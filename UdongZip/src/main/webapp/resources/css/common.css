@@ -1,0 +1,201 @@
+/***** 기본 스타일 *****/
+/* 기본 폰트 */
+body {
+  font-size: 16px;
+  font-family: 'Nanum Gothic', sans-serif; /* 깔끔 폰트 */
+}
+
+/* 작성 영역 */
+div {
+  box-sizing: border-box;
+  /* border: 1px solid black; */
+}
+#wrap {
+    width: 100vw;
+}
+#content-area {
+    width: 1000px;
+    margin: auto;
+}
+
+/* a 태그 */
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+}
+
+section.outer {
+  width: 60%;
+  padding-top: 50px;
+  margin: auto;
+}
+.inner {
+  margin: 50px;
+}
+
+/* 모달창 */
+.modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  left: 40%;
+  position: relative;
+}
+.modal-body  {
+  font-size: 16px;
+}
+/***** 기본 스타일 끝 *****/
+
+/***** 헤더 스타일 *****/
+nav {
+  border-bottom: 1px solid rgb(231, 231, 231);
+  min-width: 1000px;
+}
+
+/* 로고 */
+.navbar-udong {
+  text-decoration: none;
+  color: rgb(0, 87, 164);
+  font-family: 'Jua', sans-serif; /* 동글 폰트 */
+}
+.navbar-udong img {
+  position: relative;
+  top: 5px;
+}
+.navbar-udong > #logoText {
+  float: right;
+  text-align: center;
+}
+.navbar-udong #logoText1 {
+  font-size: 30px;
+  font-weight: 900;
+  position: relative;
+  top: 5px;
+}
+.navbar-udong #logoText2 {
+  font-size: 10px;
+  position: relative;
+  bottom: 5px;
+}
+
+/* 메뉴바 */
+.navbar-nav > li {
+  margin-left: 20px;
+}
+.dropdown-menu {
+  font-size: 14px;
+}
+
+/* 버튼 */
+.navbar .btnGroup {
+  margin-left: 30px;
+}
+.navbar button {
+  font-size: 14px;
+}
+
+/* 로그인 모달 */
+#loginForm .membership {
+  font-size: 14px;
+  position: relative;
+  left: 10%;
+}
+#loginFormCheckbox {
+  font-size: 14px;
+}
+#changePwd {
+  left: 20%;
+  position: relative;
+  font-size: 12px;
+}
+#loginForm button[type="submit"] {
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+#loginForm .modal-footer {
+  display: flex;
+  text-align: center;
+}
+#loginForm .modal-footer a {
+  font-size: 14px;
+  margin: 0;
+  width: 50%;
+  height: 100%;
+  border-left: 1px solid rgb(231, 231, 231);
+}
+#loginForm .modal-footer a:nth-child(1) {
+  border: none;
+}
+/***** 헤더 스타일 끝 *****/
+
+/***** 푸터바 스타일 *****/
+.footerText a {
+  margin: 0 10px 0;
+  font-size: 12px;
+}
+.copyright span {
+  font-size: 12px;
+}
+/***** 푸터바 스타일 끝 *****/
+
+/***** 에러페이지 스타일 *****/
+.error {
+  padding: 100px;
+  width: 500px;
+  margin: auto;
+  text-align: center;
+}
+#errorImg {
+  width: 200px;
+  margin: auto;
+  display:block;
+}
+#errorTitle {
+  font-size: 30px;
+  font-weight: 900;
+}
+#errorMsg {
+  margin: 20px 0 20px;
+  font-size: 20px;
+}
+.error button {
+  font-size: 16px;
+}
+/***** 에러페이지 스타일 끝 *****/
+
+/***** 메인페이지 스타일 시작 *****/
+#backgroundImg {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(white, white, #0057A4);
+}
+#mainTitle {
+  font-size: 60px;
+  font-weight: 900;
+  text-align: center;
+  color: white;
+  margin: 280px 0 150px;
+}
+#mainTable {
+  font-size: 14px;
+  width: 40%;
+  margin: auto;
+}
+#mainTable thead {
+  font-size: 16px;
+}
+#mainTable #mainTableMore {
+  font-size: 12px;
+  text-align: right;
+}
+#mainTable tbody tr td:first-child {
+  padding-left: 20px;
+  width: 70%;
+}
+/***** 메인페이지 스타일 끝 *****/
