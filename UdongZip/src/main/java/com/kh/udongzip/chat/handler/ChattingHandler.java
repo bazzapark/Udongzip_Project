@@ -1,5 +1,7 @@
 package com.kh.udongzip.chat.handler;
 
-public class ChattingHandler {
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+public class ChattingHandler extends TextWebSocketHandler {
 
 }

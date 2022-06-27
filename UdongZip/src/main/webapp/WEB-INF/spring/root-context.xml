@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!--  DB 연결용 bean 등록 (어떤 클래스의 어떤 객체를 만들것인지) -->
 	 <!-- 1. DB 연결을 위한 도구(bean)를 설정 -->
-	 <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
-		<!-- 어느 DB 에 접속할건지 지정 -->
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="UDONG" />
-		<property name="password" value="UDONG" />
+	
+	<context:property-placeholder location="/config/config.properties" />
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">		
+		<property name="driverClassName" value="${spring.datasource.driverClassname}" />		
+		<property name="url" value="${spring.datasource.url}" />		
+		<property name="username" value="${spring.datasource.username}" />
+		<property name="password" value="${spring.datasource.password}" />
 	</bean>
 	 
 	 <!-- 2. MyBatis Spring에서 제공하는 SQL 명령어를 실행할 수 있게 도와주는 도구 등록 -->
