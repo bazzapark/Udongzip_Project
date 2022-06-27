@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>우동집 | 우리동네집 모아보기</title>
 </head>
 <body>
+
+	<jsp:include page="WEB-INF/views/common/main.jsp" />
 
 </body>
 </html>
