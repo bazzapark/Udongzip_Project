@@ -8,7 +8,7 @@
 <title>우동집 | 우리동네집 모아보기</title>
 
 <!-- 파비콘 -->
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" >
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" >
 
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
