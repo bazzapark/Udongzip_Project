@@ -23,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <!-- CSS 파일 -->
-<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/common/common.css">
 
 </head>
 
@@ -37,19 +37,19 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
-	          <div class="form-check form-check-inline mb-3 membership">
-	            <input class="form-check-input" type="radio" name="membership" id="personal2">
-	            <label class="form-check-label" for="personal2">
-	              	개인회원
-	            </label>
-	          </div>
-	          <div class="form-check form-check-inline membership">
-	            <input class="form-check-input" type="radio" name="membership" id="agent2" checked>
-	            <label class="form-check-label" for="agent2">
-	             	업체회원
-	            </label>
-	          </div>
+	        <form action="login.me" method="post" id="login-modal-form">
+		        <div class="form-check form-check-inline mb-3 membership">
+		            <input class="form-check-input" type="radio" name="membership" id="personal2" value="member" checked>
+		            <label class="form-check-label" for="personal2">
+		              	개인회원
+		            </label>
+		        </div>
+		        <div class="form-check form-check-inline membership">
+		            <input class="form-check-input" type="radio" name="membership" id="agent2" value="agent">
+		            <label class="form-check-label" for="agent2">
+		             	업체회원
+		            </label>
+		        </div>
 	          <div class="form-floating">
 	            <input type="text" class="form-control" placeholder="아이디">
 	            <label for="">아이디</label>
@@ -72,7 +72,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <a class="" href="#">개인회원 가입</a>
-	        <a class="" href="#">업체회원 가입</a>
+	        <a class="" href="enrollForm.ag">업체회원 가입</a>
 	      </div>
 	    </div>
 	  </div>
@@ -92,151 +92,181 @@
 	    </a>
 	
 	    <div class="navbar-nav">
+		
+		<c:choose>
+		
+			<c:when test="${ empty loginUser } || ${ loginUser.identifier eq 'member' }">
+		      <!-- 메뉴 - 일반회원 -->
+		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">매물 조회</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">채팅 문의</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		           	 고객 센터
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li>
+		              <a class="dropdown-item" href="#">공지사항</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">FAQ</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">1:1문의</a>
+		            </li>
+		          </ul>
+		        </li>
+		      </ul>
+	      </c:when>
+			
+		  <c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'agent' }">
+		      <!-- 메뉴 - 업체회원 -->
+		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">채팅 관리</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            고객 센터
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li>
+		              <a class="dropdown-item" href="#">공지사항</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">FAQ</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">1:1문의</a>
+		            </li>
+		          </ul>
+		        </li>
+		      </ul> 
+	      </c:when>
+		  
+		  <c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'admin' }">
+		      <!-- 메뉴 - 관리자 -->
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">일반 회원 관리</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" href="#">업체 회원 관리</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            신고·요청 관리
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li>
+		              <a class="dropdown-item" href="#">허위 매물 신고</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">리뷰 삭제 요청</a>
+		            </li>
+		          </ul>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            	고객 센터 관리
+		          </a>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li>
+		              <a class="dropdown-item" href="#">공지사항</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">FAQ</a>
+		            </li>
+		            <li>
+		              <a class="dropdown-item" href="#">1:1문의</a>
+		            </li>
+		          </ul>
+		        </li>
+		      </ul>
+	      </c:when>
+	    </c:choose>
 	
-	      <!-- 메뉴 - 일반회원 -->
-	      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">매물 조회</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">채팅 문의</a>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	           	 고객 센터
-	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li>
-	              <a class="dropdown-item" href="#">공지사항</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">FAQ</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">1:1문의</a>
-	            </li>
-	          </ul>
-	        </li>
-	      </ul>
-	
-	      <!-- 메뉴 - 업체회원 
-	      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">채팅 관리</a>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	            고객 센터
-	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li>
-	              <a class="dropdown-item" href="#">공지사항</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">FAQ</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">1:1문의</a>
-	            </li>
-	          </ul>
-	        </li>
-	      </ul> 
-	      -->
-	
-	      <!-- 메뉴 - 관리자 
-	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">일반 회원 관리</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="#">업체 회원 관리</a>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	            신고·요청 관리
-	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li>
-	              <a class="dropdown-item" href="#">허위 매물 신고</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">리뷰 삭제 요청</a>
-	            </li>
-	          </ul>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-	            	고객 센터 관리
-	          </a>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li>
-	              <a class="dropdown-item" href="#">공지사항</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">FAQ</a>
-	            </li>
-	            <li>
-	              <a class="dropdown-item" href="#">1:1문의</a>
-	            </li>
-	          </ul>
-	        </li>
-	      </ul>
-	      -->
-	
-	      <!-- 버튼 - 로그아웃시 -->
-	      <div class="btnGroup d-flex align-items-center">
-	        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginForm">
-	          	로그인 | 회원가입
-	        </button>
-	      </div>
+		<c:choose>
+		
+			<c:when test="${ empty loginUser }">
+		      <!-- 버튼 - 로그아웃시 -->
+		      <div class="btnGroup d-flex align-items-center">
+		        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginForm">
+		          	로그인 | 회원가입
+		        </button>
+		      </div>
+	      	</c:when>
 	      
+			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'member' }">
+		      <!-- 버튼 - 로그인시 - 일반 회원 -->
+		      <div class="btnGroup d-flex align-items-center">
+		        <div class="dropdown">
+		          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
+		            마이페이지
+		          </button>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li><a class="dropdown-item" href="#">정보 수정</a></li>
+		            <li><a class="dropdown-item" href="#">예약 내역</a></li>
+		            <li><a class="dropdown-item" href="#">찜한 매물</a></li>
+		            <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
+		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
+		          </ul>
+		        </div>
+		        <button class="btn btn-primary" type="button">로그아웃</button>
+		      </div>
+	      	</c:when>
+
+			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'agent' }">
+		      <!-- 버튼 - 로그인시 - 업체 회원 -->
+		      <div class="btnGroup d-flex align-items-center">
+		        <div class="dropdown">
+		          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
+		            마이페이지
+		          </button>
+		          <ul class="dropdown-menu" aria-labelledby="">
+		            <li><a class="dropdown-item" href="#">정보 수정</a></li>
+		            <li><a class="dropdown-item" href="#">상담 예약 관리</a></li>
+		            <li><a class="dropdown-item" href="#">매물 관리</a></li>
+		            <li><a class="dropdown-item" href="#">리뷰 삭제 요청</a></li>
+		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
+		          </ul>
+		        </div>
+		        <button class="btn btn-primary" type="button">로그아웃</button>
+		      </div>
+	      	</c:when>
 	
-	      <!-- 버튼 - 로그인시 - 일반 회원 
-	      <div class="btnGroup d-flex align-items-center">
-	        <div class="dropdown">
-	          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
-	            마이페이지
-	          </button>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li><a class="dropdown-item" href="#">정보 수정</a></li>
-	            <li><a class="dropdown-item" href="#">예약 내역</a></li>
-	            <li><a class="dropdown-item" href="#">찜한 매물</a></li>
-	            <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
-	            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
-	          </ul>
-	        </div>
-	        <button class="btn btn-primary" type="button">로그아웃</button>
-	      </div>
-	      -->
-	
-	
-	      <!-- 버튼 - 로그인시 - 업체 회원 
-	      <div class="btnGroup d-flex align-items-center">
-	        <div class="dropdown">
-	          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
-	            마이페이지
-	          </button>
-	          <ul class="dropdown-menu" aria-labelledby="">
-	            <li><a class="dropdown-item" href="#">정보 수정</a></li>
-	            <li><a class="dropdown-item" href="#">상담 예약 관리</a></li>
-	            <li><a class="dropdown-item" href="#">매물 관리</a></li>
-	            <li><a class="dropdown-item" href="#">리뷰 삭제 요청</a></li>
-	            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
-	          </ul>
-	        </div>
-	        <button class="btn btn-primary" type="button">로그아웃</button>
-	      </div>
-	      -->
-	
-	      <!-- 버튼 - 로그인시 - 관리자
-	      <div class="btnGroup d-flex align-items-center">
-	        <button class="btn btn-primary" type="button">로그아웃</button>
-	      </div>
-	      -->
+			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'admin' }">
+		      <!-- 버튼 - 로그인시 - 관리자 -->
+		      <div class="btnGroup d-flex align-items-center">
+		        <button class="btn btn-primary" type="button">로그아웃</button>
+		      </div>
+	      	</c:when>
+	      
+	    </c:choose>
 	
 	    </div>
 	  </div>
 	</nav>
 	<!------- 헤더(메뉴바) 끝 ------->
+	
+	<script>
+		$(function() {
+				
+			$("input[type=radio]").on("change", function() {
+				
+				if($(this).val() == "member") {
+					$("#login-modal-form").attr("action", "login.me");
+				} else {
+					$("#login-modal-form").attr("action", "login.ag");
+				}
+				
+			})
+			
+		})
+	</script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>우동집 | 우리동네집 모아보기</title>
 
 <!-- CSS 파일 -->
-<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/common/common.css">
 
 </head>
 <body>
