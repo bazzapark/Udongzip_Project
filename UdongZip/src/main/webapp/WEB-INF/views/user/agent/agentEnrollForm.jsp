@@ -19,7 +19,7 @@
             <h1 align="center">중개사무소 회원가입</h1>
             <br>
 
-            <form id="agent-enroll-form" action="insert.ag" method="post">
+            <form id="agent-enroll-form" action="insert.ag" method="post" enctype="multipart/form-data">
 
                 <table class="info-table">
                     <tr>
@@ -101,32 +101,25 @@
                         </td>
                     </tr>
                     <tr>
+                    	<td colspan="2"> 관련 서류 (사업자등록증, 중개사등록증)</td>
+                    </tr>
+                    <tr>
                         <td>
-                            사업자등록증 <br>
                             <img id="img1" class="previewer"/>
-                            <input type="file" name="document1" class="file-input" required>
+                            <input type="file" name="document" class="file-input" required>
                         </td>
                         <td>
-                            중개사등록증 <br>
                             <img id="img2" class="previewer"/>
-                            <input type="file" name="document1" class="file-input" required>
+                            <input type="file" name="document" class="file-input" required>
                         </td>
-
-                        
                     </tr>
                     <tr>
                         <td colspan="2">
                             <span class="info-text">* 영역 클릭 시 이미지 등록 가능, 다시 클릭 시 삭제</span>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <br><br>
-                            <button onclick="return validate();" type="submit" class="enroll-btn button">가입하기</button>
-                        </td>
-                    </tr>
                 </table>
-
+				<button type="submit" class="enroll-btn button">가입하기</button>
             </form>
 
         </div>

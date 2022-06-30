@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>우동집 | 우리동네집 모아보기</title>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" >
+<link rel="shortcut icon" type="image/x-icon" href="resources/imges/favicon.ico" >
 </head>
 <body>
 	<jsp:include page="WEB-INF/views/common/main.jsp"/>

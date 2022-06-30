@@ -8,9 +8,21 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.udongzip.agent.model.vo.Agent" alias="agent"/>
+		<typeAlias type="com.kh.udongzip.chat.model.vo.ChatRoom" alias="chatRoom"/>
+		<typeAlias type="com.kh.udongzip.chat.model.vo.ChatMessage" alias="chatMessage"/>
+		<typeAlias type="com.kh.udongzip.cs.faq.model.vo.Faq" alias="faq" />
+		<typeAlias type="com.kh.udongzip.cs.inquiry.model.vo.Inquiry" alias="inquiry" />
+		<typeAlias type="com.kh.udongzip.cs.notice.model.vo.Notice" alias="notice" />
+		<typeAlias type="com.kh.udongzip.house.model.vo.House" alias="house" />
+		<typeAlias type="com.kh.udongzip.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.udongzip.reservation.model.vo.Reservation" alias="reservation" />
+		<typeAlias type="com.kh.udongzip.review.model.vo.Review" alias="review" />
+		<typeAlias type="com.kh.udongzip.review.model.vo.RemoveRequest" alias="removeRequest" />
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="mappers/agent-mapper.xml"/>
 	</mappers>
 
 </configuration>

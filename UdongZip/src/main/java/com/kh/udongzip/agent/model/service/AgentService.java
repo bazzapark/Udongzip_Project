@@ -10,7 +10,7 @@ public interface AgentService {
 	int insertAgent(Agent agent);
 	
 	// 로그인
-	Agent loginAgent(Agent agent);
+	Agent loginAgent(String agentId);
 	
 	// 업체 정보 수정
 	Agent updateAgent(Agent agent);

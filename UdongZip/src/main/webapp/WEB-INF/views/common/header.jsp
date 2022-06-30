@@ -27,6 +27,14 @@
 
 </head>
 
+	<!-- 1회성 알림문구 기능 -->
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+
 <body>
 	<!-- 로그인 모달창 -->
 	<div class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,16 +59,16 @@
 		            </label>
 		        </div>
 	          <div class="form-floating">
-	            <input type="text" class="form-control" placeholder="아이디">
+	            <input type="text" class="form-control" placeholder="아이디" name="memberId">
 	            <label for="">아이디</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input type="password" class="form-control" placeholder="비밀번호" autoComplete="off">
+	            <input type="password" class="form-control" placeholder="비밀번호" autoComplete="off" name="memberPwd">
 	            <label for="">비밀번호</label>
 	          </div>
 	          <div class="mb-3">
 	            <div class="form-check" id="loginFormCheckbox">
-	              <input type="checkbox" class="form-check-input" id="loginCheck">
+	              <input type="checkbox" class="form-check-input" id="loginCheck" name="loginCkeck">
 	              <label class="form-check-label" for="loginCheck">
 	                	로그인 상태 유지
 	              </label>
@@ -95,7 +103,7 @@
 		
 		<c:choose>
 		
-			<c:when test="${ empty loginUser } || ${ loginUser.identifier eq 'member' }">
+			<c:when test="${ empty loginUser || loginUser.identifier eq 'member' }">
 		      <!-- 메뉴 - 일반회원 -->
 		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
@@ -123,7 +131,7 @@
 		      </ul>
 	      </c:when>
 			
-		  <c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'agent' }">
+		  <c:when test="${ !empty loginUser && loginUser.identifier eq 'agent' }">
 		      <!-- 메뉴 - 업체회원 -->
 		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
@@ -148,7 +156,7 @@
 		      </ul> 
 	      </c:when>
 		  
-		  <c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'admin' }">
+		  <c:when test="${ !empty loginUser && loginUser.identifier eq 'admin' }">
 		      <!-- 메뉴 - 관리자 -->
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
@@ -201,7 +209,7 @@
 		      </div>
 	      	</c:when>
 	      
-			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'member' }">
+			<c:when test="${ !empty loginUser && loginUser.identifier eq 'member' }">
 		      <!-- 버튼 - 로그인시 - 일반 회원 -->
 		      <div class="btnGroup d-flex align-items-center">
 		        <div class="dropdown">
@@ -220,7 +228,7 @@
 		      </div>
 	      	</c:when>
 
-			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'agent' }">
+			<c:when test="${ !empty loginUser && loginUser.identifier eq 'agent' }">
 		      <!-- 버튼 - 로그인시 - 업체 회원 -->
 		      <div class="btnGroup d-flex align-items-center">
 		        <div class="dropdown">
@@ -239,7 +247,7 @@
 		      </div>
 	      	</c:when>
 	
-			<c:when test="${ !empty loginUser } && ${ loginUser.identifier eq 'admin' }">
+			<c:when test="${ !empty loginUser && loginUser.identifier eq 'admin' }">
 		      <!-- 버튼 - 로그인시 - 관리자 -->
 		      <div class="btnGroup d-flex align-items-center">
 		        <button class="btn btn-primary" type="button">로그아웃</button>

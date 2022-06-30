@@ -11,7 +11,7 @@
 	
 	<context:property-placeholder location="/config/config.properties" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">		
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">		
 		<property name="driverClassName" value="${spring.datasource.driverClassname}" />		
 		<property name="url" value="${spring.datasource.url}" />		
 		<property name="username" value="${spring.datasource.username}" />

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="agentMapper">
+
+	<resultMap id="agentResultSet" type="agent">
+		<result column="AGENT_NO" property="agentNo"/>
+		<result column="AGENT_ID" property="agentId"/>
+		<result column="AGENT_PWD" property="agentPwd"/>
+		<result column="AGENT_NAME" property="agentName"/>
+		<result column="AGENT_EMAIL" property="agentEmail"/>
+		<result column="AGENT_PHONE" property="agentPhone"/>
+		<result column="AGENT_ADDRESS" property="agentAddress"/>
+		<result column="INTRODUCE" property="introduce"/>
+		<result column="PERMISSION" property="permission"/>
+		<result column="COMPANY_NO" property="companyNo"/>
+		<result column="CEO_NAME" property="ceoName"/>
+		<result column="DOCUMENT1" property="document1"/>
+		<result column="DOCUMENT2" property="document2"/>
+	</resultMap>
+	
+	<insert id="insertAgent" parameterType="agent">
+		INSERT INTO AGENT(AGENT_NO, AGENT_ID, AGENT_PWD, AGENT_NAME, AGENT_PHONE, AGENT_EMAIL, AGENT_ADDRESS, INTRODUCE, COMPANY_NO, CEO_NAME, DOCUMENT1, DOCUMENT2)
+		VALUES(SEQ_AGE.NEXTVAL, #{agentId}, #{agentPwd}, #{agentName}, #{agentPhone}, #{agentEmail}, #{agentAddress}, #{introduce}, #{companyNo}, #{ceoName}, #{document1}, #{document2})
+	</insert>
+
+	<select id="loginAgent" parameterType="string" resultMap="agentResultSet">
+		SELECT *
+		  FROM AGENT
+		 WHERE AGENT_ID = #{agentId}
+	</select>
+
+</mapper>
