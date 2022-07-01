@@ -6,6 +6,9 @@ import com.kh.udongzip.agent.model.vo.Agent;
 
 public interface AgentService {
 	
+	// agent ID 중복체크
+	int agentIdCheck(String agentId);
+	
 	// 업체회원 회원가입
 	int insertAgent(Agent agent);
 	
@@ -13,7 +16,7 @@ public interface AgentService {
 	Agent loginAgent(String agentId);
 	
 	// 업체 정보 수정
-	Agent updateAgent(Agent agent);
+	int updateAgent(Agent agent);
 	
 	// 비밀번호 변경
 	Agent updatePwd(String newPwd);

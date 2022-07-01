@@ -23,6 +23,8 @@
 	
 	<mappers>
 		<mapper resource="mappers/agent-mapper.xml"/>
+		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/house-mapper.xml"/>
 	</mappers>
 
 </configuration>

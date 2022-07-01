@@ -16,6 +16,8 @@ div {
 #content-area {
     width: 1000px;
     margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 /* a 태그 */

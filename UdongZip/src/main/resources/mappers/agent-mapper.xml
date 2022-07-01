@@ -19,6 +19,12 @@
 		<result column="DOCUMENT2" property="document2"/>
 	</resultMap>
 	
+	<select id="agentIdCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM AGENT
+		 WHERE AGENT_ID = #{agentId}
+	</select>
+	
 	<insert id="insertAgent" parameterType="agent">
 		INSERT INTO AGENT(AGENT_NO, AGENT_ID, AGENT_PWD, AGENT_NAME, AGENT_PHONE, AGENT_EMAIL, AGENT_ADDRESS, INTRODUCE, COMPANY_NO, CEO_NAME, DOCUMENT1, DOCUMENT2)
 		VALUES(SEQ_AGE.NEXTVAL, #{agentId}, #{agentPwd}, #{agentName}, #{agentPhone}, #{agentEmail}, #{agentAddress}, #{introduce}, #{companyNo}, #{ceoName}, #{document1}, #{document2})
@@ -28,6 +34,31 @@
 		SELECT *
 		  FROM AGENT
 		 WHERE AGENT_ID = #{agentId}
+		   AND STATUS = 'Y'
 	</select>
+	
+	<update id="updateAgent" parameterType="agent">
+		UPDATE AGENT
+		   SET AGENT_EMAIL = #{agentEmail}
+		     , AGENT_PHONE = #{agentPhone}
+		     , AGENT_ADDRESS = #{agentAddress}
+		     , INTRODUCE = #{introduce}
+		 WHERE AGENT_NO = #{agentNo}
+		   AND STATUS = 'Y'
+	</update>
+	
+	<select id="selectAgent" parameterType="_int" resultMap="agentResultSet">
+		SELECT *
+		  FROM AGENT
+		 WHERE AGENT_NO = #{agentNo}
+		   AND STATUS = 'Y'
+	</select>
+	
+	<update id="deleteAgent" parameterType="_int">
+		UPDATE AGENT
+		   SET STATUS = 'N'
+		 WHERE AGENT_NO = #{agentNo}
+		   AND STATUS = 'Y'
+	</update>
 
 </mapper>

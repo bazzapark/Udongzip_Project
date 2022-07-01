@@ -8,7 +8,7 @@
 <title>우동집 | 우리동네집 모아보기</title>
 
 <!-- 파비콘 -->
-<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico" >
+<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico" >
 
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -91,7 +91,7 @@
 	  <div class="container-fluid">
 	
 	    <!-- 로고 -->
-	    <a class="navbar-udong" href="#">
+	    <a class="navbar-udong" href="/udongzip">
 	      <img src="resources/images/logo.png" alt="" width="70" height="50" class="d-inline-block align-text-center">
 	      <span id="logoText">
 	        <div id="logoText1">우동집</div>
@@ -236,14 +236,14 @@
 		            마이페이지
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">
-		            <li><a class="dropdown-item" href="#">정보 수정</a></li>
+		            <li><a class="dropdown-item" href="updateForm.ag">정보 수정</a></li>
 		            <li><a class="dropdown-item" href="#">상담 예약 관리</a></li>
-		            <li><a class="dropdown-item" href="#">매물 관리</a></li>
+		            <li><a class="dropdown-item" href="houseListView.ho">매물 관리</a></li>
 		            <li><a class="dropdown-item" href="#">리뷰 삭제 요청</a></li>
 		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
 		          </ul>
 		        </div>
-		        <button class="btn btn-primary" type="button">로그아웃</button>
+		        <button class="btn btn-primary" type="button" onclick="location.href='logout.ag'">로그아웃</button>
 		      </div>
 	      	</c:when>
 	

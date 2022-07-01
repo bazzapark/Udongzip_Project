@@ -6,6 +6,9 @@ import com.kh.udongzip.member.model.vo.Member;
 
 public interface MemberService {
 	
+	// Member ID 중복 체크
+	int memberIdCheck(String memberId);
+	
 	// 회원가입 : 개인회원
 	int insertMember(Member member);
 	

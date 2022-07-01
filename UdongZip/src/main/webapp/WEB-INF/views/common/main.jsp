@@ -17,7 +17,7 @@
 		<jsp:include page="header.jsp" />
 		<div id="content-area">
 
-			<div id="mainTitle">우리 동네의 집들을 모아서 모세요.</div>
+			<div id="mainTitle">우리 동네의 집들을 모아서 보세요.</div>
 	    <table class="table align-middle table-hover table-sm mb-5" id="mainTable">
 	      <thead>
 	        <tr>

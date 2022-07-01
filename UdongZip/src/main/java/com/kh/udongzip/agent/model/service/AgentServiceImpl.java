@@ -18,6 +18,12 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// id 중복 체크 서비스
+	@Override
+	public int agentIdCheck(String agentId) {
+		return agentDao.agentIdCheck(sqlSession, agentId);
+	}
+	
 	// 업체회원 회원가입 서비스
 	@Override
 	public int insertAgent(Agent agent) {
@@ -31,9 +37,8 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
-	public Agent updateAgent(Agent agent) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateAgent(Agent agent) {
+		return agentDao.updateAgent(sqlSession, agent);
 	}
 
 	@Override
@@ -54,16 +59,16 @@ public class AgentServiceImpl implements AgentService {
 		return null;
 	}
 
+	// 회원정보 불러오기(상세조회)
 	@Override
 	public Agent selectAgent(int agentNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return agentDao.selectAgent(sqlSession, agentNo);
 	}
 
+	// 회원 탈퇴 처리
 	@Override
 	public int deleteAgent(int agentNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return agentDao.deleteAgent(sqlSession, agentNo);
 	}
 
 }

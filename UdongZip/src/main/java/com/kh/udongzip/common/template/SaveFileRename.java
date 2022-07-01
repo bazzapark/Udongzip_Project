@@ -22,7 +22,7 @@ public class SaveFileRename {
 	* @return 저장경로 + 변경된 이름
 	*
 	*/
-	public String saveDocument(String agentName,
+	public String saveDocument(int agentNo,
 							   MultipartFile upfile,
 							   HttpSession session) {
 		
@@ -36,10 +36,10 @@ public class SaveFileRename {
 		String ext = originName.substring(originName.lastIndexOf("."));
 					
 		// 4. 합치기
-		String changeName = agentName + currentTime + ext;
+		String changeName = agentNo + "_" + currentTime + ext;
 					
 		// 5. 업로드 하고자 하는 물리적인 경로 가져오기
-		String savePath = session.getServletContext().getRealPath("/resources/agentDocuments/");
+		String savePath = session.getServletContext().getRealPath("/resources/images/agentDocuments/");
 					
 		// 6. 경로와 수정파일명을 합체시킨 후 저장
 		try {
@@ -48,7 +48,7 @@ public class SaveFileRename {
 			e.printStackTrace();
 		}
 		
-		return savePath + changeName;
+		return "resources/images/agentDocuments/" + changeName;
 		
 	}
 	
@@ -77,10 +77,10 @@ public class SaveFileRename {
 		String ext = originName.substring(originName.lastIndexOf("."));
 					
 		// 4. 합치기
-		String changeName = houseNo + currentTime + ext;
+		String changeName = houseNo + "_" + currentTime + ext;
 					
 		// 5. 업로드 하고자 하는 물리적인 경로 가져오기
-		String savePath = session.getServletContext().getRealPath("/resources/houseImgs/");
+		String savePath = session.getServletContext().getRealPath("/resources/images/houseImges/");
 					
 		// 6. 경로와 수정파일명을 합체시킨 후 저장
 		try {
@@ -89,7 +89,7 @@ public class SaveFileRename {
 			e.printStackTrace();
 		}
 		
-		return savePath + changeName;
+		return "resources/images/houseImgses/" + changeName;
 		
 	}
 
