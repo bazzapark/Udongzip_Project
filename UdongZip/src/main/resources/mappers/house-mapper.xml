@@ -18,7 +18,7 @@
 		<result column="SUBWAY_NO" property="subwayNo"/>
 		<result column="DEPOSIT" property="deposit"/>
 		<result column="MONTHLY_COST" property="monthlyCost"/>
-		<result column="MANAGE_COST" property="manageCose"/>
+		<result column="MANAGE_COST" property="manageCost"/>
 		<result column="FLOOR" property="floor"/>
 		<result column="ROOM_TYPE" property="roomType"/>
 		<result column="ROOM_COUNT" property="roomCount"/>
@@ -38,11 +38,22 @@
 		<result column="SALES_STATUS" property="salesStatus"/>
 	</resultMap>
 	
+	<!-- agent 내 매물 조회용 -->
 	<select id="selectHouseList" parameterType="_int" resultMap="houseResultSet">
 		SELECT *
 		  FROM HOUSE
 		 WHERE AGENT_NO = #{agentNo}
 		   AND STATUS = 'Y'
+		   <if test="keyword != null">
+			AND ${category} LIKE '%${keyword}%'
+		   </if>
 	</select>
+	
+	<!-- 매물 계약상태 변경용 -->
+	<update id="updateSalesStatus" parameterType="hashmap">
+		UPDATE HOUSE
+		   SET SALES_STATUS = #{salesStatus}
+		 WHERE HOUSE_NO = #{houseNo}
+	</update>
 
 </mapper>

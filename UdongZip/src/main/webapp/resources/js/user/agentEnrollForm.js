@@ -1,4 +1,4 @@
-$(function() {
+	$(function() {
                 
         // id 유효성 검사
         $("#agentId").on("keyup", function() {

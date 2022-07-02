@@ -1,6 +1,7 @@
 package com.kh.udongzip.house.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.udongzip.house.model.vo.House;
@@ -38,10 +39,13 @@ public interface HouseService {
 	// 매물 등록 : 업체회원
 	int insertHouse(House house);
 	
-	// 보유 매물 조회 : 업체 회원
-	ArrayList<House> selecthouseList(int agentNo);
+	// 보유 매물 조회 및 검색 : 업체 회원
+	ArrayList<House> selectHouseList(HashMap<String, Object> map);
 	
 	// 매물 정보 수정
 	int updateHouse(House house);
+	
+	// 매물 계약상태 변경
+	int updateSalesStatus(HashMap<String, Object> map);
 	
 }
