@@ -22,8 +22,8 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	public ArrayList<House> houseMapList() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return houseDao.houseMapList(sqlSession);
 	}
 
 	@Override

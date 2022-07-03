@@ -38,6 +38,15 @@
 		<result column="SALES_STATUS" property="salesStatus"/>
 	</resultMap>
 	
+	<!-- 지도 / 매물 조회용 -->
+	<select id="houseMapList" resultMap="houseResultSet">
+  		SELECT HOUSE_NO, TITLE, THUMBNAIL, SALES_TYPE, ADDRESS1, ADDRESS2, BUILDING_TYPE
+     		 , BUILDING_FLOOR, MONTHLY_COST, MANAGE_COST, FLOOR, ROOM_COUNT, LAT, LNG, DEPOSIT      
+		FROM HOUSE
+		WHERE STATUS = 'Y'
+		AND SALES_STATUS = 'Y' 
+  	</select>
+	
 	<!-- agent 내 매물 조회용 -->
 	<select id="selectHouseList" parameterType="_int" resultMap="houseResultSet">
 		SELECT *

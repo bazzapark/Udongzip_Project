@@ -107,7 +107,7 @@
 		      <!-- 메뉴 - 일반회원 -->
 		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">매물 조회</a>
+		          <a class="nav-link" href="list.ma">매물 조회</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">채팅 문의</a>

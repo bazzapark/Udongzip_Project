@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,5 +58,23 @@ public class HouseController {
 		return (result > 0) ? "NNNNY" : "NNNNN";
 		
 	}
-
+	
+	@RequestMapping(value="list.ma")
+	public String selectList(Model model) {
+		
+		ArrayList<House> list = houseService.houseMapList();
+		
+		model.addAttribute("list", list);
+		
+		return "user/house/houseMap";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="list.lo", produces="application/json; charset=UTF-8")
+	public String selectMap() {
+		
+		ArrayList<House> list = houseService.houseMapList();
+		
+		return new Gson().toJson(list);
+	}
 }

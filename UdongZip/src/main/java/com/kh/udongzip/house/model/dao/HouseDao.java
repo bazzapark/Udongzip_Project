@@ -11,6 +11,12 @@ import com.kh.udongzip.house.model.vo.House;
 @Repository
 public class HouseDao {
 	
+	// 지도 / 매물 전체조회
+	public ArrayList<House> houseMapList(SqlSessionTemplate sqlSession) {
+			
+		return (ArrayList)sqlSession.selectList("houseMapper.houseMapList");
+	}
+	
 	// agent 내 매물 리스트 조회 및 검색
 	public ArrayList<House> selectHouseList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return (ArrayList)sqlSession.selectList("houseMapper.selectHouseList", map);
@@ -20,5 +26,7 @@ public class HouseDao {
 	public int updateSalesStatus(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return sqlSession.update("houseMapper.updateSalesStatus", map);
 	}
+	
+	
 
 }
