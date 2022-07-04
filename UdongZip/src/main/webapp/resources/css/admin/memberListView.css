@@ -1,0 +1,33 @@
+/***** 관리자 - 일반회원 전체조회 스타일 *****/
+/* 일반회원 검색 타이틀, 검색창 */
+#memberListTitlebar {
+  display: flex;
+  position: relative;
+  margin-top: 100px;
+}
+#memberListTitle {
+  font-weight: 900;
+  font-size: 20px;
+  width: 50%;
+}
+#memberFilterbar {
+  height: 14px;
+  width: 25%;
+  position: absolute;
+  bottom: 20%;
+  right: 0;
+}
+#memberFilterbar > * {
+  font-size: 14px;
+}
+
+/* 일반회원 상세조회 모달 */
+#memberDetailModal table {
+  width: 80%;
+  margin: auto;
+}
+#memberDetailModal .modal-footer button {
+  margin: auto;
+  width: 30%;
+}
+/***** 관리자 - 일반회원 전체조회 스타일 끝 *****/

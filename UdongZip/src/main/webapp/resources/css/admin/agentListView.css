@@ -1,0 +1,40 @@
+/***** 관리자 - 업체 회원 전체 조회 스타일 *****/
+/* 업체회원 검색 타이틀, 검색창 */
+#agentListTitlebar {
+  display: flex;
+  position: relative;
+  margin-top: 100px;
+}
+#agentListTitlebar > button {
+  position: absolute;
+  right: 25%;
+  height: 14px;
+  bottom: 35%;
+  font-size: 14px;
+}
+#agentListTitle {
+  font-weight: 900;
+  font-size: 20px;
+  width: 50%;
+}
+#agentFilterbar {
+  height: 14px;
+  width: 25%;
+  position: absolute;
+  bottom: 20%;
+  right: 0;
+}
+#agentFilterbar > * {
+  font-size: 14px;
+}
+
+/* 업체회원 상세조회 모달 */
+#agentDetailModal table {
+  width: 80%;
+  margin: auto;
+}
+#agentDetailModal .modal-footer button {
+  margin: auto;
+  width: 30%;
+}
+/***** 관리자 - 업체 회원 전체 조회 스타일 끝 *****/

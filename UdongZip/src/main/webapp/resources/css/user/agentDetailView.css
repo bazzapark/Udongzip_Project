@@ -1,0 +1,35 @@
+/***** 개인 회원 - 업체 회원 상세 조회 스타일 *****/
+#content-area > .agentDetailTable:first-child {
+	margin-top: 100px;
+}
+/* 업체 상세정보 테이블 */
+.agentDetailTable > thead {
+  font-size: 20px;
+}
+#landDetailMap {
+  width: 100%;
+  height: 200px;
+}
+
+/* 리뷰 테이블 */
+.listTitle {
+  font-weight: 900;
+  font-size: 20px;
+}
+#reviewTable img {
+  width: 20px;
+  height: 20px;
+}
+#reviewTable > tbody > tr > td:nth-child(3) {
+  text-align: start;
+}
+
+/* 다른 매물 */
+#landImgList {
+  height: 200px;
+}
+#landImgList img {
+  height: 200px;
+  margin: auto;
+}
+/***** 개인 회원 - 업체 회원 상세 조회 스타일 끝 *****/
