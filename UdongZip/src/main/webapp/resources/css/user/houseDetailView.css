@@ -1,0 +1,107 @@
+/***** 개인 회원 - 매물 상세 페이지 스타일 *****/
+/* 매물 상세정보 테이블 */
+.landDetailTable {
+	width: 60%;
+}
+.landDetailTable > thead {
+  font-size: 20px;
+}
+#landDetailMap {
+  height: 300px;
+}
+
+.landDetailTable label > img {
+  width: 40px;
+  height: 40px;
+}
+
+.landDetailTable p {
+  width: 100%;
+}
+
+/* 매물 상세정보 박스 */
+#landDetailBox {
+  position: fixed;
+  right: 23%;
+  width: 12%;
+  background-color: #0057a442;
+}
+#landDetailBox #zzimBtn {
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  /* position: relative;
+  top: 35%; */
+}
+#landDetailBox #zzimImg {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  margin: 0;
+}
+#zzimImg.isZzim {
+  background-image: url("../../images/houseDetailImages/bookmarkActive.png");
+}
+#zzimImg.notZzim {
+	background-image: url("../../images/houseDetailImages/bookmark.png");
+}
+#notify {
+  font-weight: 500;
+  font-size: 12px;
+}
+#landId {
+  font-weight: 900;
+  font-size: 14px;
+  color: #0057A4;
+}
+#agentId {
+  font-weight: 900;
+}
+#landDetailBox button {
+  font-weight: 900;
+  width: 100%;
+}
+
+/* 매물 사진 */
+#landDetailImg img {
+  height: 500px;
+  object-fit: contain;
+}
+
+/* 상담예약 모달 */
+#consultBookingModal .modal-body div {
+  font-size: 14px;
+}
+#consultBookingModal .modal-body input {
+  width: 40%;
+}
+#consultBookingModal .modal-footer > * {
+  margin: auto;
+  width: 30%;
+}
+#mouseEnterBooking * {
+  width: 100%;
+  height: 100%;
+}
+.dateTimePicker input {
+  font-size: 16px;
+}
+#consultContent {
+  width: 80%;
+  height: 100px;
+  font-size: 14px;
+}
+
+/* 허위매물신고 모달 */
+#notifyModal .modal-body div {
+  width: 90%;
+  margin: auto;
+}
+#notifyModal .modal-footer button {
+  margin: auto;
+  width: 30%;
+}
+textarea {
+	resize: none;
+}
+/***** 개인 회원 - 매물 상세페이지 스타일 끝 *****/

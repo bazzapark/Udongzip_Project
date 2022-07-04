@@ -36,16 +36,8 @@
 		<result column="VIEW_COUNT" property="viewCount"/>
 		<result column="REPORT_COUNT" property="reportCount"/>
 		<result column="SALES_STATUS" property="salesStatus"/>
+		<result column="AGENT_NAME" property="agentName" />
 	</resultMap>
-	
-	<!-- 지도 / 매물 조회용 -->
-	<select id="houseMapList" resultMap="houseResultSet">
-  		SELECT HOUSE_NO, TITLE, THUMBNAIL, SALES_TYPE, ADDRESS1, ADDRESS2, BUILDING_TYPE
-     		 , BUILDING_FLOOR, MONTHLY_COST, MANAGE_COST, FLOOR, ROOM_COUNT, LAT, LNG, DEPOSIT      
-		FROM HOUSE
-		WHERE STATUS = 'Y'
-		AND SALES_STATUS = 'Y' 
-  	</select>
 	
 	<!-- agent 내 매물 조회용 -->
 	<select id="selectHouseList" parameterType="_int" resultMap="houseResultSet">
@@ -64,5 +56,92 @@
 		   SET SALES_STATUS = #{salesStatus}
 		 WHERE HOUSE_NO = #{houseNo}
 	</update>
-
+	
+	<!-- 지도 / 매물 조회용 -->
+	<select id="houseMapList" resultMap="houseResultSet">
+  		SELECT HOUSE_NO, TITLE, THUMBNAIL, SALES_TYPE, ADDRESS1, ADDRESS2, BUILDING_TYPE
+     		 , BUILDING_FLOOR, MONTHLY_COST, MANAGE_COST, FLOOR, ROOM_COUNT, LAT, LNG, DEPOSIT      
+		FROM HOUSE
+		WHERE STATUS = 'Y'
+		AND SALES_STATUS = 'Y' 
+  	</select>
+	
+	<!-- 매물 상세 조회 -->
+	<select id="selectHouse" parameterType="_int" resultMap="houseResultSet">
+		SELECT *
+		FROM HOUSE H, AGENT A
+		WHERE H.AGENT_NO = A.AGENT_NO
+		  AND HOUSE_NO = #{houseNo}
+		  AND H.STATUS = 'Y'
+	</select>
+	
+	<!-- 매물 상세 조회 조회수 증가 -->
+	<update id="updateCount" parameterType="_int">
+		UPDATE HOUSE
+		SET VIEW_COUNT = VIEW_COUNT + 1
+		WHERE HOUSE_NO = #{houseNo}
+	</update>
+	
+	<!-- 매물 옵션 조회 -->
+	<select id="selectOptionInfo" parameterType="_int" resultType="string">
+		SELECT OPTION_NO
+		FROM OPTION_INFO
+		WHERE HOUSE_NO = #{houseNo}
+	</select>
+	
+	<!-- 옵션명 조회 -->
+	<select id="selectOptions" parameterType="list" resultType="string">
+		SELECT OPTION_NAME
+		FROM OPTIONS
+		WHERE OPTION_NO IN 
+		<foreach item="optionInfo" index="index" collection="list" open="(" close=")" separator=",">
+			#{optionInfo}
+		</foreach>
+	</select>
+	
+	<!-- 매물 관리비 조회 -->
+	<select id="selectManageInfo" parameterType="_int" resultType="string">
+		SELECT MANAGE_NO
+		FROM MANAGE_INFO
+		WHERE HOUSE_NO = #{houseNo}
+	</select>
+	
+	<!-- 관리비 항목 조회 -->
+	<select id="selectManages" parameterType="list" resultType="string">
+		SELECT MANAGE_NAME
+		FROM MANAGE
+		WHERE MANAGE_NO IN
+		<foreach item="manageInfo" index="index" collection="list" open="(" close=")" separator=",">
+			#{manageInfo}
+		</foreach>
+	</select>
+	
+	<!-- 매물 이미지 조회 -->
+	<select id="selectHouseImages" parameterType="_int" resultType="string">
+		SELECT IMG_PATH
+		FROM HOUSE_IMG
+		WHERE HOUSE_NO = #{houseNo}
+	</select>
+	
+	<!-- 매물 찜 조회 -->
+	<select id="selectZzim" parameterType="_int" resultType="_int">
+		SELECT HOUSE_NO
+		FROM ZZIM
+		WHERE MEMBER_NO = #{memberNo}
+		  AND HOUSE_NO = #{houseNo}
+	</select>
+	
+	<!-- 매물 찜 추가 -->
+	<insert id="insertZzim" parameterType="_int">
+		INSERT INTO ZZIM
+		VALUES (#{memberNo}, #{houseNo})
+	</insert>
+	
+	<!-- 매물 찜 삭제 -->
+	<delete id="deleteZzim" parameterType="_int">
+		DELETE FROM ZZIM
+		WHERE MEMBER_NO = #{memberNo}
+		  AND HOUSE_NO = #{houseNo}
+	</delete>
+	
 </mapper>
