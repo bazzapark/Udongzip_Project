@@ -89,7 +89,7 @@ public class SaveFileRename {
 			e.printStackTrace();
 		}
 		
-		return "resources/images/houseImgses/" + changeName;
+		return "resources/images/houseImges/" + changeName;
 		
 	}
 

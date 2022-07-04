@@ -89,7 +89,7 @@
 	            url : "listView.ho",
 	            data : {
 	            	agentNo : ${ loginUser.agentNo },
-	            	category : $("#category").children().val(),
+	            	category : $("#category").children(":selected").val(),
 	    			keyword : $("#search-input").val()
 	        	},
 	            type : "post",

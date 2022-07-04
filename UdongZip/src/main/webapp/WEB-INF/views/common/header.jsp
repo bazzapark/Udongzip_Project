@@ -213,7 +213,7 @@
 		      <!-- 버튼 - 로그인시 - 일반 회원 -->
 		      <div class="btnGroup d-flex align-items-center">
 		        <div class="dropdown">
-		          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
+		          <button class="btn btn-link nav-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
 		            마이페이지
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">
@@ -232,7 +232,7 @@
 		      <!-- 버튼 - 로그인시 - 업체 회원 -->
 		      <div class="btnGroup d-flex align-items-center">
 		        <div class="dropdown">
-		          <button class="btn btn-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
+		          <button class="btn btn-link nav-link px-3 me-2 dropdown-toggle" type="button" id="" data-bs-toggle="dropdown">
 		            마이페이지
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">

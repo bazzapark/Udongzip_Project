@@ -39,15 +39,33 @@
 		<result column="AGENT_NAME" property="agentName" />
 	</resultMap>
 	
+	<resultMap id="manageResultSet" type="manage">
+		<result column="MANAGE_NO" property="manageNo" />
+		<result column="MANAGE_NAME" property="manageName" />
+	</resultMap>
+	
+	<resultMap id="optionResultSet" type="option">
+		<result column="OPTION_NO" property="optionNo" />
+		<result column="OPTION_NAME" property="optionName" />
+	</resultMap>
+	
+	<resultMap id="subwayResultSet" type="subway">
+		<result column="SUBWAY_NO" property="subwayNo" />
+		<result column="STATION" property="station" />
+	</resultMap>
+	
+	<!-- 업체회원 관련 SQL 시작 : 박민규 -->
+	
 	<!-- agent 내 매물 조회용 -->
 	<select id="selectHouseList" parameterType="_int" resultMap="houseResultSet">
-		SELECT *
-		  FROM HOUSE
-		 WHERE AGENT_NO = #{agentNo}
-		   AND STATUS = 'Y'
-		   <if test="keyword != null">
+		SELECT HOUSE_NO, TITLE, THUMBNAIL, ADDRESS1, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, SALES_STATUS
+		FROM HOUSE
+		WHERE AGENT_NO = #{agentNo}
+		AND STATUS = 'Y'
+		<if test="keyword != null">
 			AND ${category} LIKE '%${keyword}%'
-		   </if>
+		</if>
+		ORDER BY HOUSE_NO DESC
 	</select>
 	
 	<!-- 매물 계약상태 변경용 -->
@@ -56,6 +74,110 @@
 		   SET SALES_STATUS = #{salesStatus}
 		 WHERE HOUSE_NO = #{houseNo}
 	</update>
+	
+	<!-- 관리비 전체 항목 불러오기 -->
+	<select id="selectAllManage" resultMap="manageResultSet">
+		SELECT *
+		  FROM MANAGE
+	</select>
+	
+	<!-- 옵션 전체 항목 불러오기 -->
+	<select id="selectAllOption" resultMap="optionResultSet">
+		SELECT *
+		  FROM OPTIONS
+	</select>
+		
+	<!-- 지하철역 정보 불러오기 -->
+	<select id="selectStationList" parameterType="string" resultMap="subwayResultSet">
+		SELECT SUBWAY_NO, STATION
+		  FROM SUBWAY
+		 WHERE LINE LIKE '%${line}%'
+		 ORDER BY STATION ASC
+	</select>
+	
+		
+	<!-- 신규 매물 등록 -->
+	<insert id="insertHouse" parameterType="house">
+		INSERT INTO HOUSE(HOUSE_NO,
+						  AGENT_NO,
+						  TITLE,
+						  DESCRIPTION,
+						  THUMBNAIL,
+						  SALES_TYPE,
+						  ADDRESS1,
+						  ADDRESS2,
+						  ZIP_CODE,
+						  BUILDING_TYPE,
+						  BUILDING_FLOOR,
+						  SUBWAY_NO,
+						  DEPOSIT,
+						  MONTHLY_COST,
+						  MANAGE_COST,
+						  FLOOR,
+						  ROOM_TYPE,
+						  ROOM_COUNT,
+						  DIRECTION,
+						  PARKING,
+						  LAT,
+						  LNG,
+						  SIZE_M2,
+						  SIZE_P,
+						  PET,
+						  LOAN,
+						  MOVEIN_DATE,
+						  MANAGE_INFO,
+						  OPTION_INFO)
+		VALUES(SEQ_HOU.NEXTVAL,
+			   #{agentNo},
+			   #{title},
+			   #{description},
+			   #{thumbnail},
+			   #{salesType},
+			   #{address1},
+			   #{address2},
+			   #{zipCode},
+			   #{buildingType},
+			   #{buildingFloor},
+			   #{subwayNo},
+			   #{deposit},
+			   #{monthlyCost},
+			   #{manageCost},
+			   #{floor},
+			   #{roomType},
+			   #{roomCount},
+			   #{direction},
+			   #{parking},
+			   #{lat},
+			   #{lng},
+			   #{size_m2},
+			   #{size_p},
+			   #{pet},
+			   #{loan},
+			   #{moveinDate},
+			   #{manageInfo},
+			   #{optionInfo})
+	</insert>
+		
+	<!-- 방금 등록한 매물 정보 불러오기 -->
+	<select id="selectNewestHouse" parameterType="_int" resultMap="houseResultSet">
+		SELECT *
+		  FROM (SELECT *
+		        FROM HOUSE
+		        WHERE AGENT_NO = #{agentNo}
+		        ORDER BY HOUSE_NO DESC)
+		 WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 방금 등록한 매물의 이미지 정보 저장 -->
+	<insert id="insertHouseImg" parameterType="hashmap">
+		INSERT ALL
+		<foreach collection="imgList" item="img" separator=" ">
+			INTO HOUSE_IMG (HOUSE_NO, IMG_PATH) VALUES (#{houseNo}, #{img})
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<!-- 업체회원 관련 SQL 끝 : 박민규 -->
 	
 	<!-- 지도 / 매물 조회용 -->
 	<select id="houseMapList" resultMap="houseResultSet">

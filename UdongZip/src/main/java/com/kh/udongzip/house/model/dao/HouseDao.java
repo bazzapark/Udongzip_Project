@@ -9,9 +9,17 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.udongzip.house.model.vo.House;
+import com.kh.udongzip.house.model.vo.Manage;
+import com.kh.udongzip.house.model.vo.Option;
+import com.kh.udongzip.house.model.vo.Subway;
 
 @Repository
 public class HouseDao {
+	
+/**
+* @version 1.0
+* @author 박민규
+*/
 	
 	// agent 내 매물 리스트 조회 및 검색
 	public ArrayList<House> selectHouseList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
@@ -22,6 +30,40 @@ public class HouseDao {
 	public int updateSalesStatus(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return sqlSession.update("houseMapper.updateSalesStatus", map);
 	}
+	
+	// 관리비 전체 항목 불러오기
+	public ArrayList<Manage> selectAllManage(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("houseMapper.selectAllManage");
+	}
+	
+	// 옵션 전체 항목 불러오기
+	public ArrayList<Option> selectAllOption(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("houseMapper.selectAllOption");
+	}
+	
+	// 지하철역 정보 불러오기
+	public ArrayList<Subway> selectStationList(SqlSessionTemplate sqlSession, String line) {
+		return (ArrayList)sqlSession.selectList("houseMapper.selectStationList", line);
+	}
+	
+	// 신규 매물 등록
+	public int insertHouse(SqlSessionTemplate sqlSession, House house) {
+		return sqlSession.insert("houseMapper.insertHouse", house);
+	}
+	
+	// 가장 최근 등록된 매물 정보 불러오기 (매물 등록 과정)
+	public House selectNewestHouse(SqlSessionTemplate sqlSession, int agentNo) {
+		return sqlSession.selectOne("houseMapper.selectNewestHouse", agentNo);
+	}
+	
+	// 매물의 이미지 정보 삽입 (매물 등록 과정)
+	public int insertHouseImg(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("houseMapper.insertHouseImg", map);
+	}
+	
+/**
+* 
+*/
 	
 	// 지도 / 매물 전체조회
 	public ArrayList<House> houseMapList(SqlSessionTemplate sqlSession) {

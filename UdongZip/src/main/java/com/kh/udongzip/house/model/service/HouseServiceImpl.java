@@ -8,9 +8,13 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.udongzip.house.model.dao.HouseDao;
 import com.kh.udongzip.house.model.vo.House;
+import com.kh.udongzip.house.model.vo.Manage;
+import com.kh.udongzip.house.model.vo.Option;
+import com.kh.udongzip.house.model.vo.Subway;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -20,6 +24,12 @@ public class HouseServiceImpl implements HouseService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+
+/**
+* @version 1.0
+* @author 박민규
+*/
 	
 	// 업체회원 보유 매물 조회 및 검색
 	@Override
@@ -27,10 +37,62 @@ public class HouseServiceImpl implements HouseService {
 		return houseDao.selectHouseList(sqlSession, map);
 	}
 	
+	// 계약 상태 변경 메소드
 	@Override
 	public int updateSalesStatus(HashMap<String, Object> map) {
 		return houseDao.updateSalesStatus(sqlSession, map);
 	}
+
+	// 관리비 전체 항목 불러오기
+	@Override
+	public ArrayList<Manage> selectAllManage() {
+		return houseDao.selectAllManage(sqlSession);
+	}
+
+	// 옵션 전체 항목 불러오기
+	@Override
+	public ArrayList<Option> selectAllOption() {
+		return houseDao.selectAllOption(sqlSession);
+	}
+	
+	// 지하철역 정보 불러오기 메소드
+	@Override
+	public ArrayList<Subway> selectStationList(String line) {
+		return houseDao.selectStationList(sqlSession, line);
+	}
+	
+	// 신규 매물 등록
+	@Transactional
+	@Override
+	public int insertHouse(HashMap<String, Object> map) {
+		
+		// map에서 house 객체 뽑아내기
+		House house = (House)map.get("house");
+		
+		// 매물 정보 DB insert
+		int result1 = houseDao.insertHouse(sqlSession, house);
+		
+		int result2 = 0;
+		
+		if(result1 > 0) {
+			
+			// 방금 등록한 매물의 houseNo을 얻기 위해 가장 최근 등록한 매물 정보 조회
+			House newHouse = houseDao.selectNewestHouse(sqlSession, house.getAgentNo());
+			
+			// houseNo 뽑아서 map에 넣기
+			map.put("houseNo", newHouse.getHouseNo());
+			
+			result2 = houseDao.insertHouseImg(sqlSession, map);
+			
+		}
+		
+		return result1 * result2;
+		
+	}
+	
+/**
+* 
+*/
 
 	@Override
 	public ArrayList<House> houseMapList() {
@@ -67,14 +129,6 @@ public class HouseServiceImpl implements HouseService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public int insertHouse(House house) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	
 
 	@Override
 	public int updateHouse(House house) {

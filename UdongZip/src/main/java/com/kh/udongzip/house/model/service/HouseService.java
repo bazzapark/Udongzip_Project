@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.udongzip.house.model.vo.House;
+import com.kh.udongzip.house.model.vo.Manage;
+import com.kh.udongzip.house.model.vo.Option;
+import com.kh.udongzip.house.model.vo.Subway;
 
 public interface HouseService {
 	
@@ -28,8 +31,13 @@ public interface HouseService {
 	// 매물 삭제 : 어드민, 업체회원
 	int deleteHouse(int houseNo);
 	
+/**
+* @version 1.0
+* @author 박민규
+*/
+	
 	// 매물 등록 : 업체회원
-	int insertHouse(House house);
+	int insertHouse(HashMap<String, Object> map);
 	
 	// 보유 매물 조회 및 검색 : 업체 회원
 	ArrayList<House> selectHouseList(HashMap<String, Object> map);
@@ -39,6 +47,19 @@ public interface HouseService {
 	
 	// 매물 계약상태 변경
 	int updateSalesStatus(HashMap<String, Object> map);
+	
+	// 지하철역 정보 불러오기
+	ArrayList<Subway> selectStationList(String line);
+	
+	// 관리비 전체 항목 불러오기
+	ArrayList<Manage> selectAllManage();
+	
+	// 옵션 전체 항목 불러오기
+	ArrayList<Option> selectAllOption();
+	
+/**
+* 
+*/
 	
 /**
  * @version 1.0

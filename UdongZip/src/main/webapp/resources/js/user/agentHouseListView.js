@@ -139,5 +139,15 @@
         }
         
       	$(document).on("click", "#house-list tbody tr td:not(.not-click)", function() {
-		    alert("두 번째 버튼을 클릭했습니다.");
+		    alert("상세 페이지로 예정");
 		});
+		
+		$(function() {
+		
+			$(".enroll-btn").on("click", function() {
+				
+				location.href="enrollForm.ho";
+				
+			})
+		
+		})

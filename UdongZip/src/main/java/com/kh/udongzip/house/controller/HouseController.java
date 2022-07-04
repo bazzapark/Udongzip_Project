@@ -1,21 +1,32 @@
 package com.kh.udongzip.house.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.template.SaveFileRename;
 import com.kh.udongzip.house.model.service.HouseService;
 import com.kh.udongzip.house.model.vo.House;
+import com.kh.udongzip.house.model.vo.Manage;
+import com.kh.udongzip.house.model.vo.Option;
+import com.kh.udongzip.house.model.vo.Subway;
 import com.kh.udongzip.member.model.vo.Member;
 
 @Controller
@@ -24,11 +35,34 @@ public class HouseController {
 	@Autowired
 	private HouseService houseService;
 	
+	/**
+	* 업체회원 내 매물 목록 페이지 이동 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @return 매물 목록 페이지
+	*
+	*/
 	@RequestMapping("houseListView.ho")
 	public String agentHouseListView() {
 		return "user/house/agentHouseListView";
 	}
 	
+	/**
+	* 업체회원 내 매물 목록 조회 및 검색 메소드 (ajax)
+	* keyword가 null인 경우 전체 조회, keyowrd가 있는 경우 검색 조회
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param agentNo
+	* 		 업체회원 번호
+	* @param categoty
+	* 		 검색 영역
+	* @param keyword
+	* 		 검색어
+	* @return 검색된 매물 리스트
+	*
+	*/
 	@ResponseBody
 	@PostMapping(value="listView.ho", produces="application/json; charset=UTF8")
 	public String selecthouseList(int agentNo,
@@ -47,6 +81,18 @@ public class HouseController {
 		
 	}
 	
+	/**
+	* 업체회원 내 매물 계약 가능 여부 변경 메소드 (ajax)
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param houseNo
+	* 		 상태를 변경하려는 매물 번호
+	* @param salesStatus
+	* 		 변경하려는 상태값
+	* @return 변경 성공 여부
+	*
+	*/
 	@ResponseBody
 	@PostMapping(value="changeStatus.ho", produces="text/html; charset=UTF8")
 	public String updateSalesStatus(int houseNo,
@@ -60,6 +106,122 @@ public class HouseController {
 		int result = houseService.updateSalesStatus(map);
 		
 		return (result > 0) ? "NNNNY" : "NNNNN";
+		
+	}
+	
+	/**
+	* 업체회원 매물 등록 페이지 이동 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @return 매물 등록 페이지
+	*
+	*/
+	@RequestMapping("enrollForm.ho")
+	public String houseEnrollForm(Model model) {
+		
+		ArrayList<Manage> manageList = houseService.selectAllManage();
+		
+		ArrayList<Option> optionList = houseService.selectAllOption();
+		
+		model.addAttribute("manageList", manageList);
+		model.addAttribute("optionList", optionList);
+		
+		return "user/house/houseEnrollForm";
+	}
+	
+	/**
+	* 업체회원 매물 등록 페이지 지하철역 정보 불러오기 메소드 (ajax)
+	*
+	* @version 1.0
+	* @author 박민규
+	* @return 선택한 노선의 지하철역 정보
+	*
+	*/
+	@ResponseBody
+	@RequestMapping(value="stationList.ho", produces="applicatoin/json; charset=UTF-8")
+	public String selectStationList(String line) {
+		
+		ArrayList<Subway> stations = houseService.selectStationList(line);
+		
+		return new Gson().toJson(stations);
+		
+	}
+	
+	/**
+	* 업체회원 매물 등록 메소드
+	* 썸네일 파일 저장 후 setter 메소드로 house 객체에 변경된 이름을 저장
+	* 다른 이미지 파일들은 저장 후 list에 담은 후 map에 담아 다른 매개변수들과 함께 service로 전달
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param house
+	*        매물 정보를 담고 있는 House 객체
+	* @param thumbnailFile
+	*        매물의 대표사진
+	* @param houseImg
+	*        매물 이미지 list
+	* @param manageInfo
+	* 		 매물의 관리비 정보
+	* @param optionInfo
+	* 		 매물의 옵션 정보
+	* @return 매물 목록 페이지
+	*
+	*/
+	@Validated
+	@PostMapping("insert.ho")
+	public String insertHouse(House house,
+							  MultipartFile thumbnailFile,
+							  List<MultipartFile> houseImg,
+							  @RequestParam("manageInfo") String manageInfo,
+							  @RequestParam("optionInfo") String optionInfo,
+							  Model model,
+							  HttpSession session) {
+		
+		SaveFileRename saveFileRename = new SaveFileRename();
+		HashMap<String, Object> map = new HashMap<>();
+		ArrayList<String> imgList = new ArrayList<>();
+		
+		int agentNo = house.getAgentNo();
+		
+		house.setThumbnail(saveFileRename.saveHouseImg(agentNo, thumbnailFile, session));
+		house.setManageInfo(String.join(";", manageInfo));
+		house.setOptionInfo(String.join(";", optionInfo));
+		
+		for(MultipartFile img : houseImg) {
+			
+			if(!img.getOriginalFilename().equals("")) {
+				imgList.add(saveFileRename.saveHouseImg(agentNo, img, session));
+			}
+			
+		}
+		
+		map.put("house", house);
+		map.put("imgList", imgList);
+		
+		int result = houseService.insertHouse(map);
+		
+		if(result > 0) { // 등록 성공 시
+			
+			session.setAttribute("alertMsg", "매물이 등록 되었습니다.");
+			
+			return "redirect:houseListView.ho";
+			
+		} else { // 등록 실패 시
+			
+			// 저장된 썸네일 파일 삭제
+			new File(session.getServletContext().getRealPath(house.getThumbnail())).delete();
+			
+			// 저장된 기타 이미지 파일들 삭제
+			for(String img : imgList) {
+				new File(session.getServletContext().getRealPath(img)).delete();
+			}
+			
+			model.addAttribute("errorMsg", "매물 등록에 실패했습니다. 잠시 후 다시 시도해주새요.");
+			
+			return "common/error";
+			
+		}
 		
 	}
 	
