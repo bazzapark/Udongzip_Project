@@ -61,5 +61,13 @@
  		     , MEMBER_EMAIL = #{memberEmail}
  		 WHERE MEMBER_ID = #{memberId}
  	</update>
+ 	
+ 	<!-- 회원 탈퇴 -->
+ 	<update id="deletemember" parameterType="_int">
+ 		UPDATE MEMBER
+ 		   SET STATUS = 'N'
+ 		 WHERE MEMBER_NO =#{memberNo}
+ 	</update>
+ 	
  
 </mapper>

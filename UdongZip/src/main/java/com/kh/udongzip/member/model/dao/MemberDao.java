@@ -26,6 +26,12 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember", member);
 	}
 	
+	// 회원 탈퇴
+	public int deleteMember(SqlSessionTemplate sqlSession, int memberNo) {
 		
+		return sqlSession.update("memberMapper.deletemember", memberNo);
+	}
+	
+	
 	
 }

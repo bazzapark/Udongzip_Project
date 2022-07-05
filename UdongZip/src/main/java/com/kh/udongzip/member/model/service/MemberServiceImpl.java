@@ -50,10 +50,11 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	// 회원 탈퇴
 	@Override
 	public int deleteMember(int memberNo) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return memberDao.deleteMember(sqlSession, memberNo);
 	}
 
 	@Override

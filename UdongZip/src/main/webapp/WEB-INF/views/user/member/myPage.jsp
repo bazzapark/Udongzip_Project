@@ -46,6 +46,8 @@
   <h5 class="modal-title" id="">회원탈퇴</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
+
+<form action="delete.me" method="post">
 <pre>회원탈퇴 하시겠습니까?
 
 회원탈퇴와 동시에 서비스 이용내역 및 모든 데이터가 삭제 됩니다. 
@@ -54,13 +56,18 @@
 그동안 우리동네집구하기를 이용해 주셔서 감사합니다.
 앞으로 보다 나은 서비스를 제공할 수 있도록 노력하겠습니다.
 </pre>
+         <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
+        <div align="center">
     <button type="submit" class="btn btn-primary">탈퇴하기</button>
+    <br>
+    </div>
   </form>
+  
 </div>
 </div>
 </div>
 
-    <div class"content">
+    <div class="content">
         <br><br>
         <div class="innerOuter">
             <h2 style ="border-bottom: 3px solid #757070;">마이 페이지</h2>

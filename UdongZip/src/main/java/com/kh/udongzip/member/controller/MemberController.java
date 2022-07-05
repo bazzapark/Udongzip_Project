@@ -169,4 +169,24 @@ System.out.println("### MemberController : liginMember :: getMemberPwd = ["+ mem
 	}
 	
 	// 회원탈퇴 
+	@RequestMapping("delete.me")
+	public String deleteMemer(int memberNo, HttpSession session, Model model) {
+		
+		int result = memberService.deleteMember(memberNo);
+		
+		if(result > 0) { // 탈퇴 성공
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다.");
+			
+			return "redirect:/";
+		}
+		else { // 실패
+			
+			model.addAttribute("errorMsg", "회원 탈퇴 실패");
+			
+			return "common/error";
+		}
+	}
+	
 }
