@@ -1,0 +1,58 @@
+@charset "UTF-8";
+/***** 관리자 - 공지사항 전체 조회 스타일 *****/
+        /* 전체 영역 */
+        .wrap{ 
+            /* border: 3px solid black; */
+            margin: auto;
+            margin-top: 50px;
+            width: 1200px;
+        }
+
+        /* 리스트 콘텐트 영역 */
+        .content-wrap{
+            /* border: 1px solid red; */
+            margin: auto;
+            width: 1000px;
+            margin-top: 120px;
+            margin-bottom: 150px;
+        }
+
+        /* 글쓰기 버튼 */
+        .admin-btn{
+            /* border: 2px solid violet; */
+            width: 900px;
+            margin: auto;
+        }
+        .admin-btn * {
+            float: right;
+            margin-inline: 8px;
+        }
+
+        /* 공지 테이블 영역 */
+        .content-wrap>.table-list {
+            /* border: 3px solid blue; */
+            width: 900px;
+            height: 200px;
+            margin: auto;
+            text-align: center;
+            vertical-align: middle;
+            table-layout: fixed;
+        }
+        .content-wrap .table-list thead{
+            background-color: #595959;
+            color: white;
+        }
+        /* 콘텐트 영역의 테이블의 tbody의 행 hover 설정 */
+        .content-wrap .table-list tbody tr:hover {
+            cursor: pointer;
+            background-color: #cbcdd3;
+            opacity: 0.7;
+        }
+
+        /* 페이징바 영역 */
+        #pagingArea{
+            /* border: 2px solid forestgreen; */
+            width: fit-content;
+            margin: auto;
+            margin-top: 80px;
+        }

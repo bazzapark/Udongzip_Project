@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/***** 관리자 - 공지사항 작성 스타일 *****/
+        /* 전체 영역 */
+        .wrap{ 
+            /* border: 3px solid black; */
+            margin: auto;
+            margin-top: 50px;
+            width: 1200px;
+        }
+
+        /* 리스트 콘텐트 영역 */
+        .enroll-wrap{
+            /* border: 1px solid red; */
+            margin: auto;
+            width: 1000px;
+            margin-top: 120px;
+            margin-bottom: 120px;
+        }
+        .enroll-table {
+            /* border: 1px solid darkblue; */
+            margin: auto;
+            width: 75%;
+        }
+        .enroll-table *{
+            margin: 7px;
+        }
