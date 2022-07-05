@@ -217,14 +217,14 @@
 		            마이페이지
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">
-		            <li><a class="dropdown-item" href="#">정보 수정</a></li>
+		            <li><a class="dropdown-item" href="myPage.me">정보 수정</a></li>
 		            <li><a class="dropdown-item" href="#">예약 내역</a></li>
 		            <li><a class="dropdown-item" href="#">찜한 매물</a></li>
 		            <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
 		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
 		          </ul>
 		        </div>
-		        <button class="btn btn-primary" type="button">로그아웃</button>
+		        <button class="btn btn-primary" type="button" onclick="location.href='logout.me';">로그아웃</button>
 		      </div>
 	      	</c:when>
 

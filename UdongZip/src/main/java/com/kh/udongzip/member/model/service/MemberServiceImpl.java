@@ -11,35 +11,37 @@ import com.kh.udongzip.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Autowired
 	private MemberDao memberDao;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	// Member ID 중복 체크 확인
-	@Override
-	public int memberIdCheck(String memberId) {
-		return memberDao.memberIdCheck(sqlSession, memberId);
-	}
-
+	// 회원가입
 	@Override
 	public int insertMember(Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = memberDao.insertMember(sqlSession, member);
+		
+		return result;
 	}
-
-	@Override
+     
+	// 로그인
+	@Override 
 	public Member selectMember(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// 어렵구낭...
+		Member loginUser = memberDao.loginMember(sqlSession, member);
+		
+		return loginUser;
 	}
 
+	// 회원정보 수정
 	@Override
-	public Member updateMember(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateMember(Member member) {
+
+		return memberDao.updateMember(sqlSession, member);
 	}
 
 	@Override
@@ -64,6 +66,12 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectMember(int memberNo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int memberIdCheck(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -16,7 +16,7 @@ public interface MemberService {
 	Member selectMember(Member member);
 	
 	// 정보 수정 : 개인회원
-	Member updateMember(Member member);
+	int updateMember(Member member);
 	
 	// 비밀번호 수정 : 개인회원
 	Member updatePwd(String newPwd);
