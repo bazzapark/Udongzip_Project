@@ -3,7 +3,7 @@
 <mapper namespace="memberMapper">
  
  	<!-- 로그인 -->
- 	<resultMap id="memberReaultSet" type="member">
+ 	<resultMap id="memberResultSet" type="member">
  		<result column="MEMBER_NO" property="memberNo" />
  		<result column="MEMBER_ID" property="memberId" />
  		<result column="MEMBER_PWD" property="memberPwd" />
@@ -19,7 +19,7 @@
 		 WHERE MEMBER_ID = #{memberId}
 	</select>
  	
- 	<select id="loginMember" parameterType="member" resultMap="memberReaultSet">
+ 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
  		
  		<!-- 암호화 하기 전  
  		SELECT *

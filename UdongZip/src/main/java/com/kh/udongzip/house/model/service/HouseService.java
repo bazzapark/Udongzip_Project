@@ -42,9 +42,6 @@ public interface HouseService {
 	// 보유 매물 조회 및 검색 : 업체 회원
 	ArrayList<House> selectHouseList(HashMap<String, Object> map);
 	
-	// 매물 정보 수정
-	int updateHouse(House house);
-	
 	// 매물 계약상태 변경
 	int updateSalesStatus(HashMap<String, Object> map);
 	
@@ -57,6 +54,15 @@ public interface HouseService {
 	// 옵션 전체 항목 불러오기
 	ArrayList<Option> selectAllOption();
 	
+	// 매물 정보 불러오기 (updateForm)
+	House selectUpdateHouse(int houseNo);
+	
+	// 매물 정보 수정
+	int updateHouse(House house);
+	
+	// 매물 이미지 수정
+	int updateHouseImg(HashMap<String, Object> map);
+	
 /**
 * 
 */
@@ -65,7 +71,7 @@ public interface HouseService {
  * @version 1.0
  * @author 양아란
  */
-	// 매물 상세 조회 페이지 : 개인회원, 업체회원
+	// 매물 상세 조회 페이지 : 개인회원
 	House selectHouse(int houseNo);
 	
 	// 상세 조회 조회수 증가 : 개인회원

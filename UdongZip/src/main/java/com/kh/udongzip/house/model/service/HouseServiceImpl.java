@@ -90,6 +90,47 @@ public class HouseServiceImpl implements HouseService {
 		
 	}
 	
+	// 매물 정보 불러오기 (updateForm)
+	@Override
+	public House selectUpdateHouse(int houseNo) {
+		return houseDao.selectUpdateHouse(sqlSession, houseNo);
+	}
+	
+	// 매물 수정하기
+	@Override
+	public int updateHouse(House house) {
+		return houseDao.updateHouse(sqlSession, house);
+	}
+	
+	// 매물 이미지 정보 변경
+	@Override
+	public int updateHouseImg(HashMap<String, Object> map) {
+		
+		int result1 = 1;
+				
+		if(!((ArrayList)map.get("removeList")).isEmpty()) {
+			
+			result1 = houseDao.deleteHouseImg(sqlSession, map);
+			
+		}
+				
+		int result2 = 1;
+		
+		if(!((ArrayList)map.get("imgList")).isEmpty()) {
+			
+			result2 = houseDao.insertHouseImg(sqlSession, map);
+			
+		}
+		
+		return result1 * result2;
+		
+	}
+	
+	@Override
+	public int deleteHouse(int houseNo) {
+		return houseDao.deleteHouse(sqlSession, houseNo);
+	}
+	
 /**
 * 
 */
@@ -122,18 +163,6 @@ public class HouseServiceImpl implements HouseService {
 	public ArrayList<House> selectReportHouse() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int deleteHouse(int houseNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateHouse(House house) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 /**

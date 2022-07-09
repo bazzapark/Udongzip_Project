@@ -1,19 +1,8 @@
 $(function() {
 
-    document.getElementById("address1").addEventListener("click", function(){ //주소입력칸을 클릭하면
-        //카카오 지도 발생
-        new daum.Postcode({
-            oncomplete: function(data) { //선택시 입력값 세팅
-            	document.getElementById("address1").value = ""; // 주소란 비워주기
-                document.getElementById("address1").value = data.address; // 주소 넣기
-                document.getElementById("zipCode").value = ""; // 우편번호란 비워주기
-                document.getElementById("zipCode").value = data.zonecode; // 우편번호 넣기
-                document.getElementById("address2").focus(); //상세입력 포커싱
-            }
-        }).open();
-    });
+	getLatLng($("#address1").val());
 
-    $("img").on("click", function() {
+    $(document).on("click", "img", function() {
 
         if($(this).attr("src") == undefined || $(this).attr("src") == "") {
 
@@ -23,18 +12,12 @@ $(function() {
 	
 			$(this).next().val("");
             $(this).attr("src", "");
+            $(this).nextAll().eq(1).remove();
 
         }
 
     });
-    
-    $("#map-btn").on("click", function() {
-        
-        var address = $("#address1").val();
-    
-        getLatLng(address);
-        
-    })
+
 
     $(".file-input").on("change", function() { // file-input의 값이 바뀌면
 
@@ -96,9 +79,62 @@ $(function() {
 			$("#moveinDate").attr("readonly", false);
 		}
 			
-	})    
+	});
+	
+	$(".delete-btn").on("click", function() {
+	
+		var response = confirm("삭제 후에는 복구가 불가능합니다. 삭제하시겠습니까?");
+	
+		if(response) {
+			$("#delete-form").submit();
+		};
+	
+	});
 
-})
+});
+
+function getSelected(el, value) {
+
+	$(el).each(function() {
+	
+		if($(this).val() == value) {
+			$(this).attr("selected", true);
+		}
+	
+	})
+
+};
+
+function getChecked(el, value) {
+
+	$(el).each(function() {
+	
+		if($(this).val() == value) {
+			$(this).attr("checked", true);
+		}
+	
+	})
+
+};
+
+function arrChecked(el, value) {
+
+	$(el).each(function(){
+	
+		var str = value;
+			
+		var arr = str.split(";");
+			
+		if(arr.includes($(this).val())) {
+				
+			$(this).attr("checked", true);
+			
+		}
+	
+	})
+
+
+}
 
 function getLatLng(address) {
     

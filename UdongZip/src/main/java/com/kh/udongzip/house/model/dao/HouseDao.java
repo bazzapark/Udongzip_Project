@@ -61,6 +61,26 @@ public class HouseDao {
 		return sqlSession.insert("houseMapper.insertHouseImg", map);
 	}
 	
+	// 매물 정보 불러오기 (updateForm)
+	public House selectUpdateHouse(SqlSessionTemplate sqlSession, int houseNo) {
+		return sqlSession.selectOne("houseMapper.selectUpdateHouse", houseNo);
+	}
+	
+	// 매물 수정하기
+	public int updateHouse(SqlSessionTemplate sqlSession, House house) {
+		return sqlSession.update("houseMapper.updateHouse", house);
+	}
+	
+	// 매물 이미지 삭제
+	public int deleteHouseImg(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.delete("houseMapper.deleteHouseImg", map);
+	}
+	
+	// 매물 정보 삭제
+	public int deleteHouse(SqlSessionTemplate sqlSession, int houseNo) {
+		return sqlSession.update("houseMapper.deleteHouse", houseNo);
+	}
+	
 /**
 * 
 */

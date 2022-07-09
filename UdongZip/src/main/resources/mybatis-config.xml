@@ -28,7 +28,18 @@
 		<mapper resource="mappers/agent-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/house-mapper.xml"/>
+		<mapper resource="mappers/reservation-mapper.xml"/>
 		<mapper resource="mappers/cs-mapper.xml"/>
 	</mappers>
+	
+	<!--
+	<mappers>
+		<mapper resource="mysql/agent-mapper.xml"/>
+		<mapper resource="mysql/member-mapper.xml"/>
+		<mapper resource="mysql/house-mapper.xml"/>
+		<mapper resource="mysql/reservation-mapper.xml"/>
+		<mapper resource="mysql/cs-mapper.xml"/>
+	</mappers>
+	-->
 
 </configuration>

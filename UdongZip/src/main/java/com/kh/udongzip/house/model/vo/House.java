@@ -55,5 +55,7 @@ public class House {
 	
 	// HOUSE 테이블에 없는 필드
 	private String agentName;		  // 등록 업체명
+	private String line;			  // 지하철 노선 정보
+	private String station;           // 지하철 역 정보
 	
 }

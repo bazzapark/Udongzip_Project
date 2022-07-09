@@ -1,10 +1,12 @@
     
     	var listCount; // 전체 리스트의 수
-        var listLimit = 5; // 한 페이지에 보여줄 리스트 수
+        var listLimit = 10; // 한 페이지에 보여줄 리스트 수
         var pageLimit = 5; // 페이징바에 보여줄 페이지의 수
         var list;
      
      function paging(listCount, listLimit, pageLimit, currentPage) {
+     
+     	 $(".list-amount").text("총 " + listCount + "건");
          
          // 현재 페이징바 비우기
          $(".page_nation").text("");
@@ -79,13 +81,13 @@
              
          });
          
-     }
+     };
         
         // 리스트 출력용 함수
         function displayList(currentPage, listLimit, list) {
             
             // 테이블에 현재 보여주는 리스트 지우기
-            $("#house-list tbody").text("");
+            $("#reservation-list tbody").text("");
             
             // 전달 받은 변수 숫자로 변환
             currentPage = Number(currentPage);
@@ -104,54 +106,135 @@
             for(var i = startIndex; i < endIndex; i++) {
                 
                 listStr += "<tr>"
-                         + "<td class='houseNo'>" + list[i].houseNo + "</td>"
-                         + "<td><img class='house-thumbnail' src='" + list[i].thumbnail + "'></td>"
-                         + "<td>" + list[i].address1 + "</td>"
-                         + "<td>" + list[i].title + "</td>"
-                         + "<td>" + list[i].regDate + "</td>";
+                         + "<td class='reservationNo'>" + list[i].reservationNo + "</td>"
+                         + "<td>" + list[i].memberName + "(" + list[i].memberId  + ")" + "</td>"
+                         + "<td>" + list[i].houseNo + "</td>"
+                         + "<td>" + list[i].content + "</td>"
+                         + "<td>" + list[i].reservationDate + " " + list[i].reservationTime + "</td>"
+                         + "<td>" + list[i].deposit + "</td>";
                          
-                if(list[i].salesStatus == "Y") {
+                if(list[i].result == "방문 대기") {
                     
                     listStr += "<td class='not-click'>"
                              + "<select>"
-                             + "<option value='Y' selected>계약 가능</option>"
-                             + "<option value='N'>계약 불가</option>"
+                             + "<option value='방문 대기' selected>방문 대기</option>"
+                             + "<option value='방문 완료'>방문 완료</option>"
+                             + "<option value='예약 취소'>예약 취소</option>"
+                             + "<option value='미방문'>미방문</option>"
                              + "</select>"
                              + "</td>"
                              + "</tr>";
                     
                 } else {
-                    
-                    listStr += "<td class='not-click'>"
-                          + "<select>"
-                          + "<option value='Y'>계약 가능</option>"
-                          + "<option value='N' selected>계약 불가</option>"
-                          + "</select>"
-                          + "</td>"
-                          + "</tr>";
-                    
+                
+                	listStr += "<td>" + list[i].result + "</td>"
+                	         + "</tr>"
+                
                 }
                 
             }
             
-            $("#house-list tbody").append(listStr);
+            $("#reservation-list tbody").append(listStr);
             
         }
         
-      	$(document).on("click", "#house-list tbody tr td:not(.not-click)", function() {
-		    
-		    $("#update-form").find("input").val($(this).siblings(".houseNo").text());
-		    
-		    $("#update-form").submit();
-		    
-		});
-		
-		$(function() {
-		
-			$(".enroll-btn").on("click", function() {
-				
-				location.href="enrollForm.ho";
-				
-			})
-		
-		})
+        $(function() {
+        	
+        	$("#filter-select").on("change", function() {
+        	
+	        	if($(this).val() == '전체') {
+	        	
+	        		listCount = list.length;
+	        		
+	        		if(listCount > 0) {
+	                	
+	                	displayList(1, listLimit, list);
+		                
+		                paging(listCount, listLimit, pageLimit, 1);
+	                	
+	                } else {
+	                	
+	                	$("#reservation-list tbody").text("");
+	                	
+	                	var noList = "<tr id='no-list'>"
+	                			   + "<td colspan='6' class='not-click'>"
+	                			   + "조회된 내역이 없습니다."
+	                			   + "<td>"
+	                			   + "</tr>";
+	                			   
+	                	$("#reservation-list tbody").append(noList);
+	                	
+	                }
+	        	
+	        	} else {
+	        	
+	        		var filterList = [];
+	        		
+	        		for(var i in list) {
+	        	
+	        		if(list[i].result == $(this).val()) {
+	        			
+	        			filterList.push(list[i]);
+	        			
+	        		}
+	        		
+		        	};
+		        	
+		        	listCount = filterList.length;
+		        	
+		        	if(listCount > 0) {
+			                	
+			        	displayList(1, listLimit, filterList);
+				                
+				        paging(listCount, listLimit, pageLimit, 1);
+			                	
+			         } else {
+			                	
+			         	$("#reservation-list tbody").text("");
+			                	
+			            var noList = "<tr id='no-list'>"
+			                	   + "<td colspan='6' class='not-click'>"
+			                	   + "조회된 내역이 없습니다."
+			                	   + "<td>"
+			                	   + "</tr>";
+			                			   
+			            $("#reservation-list tbody").append(noList);
+			                	
+			         }
+	        	
+	        	}
+	        	
+        	
+        	})
+        	
+        	$(document).on("click", "#reservation-list tbody tr td:not(.not-click)", function() {
+        		
+        		var resNo = $(this).siblings(".reservationNo").text();
+        		
+        		for(var i in list) {
+        		
+        			if(list[i].reservationNo == resNo) {
+        				
+        				$("#resNo").text(list[i].reservationNo);
+        				$("#resDate").text(list[i].reservationDate + " " + list[i].reservationTime);
+        				$("#resId").text(list[i].memberId);
+        				$("#resName").text(list[i].memberName);
+        				$("#resHouse").text(list[i].houseTitle);
+        				$("#houseCheck").text(list[i].houseNo);
+        				$("#resContent").text(list[i].content);
+        				$("#resDeposit").text(list[i].deposit);
+        				$("#resResult").text(list[i].result);
+        				
+        			}
+        		
+        		}
+        		
+        		$(".modal").css("display", "block");
+        	
+        	});
+        	
+        	$(".close-btn").click(function() {
+	        	$(".modal").css("display", "none");
+	        });
+        
+        })

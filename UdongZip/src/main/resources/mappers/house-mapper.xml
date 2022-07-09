@@ -37,6 +37,10 @@
 		<result column="REPORT_COUNT" property="reportCount"/>
 		<result column="SALES_STATUS" property="salesStatus"/>
 		<result column="AGENT_NAME" property="agentName" />
+		<result column="MANAGE_INFO" property="manageInfo" />
+		<result column="OPTION_INFO" property="optionInfo" />
+		<result column="LINE" property="line" />
+		<result column="STATION" property="station" />
 	</resultMap>
 	
 	<resultMap id="manageResultSet" type="manage">
@@ -176,6 +180,58 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+	
+	<!-- 매물 수정 페이지 정보 조회용 -->
+	<select id="selectUpdateHouse" parameterType="_int" resultMap="houseResultSet">
+		SELECT *
+		  FROM HOUSE H, SUBWAY S
+		 WHERE H.SUBWAY_NO = S.SUBWAY_NO
+		   AND HOUSE_NO = #{houseNo};
+	</select>
+	
+	<!-- 매물 수정 -->
+	<update id="updateHouse" parameterType="house">
+		UPDATE HOUSE
+		   SET THUMBNAIL = #{thumbnail},
+		   	   SALES_TYPE = #{salesType},
+		   	   DEPOSIT = #{deposit},
+		   	   MONTHLY_COST = #{monthlyCost},
+		   	   LOAN = #{loan},
+		   	   MANAGE_COST = #{manageCost},
+		   	   MANAGE_INFO = #{manageInfo},
+		   	   MOVEIN_DATE = #{moveinDate} ,
+		   	   BUILDING_TYPE = #{buildingType},
+		   	   SIZE_M2 = #{size_m2},
+		   	   SIZE_P = #{size_p},
+		   	   BUILDING_FLOOR = #{buildingFloor},
+		   	   FLOOR = #{floor},
+		   	   ROOM_TYPE = #{roomType},
+		   	   ROOM_COUNT = #{roomCount},
+		   	   DIRECTION = #{direction},
+		   	   SUBWAY_NO = #{subwayNo},
+		   	   PARKING = #{parking},
+		   	   OPTION_INFO = #{optionInfo},
+		   	   PET = #{pet},
+		   	   TITLE = #{title},
+		   	   DESCRIPTION = #{description}
+		 WHERE HOUSE_NO = #{houseNo}
+	</update>
+	
+	<!-- 매물 이미지 삭제 -->
+	<delete id="deleteHouseImg" parameterType="list">
+		DELETE FROM HOUSE_IMG
+		 WHERE IMG_PATH IN
+		 <foreach collection="removeList" item="img" open="(" close=")" separator=",">
+		 	#{img}
+		 </foreach>
+	</delete>
+	
+	<!-- 매물 정보 삭제 -->
+	<update id="deleteHouse" parameterType="_int">
+		UPDATE HOUSE
+		   SET STATUS = 'N'
+		 WHERE HOUSE_NO = #{houseNo}
+	</update>
 	
 	<!-- 업체회원 관련 SQL 끝 : 박민규 -->
 	

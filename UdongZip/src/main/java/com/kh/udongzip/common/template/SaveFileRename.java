@@ -31,17 +31,20 @@ public class SaveFileRename {
 					
 		// 2. 시간 형식을 문자열로 가져오기
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 3. 난수 생성
+		int random = (int)(Math.random() * 90000 + 10000);
 					
-		// 3. 확장자명 가져오기
+		// 4. 확장자명 가져오기
 		String ext = originName.substring(originName.lastIndexOf("."));
 					
-		// 4. 합치기
-		String changeName = agentNo + "_" + currentTime + ext;
+		// 5. 합치기
+		String changeName = agentNo + "_" + random + "_" + currentTime + ext;
 					
-		// 5. 업로드 하고자 하는 물리적인 경로 가져오기
+		// 6. 업로드 하고자 하는 물리적인 경로 가져오기
 		String savePath = session.getServletContext().getRealPath("/resources/images/agentDocuments/");
 					
-		// 6. 경로와 수정파일명을 합체시킨 후 저장
+		// 7. 경로와 수정파일명을 합체시킨 후 저장
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
@@ -63,7 +66,7 @@ public class SaveFileRename {
 	* @return 저장경로 + 변경된 이름
 	*
 	*/
-	public String saveHouseImg(int houseNo,
+	public String saveHouseImg(int agentNo,
 							   MultipartFile upfile,
 							   HttpSession session) {
 		
@@ -72,17 +75,20 @@ public class SaveFileRename {
 					
 		// 2. 시간 형식을 문자열로 가져오기
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 3. 난수 생성
+		int random = (int)(Math.random() * 90000 + 10000);
 					
-		// 3. 확장자명 가져오기
+		// 4. 확장자명 가져오기
 		String ext = originName.substring(originName.lastIndexOf("."));
 					
-		// 4. 합치기
-		String changeName = houseNo + "_" + currentTime + ext;
+		// 5. 합치기
+		String changeName = agentNo + "_" + random + "_" + currentTime + ext;
 					
-		// 5. 업로드 하고자 하는 물리적인 경로 가져오기
+		// 6. 업로드 하고자 하는 물리적인 경로 가져오기
 		String savePath = session.getServletContext().getRealPath("/resources/images/houseImges/");
 					
-		// 6. 경로와 수정파일명을 합체시킨 후 저장
+		// 7. 경로와 수정파일명을 합체시킨 후 저장
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {

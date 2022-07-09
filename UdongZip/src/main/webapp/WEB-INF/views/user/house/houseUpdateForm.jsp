@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,12 @@
     <!-- 주소 검색 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- css -->
-    <link rel="stylesheet" href="resources/css/user/houseEnrollForm.css">
+    <link rel="stylesheet" href="resources/css/user/houseUpdateForm.css">
     <!-- js -->
-    <script type="text/javascript" src="resources/js/user/houseEnrollForm.js"></script>
+    <script type="text/javascript" src="resources/js/user/houseUpdateForm.js"></script>
 </head>
+<body>
+
 <body>
 
 	    <div id="wrap">
@@ -25,34 +28,34 @@
 
         <div id="content-area">
 
-            <h1 align="center">신규 매물 등록</h1>
+            <h1 align="center">매물 정보 수정</h1>
             <br>
 
-            <form id="house-enroll-form" action="insert.ho" method="post" enctype="multipart/form-data">
+            <form id="house-enroll-form" action="update.ho" method="post" enctype="multipart/form-data">
 
                 <h2>위치 정보</h2>
                 <hr>
 	
+				<input type="hidden" name="houseNo" value="${ house.houseNo }">
 				<input type="hidden" name="agentNo" value="${ loginUser.agentNo }">
                 <table class="info-table" style="margin-bottom: 30px;">
                     <tr>
-                        <th style="width: 200px; height: 250px;">주소</th>
+                        <th style="width: 200px; height: 250px;">
+                        	주소 <br>
+                        	<span class="info-text">* 위치 정보는 수정 불가합니다.</span>
+                        </th>
                         <td colspan="3">
                             <div class="input-group">
-                                <input type="text" id="address1" name="address1" class="input long-input" required>
-                                <label for="address1" class="input-label">도로명 주소</label>
+                                <input type="text" id="address1" name="address1" class="input long-input" value="${ house.address1 }" disabled>
                             </div>
                             <div class="input-group">
-                                <input type="text" id="address2" name="address2" class="input long-input" required>
-                                <label for="address2" class="input-label">상세 주소</label>
+                                <input type="text" id="address2" name="address2" class="input long-input" value="${ house.address2 }" disabled>
                             </div>
                             <div class="input-group">
-                                <input type="text" id="zipCode" name="zipCode" pattern="[0-9]+" maxlength="5" class="input short-input" required>
-                                <label for="zipCode" class="input-label">우편번호</label>
-                                <input type="hidden" name="lat" id="lat">
-                                <input type="hidden" name="lng" id="lng">
+                                <input type="text" id="zipCode" name="zipCode" pattern="[0-9]+" maxlength="5" class="input short-input" value="${ house.zipCode }" disabled>
+                                <input type="hidden" name="lat" value="${ house.lat }" id="lat">
+                                <input type="hidden" name="lng" value="${ house.lng }" id="lng">
                             </div>
-                            <button type="button" id="map-btn" class="button map-btn">위치 확인하기</button>
                         </td>
                     </tr>
                 </table>
@@ -67,7 +70,6 @@
                             3. 실제 위치와 우측에 지도 상의 위치가 일치하지 않는 경우 <br>
                                - 도로명 주소와 상세주소를 다시 한 번 확인해주세요. <br>
                                - 올바른 주소를 입력 했다면 고객센터로 문의해주세요. <br>
-                        </p>
                     </div>
                     <div id="map" class="real-map"></div>
                 </div>
@@ -77,29 +79,21 @@
 
                 <div id="img-area">
                     <div class="thumbnail-area">
-                        <img class="previewer-big">
-                        <input type="file" class="file-input" name="thumbnailFile" required>
+                        <img class="previewer-big" src="${ house.thumbnail }">
+                        <input type="file" class="file-input" name="thumbnailFile" value="${ house.thumbnail }">
+                        <input type="hidden" name="thumbnail" value="${ house.thumbnail }">
                         <h4 align="center">대표사진</h4>
                     </div>
                     <div class="etc-area">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
-                        <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                    	<c:forEach var="houseImg" items="${ houseImgList }" varStatus="status">
+                    		<img class="previewer-small" src="${ houseImg }">
+	                        <input type="file" class="file-input" name="reUpfile" value="${ houseImg }">
+		                    <input type="hidden" name="uploaded" value="${ houseImg }">
+                    	</c:forEach>
+                    	<c:forEach var="i" begin="0" end="${ 8 - fn:length(houseImgList) }">
+                    		<img class="previewer-small">
+	                        <input type="file" class="file-input" name="reUpfile">
+                    	</c:forEach>
                     </div>
                     <br clear="both">
                     <div class="info-text info-area">
@@ -119,22 +113,22 @@
                     <tr>
                         <th style="width: 200px; height: 50px;">계약 형태</th>
                         <td colspan="3">
-                            <input type="radio" name="salesType" value="월세" id="월세" required>
-                            <label for="월세">월세</label> &nbsp;
-                            <input type="radio" name="salesType" value="전세" id="전세">
-                            <label for="전세">전세</label>
+		                	<input type="radio" name="salesType" value="월세" id="월세" required>
+		                    <label for="월세">월세</label> &nbsp;
+		                    <input type="radio" name="salesType" value="전세" id="전세">
+		                    <label for="전세">전세</label>
                         </td>
                     </tr>
                     <tr>
                         <th style="width: 200px; height: 140px;">가격</th>
                         <td colspan="3">
                             <div class="input-group">
-                                <input type="text" id="deposit" name="deposit" pattern="[0-9]+" class="input short-input" required>
+                                <input type="text" id="deposit" name="deposit" pattern="[0-9]+" class="input short-input" value="${ house.deposit }" required>
                                 <label for="deposit" class="input-label">전세(보증)금</label> &nbsp;
                                 <span class="unit">만원</span>
                             </div>
                             <div class="input-group">
-                                <input type="text" id="monthlyCost" name="monthlyCost" pattern="[0-9]+" class="input short-input" required>
+                                <input type="text" id="monthlyCost" name="monthlyCost" pattern="[0-9]+" class="input short-input" value="${ house.monthlyCost }" required>
                                 <label for="monthlyCost" class="input-label">월세</label> &nbsp;
                                 <span class="unit">만원</span>
                             </div>
@@ -143,17 +137,17 @@
                     <tr>
                         <th style="width: 200px; height: 50px;">전세 대출</th>
                         <td colspan="3">
-                            <input type="radio" name="loan" value="가능" id="대출가능" required>
-                            <label for="대출가능">가능</label> &nbsp;
-                            <input type="radio" name="loan" value="불가" id="대출불가">
-                            <label for="대출불가">불가</label>
+		                	<input type="radio" name="loan" value="가능" id="대출가능" required>
+		                    <label for="대출가능">가능</label> &nbsp;
+		                    <input type="radio" name="loan" value="불가" id="대출불가">
+		                   	<label for="대출불가">불가</label>
                         </td>
                     </tr>
                     <tr>
                         <th style="width: 200px; height: 110px;">관리비</th>
                         <td colspan="3">
                             <div class="input-group">
-                                <input type="text" id="manageCost" name="manageCost" pattern="[0-9]+" class="input short-input" required>
+                                <input type="text" id="manageCost" name="manageCost" pattern="[0-9]+" class="input short-input" value="${ house.manageCost }" required>
                                 <label for="manageCost" class="input-label">관리비</label> &nbsp;
                                 <span class="unit">만원</span>
                             </div>
@@ -170,11 +164,19 @@
                         	<span class="info-text">* 년(4자리)/월/일</span>
                         </th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="moveinDate" name="moveinDate" class="input short-input" required>
-                            </div>
-                            <input type="checkbox" id="moveinNow">
-                            <label for="moveinNow">즉시입주 가능</label>
+                        	<div class="input-group">
+		                    	<input type="text" id="moveinDate" name="moveinDate" class="input short-input" value="${ house.moveinDate }" required>
+		                   	</div>
+                        	<c:choose>
+                        		<c:when test="${ house.moveinDate eq '즉시입주' }">
+		                            <input type="checkbox" id="moveinNow" checked>
+		                            <label for="moveinNow">즉시입주 가능</label>
+                        		</c:when>
+                        		<c:otherwise>
+		                            <input type="checkbox" id="moveinNow">
+		                            <label for="moveinNow">즉시입주 가능</label>
+                        		</c:otherwise>
+                        	</c:choose>
                         </td>
                     </tr>
                 </table>
@@ -186,7 +188,7 @@
                     <tr>
                         <th style="width: 200px; height: 50px;">건물 유형</th>
                         <td colspan="3">
-                            <input type="radio" name="buildingType" value="단독주택" id="단독주택" checked>
+                            <input type="radio" name="buildingType" value="단독주택" id="단독주택" required>
                             <label for="단독주택">단독주택</label> &nbsp;
                             <input type="radio" name="buildingType" value="다가구주택" id="다가구주택">
                             <label for="다가구주택">다가구주택</label> &nbsp;
@@ -201,11 +203,11 @@
                         </th>
                         <td>
                             <div class="input-group">
-                                <input type="text" id="size_m2" name="size_m2" pattern="[0-9.]+" class="input short-input" required>
+                                <input type="text" id="size_m2" name="size_m2" pattern="[0-9.]+" class="input short-input" value="${ house.size_m2 }" required>
                                 <label for="size_m2" class="input-label">m2</label>
                             </div>
                             <div class="input-group">
-                                <input type="text" id="size_p" name="size_p" pattern="[0-9.]+" class="input short-input" required>
+                                <input type="text" id="size_p" name="size_p" pattern="[0-9.]+" class="input short-input" value="${ house.size_p }" required>
                                 <label for="size_p" class="input-label">평</label>
                             </div>
                         </td>
@@ -214,7 +216,7 @@
                             <div class="input-group">
                                 <select name="buildingFloor" id="buildingFloor" class="input" required>
                                 	<c:forEach var="i" begin="1" end="80">
-                                    	<option value="${ i }">${ i }층</option>
+                                		<option value="${ i }">${ i }층</option>
                                     </c:forEach>
                                 </select>
                                 <label for="buildingFloor" class="input-label">건물 전체 층수</label>
@@ -225,7 +227,7 @@
                                     <option value="반지하">반지하</option>
                                     <option value="옥탑">옥탑</option>
                                     <c:forEach var="i" begin="1" end="80">
-                                    	<option value="${ i }">${ i }층</option>
+                                		<option value="${ i }">${ i }층</option>
                                     </c:forEach>
                                 </select>
                                 <label for="floor" class="input-label">매물 층수</label>
@@ -269,7 +271,6 @@
                         <td>
                             <div class="input-group">
                                 <select name="line" class="input" required>
-                                	<option>호선</option>
                                     <option value="1호선">1호선</option>
                                     <option value="2호선">2호선</option>
                                     <option value="3호선">3호선</option>
@@ -286,7 +287,7 @@
                                     <option value="신분당선">신분당선</option>
                                 </select>
                                 <select name="subwayNo" class="input" required>
-                                    <option>역 이름</option>
+                                    <option value="${ house.subwayNo }">${ house.station }</option>
                                 </select>
                             </div>
                         </td>
@@ -296,7 +297,7 @@
                         </th>
                         <td>
                         	<div class="input-group">
-                                <input type="text" id="parking" name="parking" pattern="[0-9]+" class="input" style="width: 120px;" required>
+                                <input type="text" id="parking" name="parking" pattern="[0-9]+" class="input" value="${ house.parking }" style="width: 120px;" required>
                                 <label for="parking" class="input-label">주차 가능</label> &nbsp;
                                 <span class="unit">대</span>
                             </div>
@@ -341,7 +342,7 @@
                         </th>
                         <td colspan="3">
                             <div class="input-group">
-                                <input type="text" id="title" name="title" class="input long-input" maxlength="50" required>
+                                <input type="text" id="title" name="title" class="input long-input" maxlength="50" value="${ house.title }" required>
                                 <label for="title" class="input-label">매물 제목</label>
                             </div>
                         </td>
@@ -353,15 +354,19 @@
                         </th>
                         <td colspan="3">
                             <div class="input-group">
-                                <textarea id="description" name="description" class="input long-input" maxlength="950" required></textarea>
+                                <textarea id="description" name="description" class="input long-input" maxlength="950" required>${ house.description }</textarea>
                                 <label for="description" class="input-label">매물 상세정보</label>
                             </div>
                         </td>
                     </tr>
                 </table>
 
-                <button type="submit" class="button enroll-btn">등록하기</button>
-
+				<div class="btn-area">
+                	<button type="submit" class="button enroll-btn">수정하기</button>
+					<button type="button" class="button delete-btn">삭제하기</button>
+				</div>
+				
+				<br><br>
             </form>
 
         </div>
@@ -372,12 +377,16 @@
 
 </body>
 
+	<form action="delete.ho" method="post" id="delete-form" style="display:none;">
+		<input type="hidden" name="houseNo" value="${ house.houseNo }">
+	</form>
+
 <script>
-	
+
 	$(function() {
-	
-		$("select[name=line]").on("change", function() {
 		
+		$("select[name=line]").on("change", function() {
+			
 			$.ajax({
 				url : "stationList.ho",
 				data : { line : $(this).val() },
@@ -405,8 +414,40 @@
 			
 		})
 		
+		getChecked($("input[name=salesType]"), "${ house.salesType }");
+		
+		getChecked($("input[name=loan]"), "${ house.loan }");
+		
+		getChecked($("input[name=buildingType]"), "${ house.buildingType }");
+		
+		getChecked($("input[name=pet]"), "${ house.pet }");
+		
+		getSelected($("select[name=buildingFloor]").find("option"), "${ house.buildingFloor }");
+		
+		getSelected($("select[name=floor]").find("option"), "${ house.floor }");
+		
+		getSelected($("select[name=roomType]").find("option"), "${ house.roomType }");
+		
+		getSelected($("select[name=direction]").find("option"), "${ house.direction }");
+		
+		arrChecked($("input[name=manageInfo]"), "${ house.manageInfo }");
+		
+		arrChecked($("input[name=optionInfo]"), "${ house.optionInfo }");
+		
+		$("select[name=line]").find("option").each(function() {
+			
+			var line = "${ house.line }";
+		
+			if(line.includes($(this).val())) {
+				$(this).attr("selected", true);
+				return false;
+			}
+			
+		})
+		
 	})
-	
 
 </script>
+
+</body>
 </html>

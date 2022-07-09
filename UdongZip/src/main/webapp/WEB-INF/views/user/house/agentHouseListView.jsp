@@ -70,6 +70,12 @@
 
     </div>
     
+    <form action="updateForm.ho" method="post" style="display: none;" id="update-form">
+    
+    	<input type="hidden" name="houseNo">
+    
+    </form>
+    
     <script>
 	    $(function() {
 	        

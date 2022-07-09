@@ -79,7 +79,7 @@
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	        <a class="" href="#">개인회원 가입</a>
+	        <a class="" href="enrollForm.me">개인회원 가입</a>
 	        <a class="" href="enrollForm.ag">업체회원 가입</a>
 	      </div>
 	    </div>
@@ -215,7 +215,7 @@
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">
 		            <li><a class="dropdown-item" href="updateForm.ag">정보 수정</a></li>
-		            <li><a class="dropdown-item" href="#">상담 예약 관리</a></li>
+		            <li><a class="dropdown-item" href="reservation.ag">상담 예약 관리</a></li>
 		            <li><a class="dropdown-item" href="houseListView.ho">매물 관리</a></li>
 		            <li><a class="dropdown-item" href="#">리뷰 삭제 요청</a></li>
 		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>

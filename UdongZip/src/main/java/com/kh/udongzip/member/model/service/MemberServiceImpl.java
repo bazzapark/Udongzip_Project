@@ -69,10 +69,10 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	// Member ID 중복 체크 확인
 	@Override
 	public int memberIdCheck(String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.memberIdCheck(sqlSession, memberId);
 	}
 
 }

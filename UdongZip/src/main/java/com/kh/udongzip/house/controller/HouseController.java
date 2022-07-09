@@ -11,9 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -139,7 +137,7 @@ public class HouseController {
 	*
 	*/
 	@ResponseBody
-	@RequestMapping(value="stationList.ho", produces="applicatoin/json; charset=UTF-8")
+	@RequestMapping(value="stationList.ho", produces="application/json; charset=UTF-8")
 	public String selectStationList(String line) {
 		
 		ArrayList<Subway> stations = houseService.selectStationList(line);
@@ -168,13 +166,12 @@ public class HouseController {
 	* @return 매물 목록 페이지
 	*
 	*/
-	@Validated
 	@PostMapping("insert.ho")
 	public String insertHouse(House house,
 							  MultipartFile thumbnailFile,
 							  List<MultipartFile> houseImg,
-							  @RequestParam("manageInfo") String manageInfo,
-							  @RequestParam("optionInfo") String optionInfo,
+							  @RequestParam(value="manageInfo", required=false) List<String> manageInfo,
+							  @RequestParam(value="optionInfo", required=false) List<String> optionInfo,
 							  Model model,
 							  HttpSession session) {
 		
@@ -218,6 +215,168 @@ public class HouseController {
 			}
 			
 			model.addAttribute("errorMsg", "매물 등록에 실패했습니다. 잠시 후 다시 시도해주새요.");
+			
+			return "common/error";
+			
+		}
+		
+	}
+	
+	/**
+	* 업체회원 매물 수정 페이지 이동 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param houseNo
+	* 		 수정하려는 매물의 매물번호
+	* @return 매물 정보, 관리비 전체 항목, 옵션 전체 항목, 매물 이미지 => 수정 페이지
+	*
+	*/
+	@RequestMapping(value="updateForm.ho")
+	public String houseUpdateForm(int houseNo,
+								  Model model) {
+		
+		House house = houseService.selectUpdateHouse(houseNo);
+		ArrayList<Manage> manageList = houseService.selectAllManage();
+		ArrayList<Option> optionList = houseService.selectAllOption();
+		ArrayList<String> houseImgList = houseService.selectHouseImages(houseNo);
+		
+		model.addAttribute("house", house);
+		model.addAttribute("manageList", manageList);
+		model.addAttribute("optionList", optionList);
+		model.addAttribute("houseImgList", houseImgList);
+		
+		return "user/house/houseUpdateForm";
+		
+	}
+	
+	/**
+	* 업체회원 매물 수정 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param house
+	* 		 수정하려는 매물의 정보
+	* @param manageInfo
+	* 		 관리비 항목 정보
+	* @param optionInfo
+	* 		 옵션 항목 정보
+	* @param thumbnail
+	* 	     변경된 썸네일 파일
+	* @param reUpfile
+	* 		 새로 등록된 이미지 파
+	* @param uploaded
+	*        기존에 등록되어 있던 이미지 목록
+	* @return 매물 목록 조회 페이지
+	*
+	*/
+	@PostMapping(value="update.ho")
+	public String updateHouse(House house,
+			  				@RequestParam(value="manageInfo", required=false) List<String> manageInfo,
+			  				@RequestParam(value="optionInfo", required=false) List<String> optionInfo,
+							@RequestParam(required=false) MultipartFile thumbnailFile,
+							@RequestParam(required=false) MultipartFile[] reUpfile,
+							@RequestParam(value="uploaded", required=false) List<String> uploaded,
+							HttpSession session,
+							Model model) {
+		
+		SaveFileRename saveFileRename = new SaveFileRename();
+		ArrayList<String> imgList = new ArrayList<>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String path = "/Users/bazza/Udongzip_Project/UdongZip/src/main/webapp/";
+		// String path = "C://Udongzip_Project/UdongZip/src/main/webapp/";
+		
+		house.setManageInfo(String.join(";", manageInfo));
+		house.setOptionInfo(String.join(";", optionInfo));
+		
+		if(!thumbnailFile.getOriginalFilename().equals("")) {
+			
+			new File(session.getServletContext().getRealPath(path + house.getThumbnail())).delete();
+			
+			house.setThumbnail(saveFileRename.saveHouseImg(house.getAgentNo(), thumbnailFile, session));
+			
+		}
+		
+		int result1 = houseService.updateHouse(house);
+		
+		if(result1 > 0) {
+			
+			ArrayList<String> oldImgList = houseService.selectHouseImages(house.getHouseNo());
+			ArrayList<String> removeList = new ArrayList<>();
+			
+			for(String file : oldImgList) {
+				
+				if(!uploaded.contains(file)) {
+					new File(session.getServletContext().getRealPath(path + file)).delete();
+					removeList.add(file);
+				}
+				
+			}
+				
+			for(MultipartFile img : reUpfile) {
+					
+				if(!img.getOriginalFilename().equals("")) {
+					imgList.add(saveFileRename.saveHouseImg(house.getAgentNo(), img, session));
+				}
+					
+			}
+				
+			map.put("removeList", removeList);
+			map.put("houseNo", house.getHouseNo());
+			map.put("imgList", imgList);
+			
+			int result2 = houseService.updateHouseImg(map);
+			
+			if(result2 > 0) {
+				
+				session.setAttribute("alertMsg", "매물 정보가 수정 되었습니다.");
+				
+				return "redirect:houseListView.ho";
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "매물 이미지 수정 과정에서 오류가 발생했습니다.");
+				
+				return "common/error";
+				
+			}
+		
+		} else {
+			
+			model.addAttribute("errorMsg", "매물 정보 수정에 실패했습니다.");
+			
+			return "common/error";
+			
+		}
+		
+	}
+	
+	/**
+	* 업체회원 매물 삭제 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param houseNo
+	*        삭제하려는 매물 번호
+	* @return 매물 목록 페이지
+	*
+	*/
+	@PostMapping("delete.ho")
+	public String deleteHouse(int houseNo,
+							  Model model,
+							  HttpSession session) {
+		
+		int result = houseService.deleteHouse(houseNo);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "매물이 삭제되었습니다.");
+			
+			return "redirect:houseListView.ho";
+			
+		} else {
+			
+			model.addAttribute("errorMsg", "매물을 삭제하지 못했습니다. 잠시 후 다시 시도해주세요.");
 			
 			return "common/error";
 			

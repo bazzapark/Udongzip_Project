@@ -185,7 +185,7 @@ public class AgentController {
 	}
 	
 	/**
-	* 업체회원 회원정보 메소드
+	* 업체회원 회원정보 수정 메소드
 	*
 	* @version 1.0
 	* @author 박민규
