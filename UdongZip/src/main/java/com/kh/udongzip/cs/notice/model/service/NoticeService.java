@@ -9,6 +9,7 @@ public interface NoticeService {
 	// 목록 전체 조회 : 개인/업체회원/어드민
 	ArrayList<Notice> selectNoticeList();
 	
+	
 	// 상세 조회 : 개인/업체회원/어드민
 	Notice selectNotice(int noticeNo);
 	
@@ -20,5 +21,7 @@ public interface NoticeService {
 	
 	// 삭제 : 어드민
 	int deleteNotice(int noticeNo);
+	
+	
 
 }

@@ -112,21 +112,10 @@
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">채팅 문의</a>
 		        </li>
-		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		        <li class="nav-item">
+		          <a class="nav-link" href="faq.no" id="" aria-expanded="false">
 		           	 고객 센터
 		          </a>
-		          <ul class="dropdown-menu" aria-labelledby="">
-		            <li>
-		              <a class="dropdown-item" href="#">공지사항</a>
-		            </li>
-		            <li>
-		              <a class="dropdown-item" href="#">FAQ</a>
-		            </li>
-		            <li>
-		              <a class="dropdown-item" href="#">1:1문의</a>
-		            </li>
-		          </ul>
 		        </li>
 		      </ul>
 	      </c:when>
@@ -137,21 +126,10 @@
 		        <li class="nav-item">
 		          <a class="nav-link" href="#">채팅 관리</a>
 		        </li>
-		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            고객 센터
+		        <li class="nav-item">
+		          <a class="nav-link" href="faq.no" id="" aria-expanded="false">
+		           	 고객 센터
 		          </a>
-		          <ul class="dropdown-menu" aria-labelledby="">
-		            <li>
-		              <a class="dropdown-item" href="#">공지사항</a>
-		            </li>
-		            <li>
-		              <a class="dropdown-item" href="#">FAQ</a>
-		            </li>
-		            <li>
-		              <a class="dropdown-item" href="#">1:1문의</a>
-		            </li>
-		          </ul>
 		        </li>
 		      </ul> 
 	      </c:when>

@@ -1,0 +1,166 @@
+@charset "UTF-8";
+        /* 전체 영역 */
+        #wrap{
+            /* border: 3px solid violet; */
+            margin: auto;
+            margin-top: 50px;
+            width: 1200px;
+            height: 800px; /* 나중에 삭제 */
+        }
+        /* 콘텐트 영역 */
+        #content-area{
+            /* border: 2px solid darkblue; */
+            height: 100%; /* 추가 구문 */
+            margin: auto;
+            width: 1000px;
+        }
+
+        /* 큰 제목 영역 */
+        #content-area>.Service{
+            /* border: 3px solid green; */
+            padding: 25px;
+        }
+        #content-area h1{
+            font-size: 50px;
+        }
+
+        /* 메뉴바 */
+        .navi{
+            /* border: 1px solid red; */
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        .navi li{
+            border-radius: 3px;
+            display: inline-block;
+            background: white;
+            color: #595959;
+            width: 300px;
+            height: 80px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            margin: 14px;
+        }
+        .navi li.current{
+            background: white; /* #e0e0e0; */ 
+            color: #222;
+            font-weight: bolder;
+            border-bottom: 5px solid #0057A4;
+        }
+        
+        /* 탭 내용 */
+        .navi-area .tab-content{
+            /* border: 3px solid red; */
+            display: none;
+            padding: 12px;
+            /*
+            position: relative;
+            top: 100px;
+            */
+        }
+        .tab-content.current{
+            display: inherit;
+        }
+
+        /* FAQ */
+        #tab-1>.faqq{
+            background-color: rgb(247, 245, 245); /*#dbdbe2c0;*/
+            text-align : center;
+            line-height : 30px;
+            cursor : pointer;
+            width: 80%;
+            height: 55px;
+            padding: 11px 5px 5px 5px;
+            margin: auto;
+            margin-bottom: 1px;
+            border-radius: 3px;
+        }
+        #tab-1>.faqa{
+            border : 2px solid #033d70;
+            width : 80%;
+            height : 100px;
+            margin: auto;
+            margin-top : 5px;
+            border-radius : 10px;
+            padding : 10px;
+            box-sizing : border-box;
+            display: none;
+        }
+
+        /* 1:1 문의 */
+        #tab-2{
+            background-color:rgb(247, 245, 245);
+            width:100%;
+            margin:auto;
+            margin-top: 50px;
+        }
+        #tab-2>.innerOuter {
+            border:1px solid #595959;
+            width:80%;
+            margin:auto;
+            padding:5% 10%;
+            background-color:white;
+        }
+        #enrollForm>table {width:100%;}
+        #enrollForm>table * {margin:5px;}
+        #enrollForm>.wt-btn>.btn{
+            background-color: #595959;
+            opacity: 0.8;
+            color: white;
+        }
+
+        /* 공지사항 */
+        #tab-3>#notice-area{
+            /* border: 1px solid black; */
+            width: 90%;
+            margin: auto;
+            margin-top: 80px;
+        }
+        #tab-3>#notice-area>table{
+            text-align: center;
+        }
+        #tab-3>#notice-area>table th{
+            background-color: rgb(247, 245, 245);
+            /* color: rgb(0, 0, 0); */
+        }
+        #tab-3>#notice-area>table>tbody>tr:hover{
+            cursor: pointer;
+        }
+        #tab-3>#pagingArea{
+            /* border: 1px solid darkcyan; */
+            width: fit-content;
+            margin: auto;
+            margin-top: 80px;
+        }
+        
+        /* 공지사항 상세 */
+        #tab-3>#noticeDT{
+            border: 1px solid black;
+            margin: auto;
+            width: 80%;
+            height: 600px;
+            display:none;
+        }
+        #tab-3>#noticeDT>#DTtitle{
+            height: 15%;
+            text-align: center;
+        }
+        #tab-3>#noticeDT>#DTtitle>h3{
+            padding: 25px
+        }
+        #tab-3>#noticeDT>#DTdate{
+            text-align: center;
+            margin-top: 20px;
+            color: #595959;
+        }
+        #tab-3>#noticeDT>#DTcontent{
+            height: 65%;
+            margin-top: 20px;
+        }
+        #tab-3>#noticeDT>#DTcontent>textarea{
+            background-color: rgb(247, 245, 245);
+            display: block;
+            margin: auto;
+        }
