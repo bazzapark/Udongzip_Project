@@ -132,7 +132,8 @@ public class HouseServiceImpl implements HouseService {
 	}
 	
 /**
-* 
+ * @version 1.0
+ * @author 연경흠 
 */
 
 	@Override
@@ -142,15 +143,15 @@ public class HouseServiceImpl implements HouseService {
 	}
 	
 	@Override
-	public ArrayList<House> houseFilter(Map<String, String> filter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ArrayList<House> houseList() {
 
+		return houseDao.houseList(sqlSession);
+	}
+	
 	@Override
-	public ArrayList<House> houseSearch(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<House> houseFilter(Map<String, Object> map) {
+		
+		return houseDao.houseFilter(sqlSession, map);
 	}
 
 	@Override

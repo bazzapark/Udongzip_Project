@@ -82,12 +82,23 @@ public class HouseDao {
 	}
 	
 /**
-* 
+ * @version 1.0
+ * @author 연경흠
 */
 	
 	// 지도 / 매물 전체조회
 	public ArrayList<House> houseMapList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("houseMapper.houseMapList");
+	}
+	
+	// 지도 / 매물 전체조회
+	public ArrayList<House> houseList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("houseMapper.houseList");
+	}
+	
+	// 검색 필터 조회
+	public ArrayList<House> houseFilter(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		return (ArrayList)sqlSession.selectList("houseMapper.houseFilter", map);
 	}
 	
 /**

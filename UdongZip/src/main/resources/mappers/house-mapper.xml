@@ -236,12 +236,59 @@
 	<!-- 업체회원 관련 SQL 끝 : 박민규 -->
 	
 	<!-- 지도 / 매물 조회용 -->
-	<select id="houseMapList" resultMap="houseResultSet">
-  		SELECT HOUSE_NO, TITLE, THUMBNAIL, SALES_TYPE, ADDRESS1, ADDRESS2, BUILDING_TYPE
-     		 , BUILDING_FLOOR, MONTHLY_COST, MANAGE_COST, FLOOR, ROOM_COUNT, LAT, LNG, DEPOSIT      
+	<select id="houseList" resultMap="houseResultSet">
+  		SELECT *      
 		FROM HOUSE
 		WHERE STATUS = 'Y'
-		AND SALES_STATUS = 'Y' 
+		AND SALES_STATUS = 'Y'
+	</select>
+	
+	<!-- 지도 / 매물 조회용 -->
+	<select id="houseMapList" resultMap="houseResultSet">
+  		SELECT *      
+		FROM HOUSE
+		WHERE STATUS = 'Y'
+		AND SALES_STATUS = 'Y'
+	</select>
+	
+	<!-- 지도 / 매물 조회용 -->
+	<select id="houseFilter" parameterType="hashmap" resultMap="houseResultSet">
+  		SELECT *      
+		FROM HOUSE
+		WHERE STATUS = 'Y'
+		AND SALES_STATUS = 'Y'
+		<if test="salesType != null">
+		AND SALES_TYPE IN
+			<foreach item="type" collection="salesType" open="(" separator="," close=")">
+				#{type}
+			</foreach>
+		</if>
+		<if test="buildingType != null">	
+		AND BUILDING_TYPE IN
+			<foreach item="buildingType" collection="buildingType" open="(" separator="," close=")">
+				#{buildingType}
+			</foreach>
+		</if>
+		<if test="floor != null">
+			AND FLOOR IN
+			<foreach item="floor" collection="floor" open="(" separator="," close=")">
+			<choose>
+				<when test="floor == '옥탑' or floor == '반지하'">
+					#{floor}
+				</when>
+				<otherwise>
+					
+					'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'
+				</otherwise>
+			</choose>
+			</foreach>
+		</if>
+		<if test="roomType != null">	
+		AND ROOM_TYPE IN
+			<foreach item="roomType" collection="roomType" open="(" separator="," close=")">
+				#{roomType}
+			</foreach>			
+		</if> 
   	</select>
 	
 	<!-- 매물 상세 조회 -->

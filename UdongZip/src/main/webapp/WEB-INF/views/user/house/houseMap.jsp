@@ -43,7 +43,7 @@
 					<table>
 						<tr>
 							<td><input type="text" id="address_kakao" name="address" size="100%" readonly></td>
-							<td><button style="width:50px" type="submit" id="searchBtn">검색</button></td>
+							<td><button style="width:40px" type="button" id="searchBtn" align="center">검색</button></td>
 						</tr>
 					</table>
 				</div>
@@ -52,15 +52,15 @@
 				<div id="search-detail">
 					<div id="search-q"style="font-size: 5px; margin:3px;">조건검색 상세조건을 선택해주세요</div>
 					<div id="search-a">
-						<form action="list.ma" method="get">
-						<table border="1" align="center">
+						<form action="" method="get">
+						<table border="1" align="center" id="search">
 							<tr>
 								<th>계 약 유 형</th>
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="a" value="월세"> 월 세</label>
-									<label><input type="checkbox" name="a" value="전세"> 전 세</label>
+									<label><input type="checkbox" name="salesType" value="월세"> 월 세</label>
+									<label><input type="checkbox" name="salesType" value="전세"> 전 세</label>
 								</td>
 							</tr>
 							<tr>
@@ -68,9 +68,9 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="b" value="다가구주택"> 다 가 구 주 택</label>
-									<label><input type="checkbox" name="b" value="단독주택"> 단 독 주 택</label>
-									<label><input type="checkbox" name="b" value="오피스텔"> 오 피 스 텔</label>
+									<label><input type="checkbox" name="buildingType" value="다가구주택"> 다 가 구 주 택</label>
+									<label><input type="checkbox" name="buildingType" value="단독주택"> 단 독 주 택</label>
+									<label><input type="checkbox" name="buildingType" value="오피스텔"> 오 피 스 텔</label>
 								</td>
 							</tr>
 							<tr>
@@ -78,10 +78,9 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="c" value="1층 ~ 5층"> 1 층 ~ 5 층</label>
-									<label><input type="checkbox" name="c" value="6층이상"> 6 층 이 상</label>
-									<label><input type="checkbox" name="c" value="옥탑"> 옥 탑</label>
-									<label><input type="checkbox" name="c" value="반지하"> 반 지 하</label>
+									<label><input type="checkbox" name="floor" value="지상"> 지 상</label>
+									<label><input type="checkbox" name="floor" value="옥탑"> 옥 탑</label>
+									<label><input type="checkbox" name="floor" value="반지하"> 반 지 하</label>
 								</td>
 							</tr>
 							<tr>
@@ -89,33 +88,25 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="d" value="오픈형"> 오 픈 형</label>
-									<label><input type="checkbox" name="d" value="분리형"> 분 리 형</label>
-									<label><input type="checkbox" name="d" value="복층형"> 복 층 형</label>
-								</td>
-							</tr>
-							<tr>
-								<th>평 수</th>
-							</tr>
-							<tr>
-								<td>
-									<label><input type="checkbox" name="e" value="5평이하"> 5 평 이 하</label>
-									<label><input type="checkbox" name="e" value="6평 ~ 10평"> 6 평 ~ 1 0 평</label>
-									<label><input type="checkbox" name="e" value="11평이상"> 1 1 평 이 상</label>
+									<label><input type="checkbox" name="roomType" value="오픈형 원룸"> 오 픈 형 원 룸</label>
+									<label><input type="checkbox" name="roomType" value="분리형 원룸"> 분 리 형 원 룸</label>
+									<label><input type="checkbox" name="roomType" value="복층형 원룸"> 복 층 형 원 룸</label>
+									<label><input type="checkbox" name="roomType" value="투룸"> 투 룸</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<button type="reset">초기화</button>
-									<button type="submit">매물보기</button>
+									<button type="reset" id="resetBtn">초기화</button>
+									<button type="button" id="checkBtn">매물보기</button>
 								</td>
 							</tr>
 						</table>
 						</form>
 					</div>
 				</div>
-				<div id="select-house" style="overflow:auto; height:600px;">
-					<table id="result" border="1"></table>
+				<div id="select-house" style="overflow:auto; height:630px;">
+					<table id="result" border="1">
+					</table>
 					<br>
 				</div>
 				
@@ -131,193 +122,76 @@
 	
 	
 	<script>
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    mapOption = {
-		        center: new kakao.maps.LatLng(37.56567098274831, 126.97895819773866), // 지도의 중심좌표
-		        level: 8, // 지도의 확대 레벨
-		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-		    }; 
-		// 지도를 생성한다 
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
-		
-		// 지도에 확대 축소 컨트롤을 생성한다
-		var zoomControl = new kakao.maps.ZoomControl();	
-
-		// 마커 클러스터러를 생성합니다 
-	    var clusterer = new kakao.maps.MarkerClusterer({
-	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-	        minLevel: 5 // 클러스터 할 최소 지도 레벨 
-	        
-	    });
-		
-	    $('#searchBtn').click(function(){
-	    	
-	    	// 주소-좌표 변환 객체를 생성합니다
-	        var geocoder = new kakao.maps.services.Geocoder();
-	    	
-	     // 주소로 좌표를 검색합니다
-			geocoder.addressSearch($('#address_kakao').val(), function(result, status) {
-		
-		    // 정상적으로 검색이 완료됐으면 
-		     if (status === kakao.maps.services.Status.OK) {
-		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		        
-		        // 추출한 좌표를 통해 도로명 주소 추출
-		        let lat = result[0].y;
-		        let lng = result[0].x;
-		        getAddr(lat,lng);
-		        function getAddr(lat,lng){
-		            let geocoder = new kakao.maps.services.Geocoder();
 	
-		            let coord = new kakao.maps.LatLng(lat, lng);
-		            let callback = function(result, status) {
-		                if (status === kakao.maps.services.Status.OK) {
-		                	// 추출한 도로명 주소를 해당 input의 value값으로 적용
-		                    $('#address_kakao').val(result[0].road_address.address_name);
-		                    level: 8
-		                }
-		            }
-		            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-		        }
-	        
-			     	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
-		    	} 
-			});  
-		});
-	 	
-		var markers = [];
 		
 		$(function() {
-		
+			
 			$.ajax({
 				url : "list.lo",
-				//dataType : "json",
 				success : function(data) {
 					
-					//console.log(data);
+					// console.log(data);
+					test01(data);
 					
-					
-					
-					dataStr = "";
-					
-					
-					for(var i = 0; i < data.length; i++) {
-						
-						if(data[i].salesType === "월세") {
-							dataStr += "<tr>"
-									 +		"<td><img src='" + data[i].thumbnail + "'style='width:150px; height:150px;'><td>"
-									 + 		"<td><div style='width:100%;'><b>" + data[i].salesType +" "+ data[i].monthlyCost + "만원</b></div><div>" 
-									 + 											 data[i].address1 + "</div><div>"
-									 +											 data[i].buildingType + " | " + data[i].roomCount + "층 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원</div>"
-									 + "</tr>" 
-						}
-						else {
-							dataStr += "<tr>"
-								 +		"<td><img src='" + data[i].thumbnail + "'style='width:150px; height:150px;'><td>"
-								 + 		"<td><div style='width:100%;'><b>" + data[i].salesType +" "+ data[i].deposit + "만원</b></div><div>" 
-								 + 											 data[i].address1 + "</div><div>"
-								 +											 data[i].buildingType + " | " + data[i].roomCount + "층 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원</div>"
-								 + "</tr>" 
-								 
-						}
-						
-						
-						$("#result").html(dataStr);
-						
-						if(data[i].buildingType === "오피스텔") {		 
-						var markerImageUrl = 'resources/images/housemapicons/skyscraper.png', 
-						    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
-						    markerImageOptions = { 
-						        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
-						    };
-						}
-						else if(data[i].buildingType === "빌라") {
-							var markerImageUrl = 'resources/images/housemapicons/house.png', 
-						    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
-						    markerImageOptions = { 
-						        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
-						    };
-							
-						}
-						else if(data[i].buildingType === "다가구주택") {
-							var markerImageUrl = 'resources/images/housemapicons/house.png', 
-						    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
-						    markerImageOptions = { 
-						        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
-						    };
-							
-						}
-						
-						
-						
-						// 마커 이미지를 생성한다
-						var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize, markerImageOptions);		 
-								 
-						// 지도에 마커를 생성하고 표시한다
-						var marker = new kakao.maps.Marker({
-						    position: new kakao.maps.LatLng(data[i].lat, data[i].lng), // 마커의 좌표
-						    image : markerImage,
-						    map: map // 마커를 표시할 지도 객체
-						});
-						
-						// 마커 위에 표시할 인포윈도우를 생성한다
-						var infowindow = new kakao.maps.InfoWindow({
-						    content : data[i].title // 인포윈도우에 표시할 내용
-						});
-
-						
-						markers.push(marker);
-						
-						 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-					    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-					    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-					    
-					    // 마커에 클릭 이벤트를 등록한다 (우클릭 : rightclick)
-						kakao.maps.event.addListener(marker, 'click', function() {
-							
-							// location.href = "detail.ma?pno=" + ${houseNo};
-						});
-					    
-					} 
-					
-					 // 클러스터러에 마커들을 추가합니다
-			        clusterer.addMarkers(markers);
-					
-					// 지도의 우측에 확대 축소 컨트롤을 추가한다
-					map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
-					
-					map.setMaxLevel(8);
-					
-					 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-			        function makeOverListener(map, marker, infowindow) {
-			            return function() {
-			                infowindow.open(map, marker);
-			            };
-			        }
-
-			        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-			        function makeOutListener(infowindow) {
-			            return function() {
-			                infowindow.close();
-			            };
-			        }
-					
-			    
-			        
 				},
 				error : function() {
-					console.log("실패");
+					console.log("ajax 통신 실패!");
 				}
 			});
+		
 		});
 		
-
     	
+    	$("#checkBtn").on("click", function() {	
+    		
+    		getList();
+    	
+    	});
+    	
+    	function getCheckList(condition) {
+    		var temp = document.getElementsByName(condition);
 
+    		var arr = [];
+    		var count = 0;
+    		for(var i = 0; i < temp.length; i++) {
+    			
+    			if(temp[i].checked) {
+    				arr[count++] = temp[i].value;
+    			}
+    		}
+    		return arr;
+    	}
+    	
+    	function getList() {
+    		
+    		var salesType = getCheckList("salesType");
+    		var buildingType = getCheckList("buildingType");
+    		var floor = getCheckList("floor");    		
+    		var roomType = getCheckList("roomType");
+    		
+    		$.ajax({
+    			url : "search.ma",
+    			data : {
+    				salesType : salesType,
+    				buildingType : buildingType,
+    				floor : floor,
+    				roomType : roomType
+    			},
+    			success : function(data) {
+    				// console.log(data);
+    				$("#result").empty();
+    				test01(data);
+    			},
+    			error : function() {
+    				console.log("ajax 통신 실패!");
+    			}
+    		});
+    		
+    		
+    		
+    	};
+    	
+		
 		// slide
 
 		$(function() {
@@ -325,11 +199,11 @@
 				
 				var $p = $(this).next();
 
-				console.log($p.css("display"));
 
 				if($p.css("display") == "none") {
 					
 					$(this).siblings("div").slideUp(1000);
+					
 
 					$p.slideDown(0);
 				}
@@ -352,15 +226,249 @@
 		    });
 		}
 		
-		// 상세보기 페이지로 이동
-		$(function() {
+	
+		function test01(data) {
 			
-			$("#result").click(function() {
-
-				location.href = "detail.ma?pno=" + $(this).children().children().eq(1).text();  
-				
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(37.5251992697347, 126.897104767379), // 지도의 중심좌표
+		        level: 8, // 지도의 확대 레벨
+		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
+			// 지도를 생성한다 
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			// 지도에 확대 축소 컨트롤을 생성한다
+			var zoomControl = new kakao.maps.ZoomControl();	
+	
+			// 마커 클러스터러를 생성합니다 
+		    var clusterer = new kakao.maps.MarkerClusterer({
+		        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+		        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+		        minLevel: 5, // 클러스터 할 최소 지도 레벨 
+		        calculator: [10, 20, 30, 40, 50, 60], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
+		        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
+	                width : '30px', height : '30px',
+	                background: 'green',
+	                borderRadius: '15px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '31px'
+	            },
+	            {
+	                width : '40px', height : '40px',
+	                background: 'yellow',
+	                borderRadius: '20px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '41px'
+	            },
+	            {
+	                width : '50px', height : '50px',
+	                background: 'orange',
+	                borderRadius: '25px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '51px'
+	            },
+	            {
+	                width : '60px', height : '60px',
+	                background: 'red',
+	                borderRadius: '30px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '61px'
+	            }
+	           
+	        ]
+		    
+		    
+		    
+		    });
+			
+		    $('#searchBtn').click(function(){
+		    	
+		    	// 주소-좌표 변환 객체를 생성합니다
+		        var geocoder = new kakao.maps.services.Geocoder();
+		    	
+		     // 주소로 좌표를 검색합니다
+				geocoder.addressSearch($('#address_kakao').val(), function(result, status) {
+			
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        
+			        // 추출한 좌표를 통해 도로명 주소 추출
+			        let lat = result[0].y;
+			        let lng = result[0].x;
+			        getAddr(lat,lng);
+			        function getAddr(lat,lng){
+			            let geocoder = new kakao.maps.services.Geocoder();
+		
+			            let coord = new kakao.maps.LatLng(lat, lng);
+			            let callback = function(result, status) {
+			                if (status === kakao.maps.services.Status.OK) {
+			                	// 추출한 도로명 주소를 해당 input의 value값으로 적용
+			                    $('#address_kakao').val(result[0].road_address.address_name);
+			                    level: 8
+			                }
+			            }
+			            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+			        }
+		        
+				     	// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+			    	} 
+				});  
 			});
-		});
+		 	
+			var markers = [];
+			
+			var dataStr = "";
+			
+			for(var i = 0; i < data.length; i++) {
+						 
+				if(data[i].salesType === "월세") {
+					dataStr += "<tr>"
+							 +      "<td style='display: none;' id='houseNo'>" + data[i].houseNo + "</td>"
+							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
+							 + 		"<td><div style='width:100%; font-size :16px;'><b>★" + data[i].salesType +"★ "+ data[i].monthlyCost + "만원</b><br></div><div style='width:100%; font-size :13px;'>" 
+							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :13px;'>"
+							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
+							 + "</tr>" 
+				}
+				else {
+					dataStr += "<tr>"
+							 +      "<td style='display: none;' id='houseNo'>" + data[i].houseNo + "</td>"
+							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
+							 + 		"<td><div style='width:100%; font-size :15px;'><b>★" + data[i].salesType +"★ "+ data[i].deposit + "만원</b></div><div style='width:100%; font-size :13px;'>" 
+							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :13px;'>"
+							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
+							 + "</tr>" 
+						 
+				}
+				
+				
+				$("#result").html(dataStr);
+				
+				// list:hover
+				$(document).ready(function () {
+					    $('#result').html(dataStr).hover(function(){
+							$(this).css('cursor','pointer');    
+						}, function() {
+							$(this).css('cursor','default');    
+						});
+				});
+				
+				if(data[i].buildingType === "오피스텔") {		 
+				
+					var markerImageUrl = 'resources/images/housemapicons/opi.png', 
+				    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
+				    markerImageOptions = { 
+				        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
+				    };
+				}
+				else if(data[i].buildingType === "다가구주택") {		 
+					
+					var markerImageUrl = 'resources/images/housemapicons/da.png', 
+				    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
+				    markerImageOptions = { 
+				        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
+				    };
+				}
+				else {
+					
+					var markerImageUrl = 'resources/images/housemapicons/dan.png', 
+				    markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
+				    markerImageOptions = { 
+				        offset : new kakao.maps.Point(20, 42)// 마커 좌표에 일치시킬 이미지 안의 좌표
+				    };
+					
+				}
+				
+				// 마커 이미지를 생성한다
+				var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize, markerImageOptions);		 
+						 
+				// 지도에 마커를 생성하고 표시한다
+				var marker = new kakao.maps.Marker({
+				    position: new kakao.maps.LatLng(data[i].lat, data[i].lng), // 마커의 좌표
+				    image : markerImage,
+				    map : map, // 마커를 표시할 지도 객체
+				    title : data[i].houseNo
+				});
+				
+				// 마커 위에 표시할 인포윈도우를 생성한다
+				var infowindow = new kakao.maps.InfoWindow({
+				    content : '<div style="width:400px; padding:5px;">' + data[i].title + '</div>' // 인포윈도우에 표시할 내용
+				});
+				
+				markers.push(marker);
+				
+				 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+			   
+			    // 마커에 클릭 이벤트를 등록한다 (우클릭 : rightclick)
+				kakao.maps.event.addListener(marker, 'click', function() {
+					
+					window.open("/udongzip/detail.ho?hno=" + this.Gb);
+					
+				});
+			    
+			} 
+			
+			 // 클러스터러에 마커들을 추가합니다
+	        clusterer.addMarkers(markers);
+			
+			// 지도의 우측에 확대 축소 컨트롤을 추가한다
+			map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
+			
+			map.setMaxLevel(8);
+			
+			 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	        function makeOverListener(map, marker, infowindow) {
+	            return function() {
+	                infowindow.open(map, marker);
+	            };
+	        }
+	
+	        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	        function makeOutListener(infowindow) {
+	            return function() {
+	                infowindow.close();
+	            };
+	        }
+			
+	        $(function() {
+	        	
+		         $("#result").on("click", "tr", function() {
+		            
+		            var hno = Number($(this).children().eq(0).text());
+		            var form = document.createElement("form");
+		            var input = document.createElement("input");
+		            
+		            
+		            form.action = "detail.ho";
+		            form.method = "GET";
+		            form.target = "_blank";
+		            input.name = "hno";
+		            input.value = hno;
+		            form.appendChild(input);
+		            form.style.display ="none";
+		            document.body.appendChild(form);
+		            form.submit();
+		            
+		         })
+		      });
+		}
+		
+		
 		
 		
 		

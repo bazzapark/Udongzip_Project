@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -384,21 +385,68 @@ public class HouseController {
 		
 	}
 	
+	/**
+	 * 매물 보기 (지도/매물) 조회 메소드
+	 * @version 1.0
+	 * @author 연경흠
+	 * @return 매물 보기 페이지
+	 */
 	@RequestMapping(value="list.ma")
-	public String selectList(Model model) {
+	public String selectMapList(Model model) {
 		
-		ArrayList<House> list = houseService.houseMapList();
+		ArrayList<House> list = houseService.houseList();
 		
 		model.addAttribute("list", list);
 		
 		return "user/house/houseMap";
 	}
 	
+	/**
+	 * 매물 보기 (매물/지도) 조회 메소드(ajax)
+	 * @version 1.0
+	 * @author 연경흠 
+	 * @return 전체 조회된 house 값 조회
+	 */
+	
 	@ResponseBody
 	@RequestMapping(value="list.lo", produces="application/json; charset=UTF-8")
 	public String selectMap() {
 		
 		ArrayList<House> list = houseService.houseMapList();
+		
+		return new Gson().toJson(list);
+	}
+	
+	
+	/**
+	 * 조건 검색 필터 조회 메소드
+	 * @version 1.0
+	 * @author 연경흠 
+	 * @param salesType 계약유형  
+	 * @param buildingType 건물유형
+	 * @param floor 건물층수
+	 * @param roomType 방유형
+	 * @return 필터 조건식에 의해 조회된 값들 조회
+	 */
+	@ResponseBody
+	@RequestMapping(value="search.ma", produces="application/json; charset=UTF-8")
+	public String houseFilter(@RequestParam(value="salesType[]", required=false) ArrayList<String> salesType,
+							@RequestParam(value="buildingType[]", required=false) ArrayList<String> buildingType,
+							@RequestParam(value="floor[]", required=false) ArrayList<String> floor,
+							@RequestParam(value="roomType[]", required=false) ArrayList<String> roomType) {
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("salesType", salesType);
+		map.put("buildingType", buildingType);
+		map.put("floor", floor);
+		map.put("roomType", roomType);
+		
+		ArrayList<House> list = houseService.houseFilter(map);
+		
+		// System.out.println(map);
+		// System.out.println(list.size());
+		
 		
 		return new Gson().toJson(list);
 	}

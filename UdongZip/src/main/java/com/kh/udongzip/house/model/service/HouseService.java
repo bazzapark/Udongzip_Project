@@ -12,15 +12,19 @@ import com.kh.udongzip.house.model.vo.Subway;
 
 public interface HouseService {
 	
+	/**
+	* @version 1.0
+	* @author 연경흠
+	*/
+	
 	// 전체 매물 조회 (지도, 리스트) : 개인회원
 	// status, saleStatus 둘 다 검사 (쿼리문에서)
 	ArrayList<House> houseMapList();
 	
-	// 필터 : 개인회원
-	ArrayList<House> houseFilter(Map<String, String> filter);
+	ArrayList<House> houseList();
 	
-	// 검색(주소) : 개인회원
-	ArrayList<House> houseSearch(String keyword);
+	// 필터 : 개인회원
+	ArrayList<House> houseFilter(Map<String, Object> map);
 	
 	// 매물 신고 : 개인회원
 	int updateReportCount(int houseNo);
