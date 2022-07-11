@@ -32,7 +32,7 @@
                 <!-- 글 삭제 / 글 작성 -->
                 <form id="" action="" method="">
                     <div class="admin-btn">
-                        <a class="btn btn-secondary" style="float:right;" href="">글쓰기</a>
+                        <a class="btn btn-secondary" style="float:right;" href="enrollForm.no">글쓰기</a>
                         <button type="submit" class="btn btn-outline-danger delete-btn">삭제하기</button>
                         <br><br>
                     </div>
@@ -49,44 +49,20 @@
                         </tr>
                         </thead>
                         <tbody align="center">
-                        <tr>
-                            <td><input type="checkbox" class="each_check"></td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>2022-06-02</td>
-                            <td>Y</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="each_check"></td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>2022-06-02</td>
-                            <td>N</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="each_check"></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>2022-06-02</td>
-                            <td>Y</td>
-                        </tr>
+	                        <c:forEach var="n" items="${ list }">
+		                        <tr>
+		                            <td><input type="checkbox" class="each_check"></td>
+		                            <td class="nno">${ n.noticeNo }</td>
+		                            <td>${ n.title }</td>
+		                            <td>${ n.createDate }</td>
+		                            <td>${ n.status }</td>
+		                        </tr>
+	               			</c:forEach>
                         </tbody>
                     </table>
                 </form>
             </div>   
 
-            <!-- 페이징바 -->
-            <div id="pagingArea">
-                <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </div>
 
             <br><br>
 
@@ -94,9 +70,9 @@
             <script>
                 $(function() {
     
-                    $(".table-list>tr").click(function() {
+                    $("#notice-list>tbody>tr").click(function() {
     
-                        location.href = "/" + $(this).children().eq(0).text();
+                        location.href = "detail.no?nno=" + $(this).children(".nno").eq(0).text();
                     });
                 });
 

@@ -30,10 +30,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectNotice(sqlSession, noticeNo);
 	}
 
+	// 공지사항 작성 
 	@Override
 	public int insertNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+		return noticeDao.insertNotice(sqlSession, notice);
 	}
 
 	@Override

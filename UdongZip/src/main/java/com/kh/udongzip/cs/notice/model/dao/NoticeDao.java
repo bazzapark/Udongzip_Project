@@ -20,5 +20,10 @@ public class NoticeDao {
 	public Notice selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
 		return sqlSession.selectOne("csMapper.selectNotice", noticeNo);
 	}
+	
+	// 공지사항 작성
+	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
+		return sqlSession.insert("csMapper.insertNotice", notice);
+	}
 
 }

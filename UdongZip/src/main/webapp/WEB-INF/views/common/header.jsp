@@ -162,7 +162,7 @@
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="">
 		            <li>
-		              <a class="dropdown-item" href="#">공지사항</a>
+		              <a class="dropdown-item" href="adminlist.no">공지사항</a>
 		            </li>
 		            <li>
 		              <a class="dropdown-item" href="#">FAQ</a>
