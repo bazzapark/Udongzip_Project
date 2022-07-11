@@ -444,14 +444,19 @@ public class HouseController {
 		
 		ArrayList<House> list = houseService.houseFilter(map);
 		
-		// System.out.println(map);
-		// System.out.println(list.size());
-		
 		
 		return new Gson().toJson(list);
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="search.lo", produces="application/json; charset=UTF-8")
+	public String searchMap(String address1) {
+		
+		ArrayList<House> list = houseService.searchMap(address1);
+		
+		return new Gson().toJson(list);
+		
+	}
 	/**
 	 * 매물 상세 조회 메소드
 	 * 조회수 증가,

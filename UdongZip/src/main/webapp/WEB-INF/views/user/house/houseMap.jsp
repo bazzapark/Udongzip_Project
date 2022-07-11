@@ -15,6 +15,7 @@
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
+
 <body>
 	
 	
@@ -42,18 +43,18 @@
 				<div id="search">
 					<table>
 						<tr>
-							<td><input type="text" id="address_kakao" name="address" size="100%" readonly></td>
-							<td><button style="width:40px" type="button" id="searchBtn" align="center">검색</button></td>
+							<td><input type="text" class="form-control" id="search-input" name="address1" size="100%" placeholder="주소를 입력해주세요."></td>
+							<td><button style="width:60px" type="button" id="searchBtn" align="center" class="btn btn-primary"><img src="resources/images/search-btn.png" style="width:30px; height:30px;"></button></td>
 						</tr>
 					</table>
 				</div>
 				
 				<!-- 조건 검색 -->
 				<div id="search-detail">
-					<div id="search-q"style="font-size: 5px; margin:3px;">조건검색 상세조건을 선택해주세요</div>
+					<div id="search-q"style="font-size: 15px; margin:3px;">상세보기<img src="resources/images/angle.png" id="angle" style="width:20px; height:20px;"></div>
 					<div id="search-a">
 						<form action="" method="get">
-						<table border="1" align="center" id="search">
+						<table align="center" id="search">
 							<tr>
 								<th>계 약 유 형</th>
 							</tr>
@@ -91,13 +92,14 @@
 									<label><input type="checkbox" name="roomType" value="오픈형 원룸"> 오 픈 형 원 룸</label>
 									<label><input type="checkbox" name="roomType" value="분리형 원룸"> 분 리 형 원 룸</label>
 									<label><input type="checkbox" name="roomType" value="복층형 원룸"> 복 층 형 원 룸</label>
-									<label><input type="checkbox" name="roomType" value="투룸"> 투 룸</label>
+									<label><input type="checkbox" name="roomType" value="투룸"> 투 룸</label><br><br>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<button type="reset" id="resetBtn">초기화</button>
-									<button type="button" id="checkBtn">매물보기</button>
+									<button type="reset" id="resetBtn" class="btn btn-warning">초기화</button>
+									<button type="button" id="checkBtn" class="btn btn-primary">매물보기</button>
+									<br>
 								</td>
 							</tr>
 						</table>
@@ -105,7 +107,7 @@
 					</div>
 				</div>
 				<div id="select-house" style="overflow:auto; height:630px;">
-					<table id="result" border="1">
+					<table id="result">
 					</table>
 					<br>
 				</div>
@@ -147,6 +149,7 @@
     		getList();
     	
     	});
+    	
     	
     	function getCheckList(condition) {
     		var temp = document.getElementsByName(condition);
@@ -191,6 +194,32 @@
     		
     	};
     	
+		$("#searchBtn").on("click", function() {	
+    		
+    		search();
+    	
+    	});
+    	
+    	function search() {
+    		
+    		$.ajax({
+    			url : "search.lo",
+    			headers : { 'Authorization' : 'KakaoAK a8b77d874cdf7d0680055d6b64f7eb45'},
+    			data : {
+    				address1 : $("#search-input").val(),
+    			},
+    			success : function(data) {
+    				
+    				$("#result").empty();
+    				test01(data);
+    				
+    			},
+    			error : function() {
+    				console.log("ajax 통신 실패!");
+    			}
+    		});
+    	}
+    	
 		
 		// slide
 
@@ -214,17 +243,7 @@
 			});
 		});
 		
-		// 검색창
-		window.onload = function(){
-		    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
-		        //카카오 지도 발생
-		        new daum.Postcode({
-		            oncomplete: function(data) { //선택시 입력값 세팅
-		                document.getElementById("address_kakao").value = data.address; // 주소 넣기
-		            }
-		        }).open();
-		    });
-		}
+		
 		
 	
 		function test01(data) {
@@ -290,13 +309,13 @@
 		    
 		    });
 			
-		    $('#searchBtn').click(function(){
+			$('#searchBtn').click(function(){
 		    	
 		    	// 주소-좌표 변환 객체를 생성합니다
 		        var geocoder = new kakao.maps.services.Geocoder();
 		    	
-		     // 주소로 좌표를 검색합니다
-				geocoder.addressSearch($('#address_kakao').val(), function(result, status) {
+		     	// 주소로 좌표를 검색합니다
+				geocoder.addressSearch($('#search-input').val(), function(result, status) {
 			
 			    // 정상적으로 검색이 완료됐으면 
 			     if (status === kakao.maps.services.Status.OK) {
@@ -313,7 +332,7 @@
 			            let callback = function(result, status) {
 			                if (status === kakao.maps.services.Status.OK) {
 			                	// 추출한 도로명 주소를 해당 input의 value값으로 적용
-			                    $('#address_kakao').val(result[0].road_address.address_name);
+			                    $('#search-input').val();
 			                    level: 8
 			                }
 			            }
@@ -325,19 +344,24 @@
 			    	} 
 				});  
 			});
-		 	
+		    
+			
+			
 			var markers = [];
 			
 			var dataStr = "";
 			
 			for(var i = 0; i < data.length; i++) {
-						 
+			
+				var deposit = data[i].deposit.toLocaleString('ko-KR');
+			
+				
 				if(data[i].salesType === "월세") {
 					dataStr += "<tr>"
 							 +      "<td style='display: none;' id='houseNo'>" + data[i].houseNo + "</td>"
 							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
-							 + 		"<td><div style='width:100%; font-size :16px;'><b>★" + data[i].salesType +"★ "+ data[i].monthlyCost + "만원</b><br></div><div style='width:100%; font-size :13px;'>" 
-							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :13px;'>"
+							 + 		"<td><div style='width:100%; font-size :17px;'><img src='resources/images/housemapicons/wal.png' style='width:20px; height:20px;'><b>" + data[i].salesType +" "+ data[i].monthlyCost + "만원</b><br></div><div style='width:100%; font-size :15px;'>" 
+							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :15px;'>"
 							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
 							 + "</tr>" 
 				}
@@ -345,7 +369,7 @@
 					dataStr += "<tr>"
 							 +      "<td style='display: none;' id='houseNo'>" + data[i].houseNo + "</td>"
 							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
-							 + 		"<td><div style='width:100%; font-size :15px;'><b>★" + data[i].salesType +"★ "+ data[i].deposit + "만원</b></div><div style='width:100%; font-size :13px;'>" 
+							 + 		"<td><div style='width:100%; font-size :15px;'><img src='resources/images/housemapicons/jun.png' style='width:20px; height:20px;'><b>" + data[i].salesType +" "+ deposit + "만원</b></div><div style='width:100%; font-size :13px;'>" 
 							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :13px;'>"
 							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
 							 + "</tr>" 

@@ -153,6 +153,12 @@ public class HouseServiceImpl implements HouseService {
 		
 		return houseDao.houseFilter(sqlSession, map);
 	}
+	
+	@Override
+	public ArrayList<House> searchMap(String address1) {
+		
+		return houseDao.searchMap(sqlSession, address1);
+	}
 
 	@Override
 	public int updateReportCount(int houseNo) {
