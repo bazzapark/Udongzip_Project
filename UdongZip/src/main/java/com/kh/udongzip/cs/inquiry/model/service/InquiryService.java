@@ -1,6 +1,7 @@
 package com.kh.udongzip.cs.inquiry.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
 
@@ -9,8 +10,11 @@ public interface InquiryService {
 	// 문의 등록 : 개인/업체 회원
 	int insertInquiry(Inquiry inquiry);
 	
-	// 전체 조회 : 개인/업체 회원, 어드민
-	ArrayList<Inquiry> selectInquiryList(Inquiry inquiry);
+	// 전체 조회 : 업체 회원
+	ArrayList<Inquiry> selectAgentInquiryList(int agentNo);
+	
+	// 전체 조회 : 개인 회원
+	ArrayList<Inquiry> selectInquiryList(int memberNo);
 	
 	// 상세 조회 : 개인/업체 회원
 	Inquiry selectInquiry(int inquiryNo);

@@ -42,7 +42,7 @@ public class HouseController {
 	* @return 매물 목록 페이지
 	*
 	*/
-	@RequestMapping("houseListView.ho")
+	@RequestMapping("house.ag")
 	public String agentHouseListView() {
 		return "user/house/agentHouseListView";
 	}
@@ -63,7 +63,7 @@ public class HouseController {
 	*
 	*/
 	@ResponseBody
-	@PostMapping(value="listView.ho", produces="application/json; charset=UTF8")
+	@PostMapping(value="listView.ho", produces="application/json; charset=UTF-8")
 	public String selecthouseList(int agentNo,
 								 String category,
 								 String keyword) {
@@ -93,7 +93,7 @@ public class HouseController {
 	*
 	*/
 	@ResponseBody
-	@PostMapping(value="changeStatus.ho", produces="text/html; charset=UTF8")
+	@PostMapping(value="changeStatus.ho", produces="text/html; charset=UTF-8")
 	public String updateSalesStatus(int houseNo,
 									String salesStatus) {
 		

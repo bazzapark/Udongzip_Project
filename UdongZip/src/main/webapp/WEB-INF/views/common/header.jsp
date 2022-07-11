@@ -216,9 +216,9 @@
 		          <ul class="dropdown-menu" aria-labelledby="">
 		            <li><a class="dropdown-item" href="updateForm.ag">정보 수정</a></li>
 		            <li><a class="dropdown-item" href="reservation.ag">상담 예약 관리</a></li>
-		            <li><a class="dropdown-item" href="houseListView.ho">매물 관리</a></li>
-		            <li><a class="dropdown-item" href="#">리뷰 삭제 요청</a></li>
-		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
+		            <li><a class="dropdown-item" href="house.ag">매물 관리</a></li>
+		            <li><a class="dropdown-item" href="review.ag">리뷰 삭제 요청</a></li>
+		            <li><a class="dropdown-item" href="inquiry.ag">1:1 문의 내역</a></li>
 		          </ul>
 		        </div>
 		        <button class="btn btn-primary" type="button" onclick="location.href='logout.ag'">로그아웃</button>

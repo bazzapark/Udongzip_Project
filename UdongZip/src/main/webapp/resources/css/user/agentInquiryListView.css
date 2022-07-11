@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+    .list-amount {
+        margin-left: 50px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    #inquiry-list-area {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #inquiry-list {
+        width: 900px;
+        height: auto;
+        margin: auto;
+        table-layout: fixed;
+        border-collapse: collapse;
+        position: relative;
+    }
+
+    #inquiry-list thead th {
+        font-weight: 700;
+        color: #0057A4;
+        border-top: 1px solid #0057A4;
+        border-bottom: 3px solid #0057A4;
+    }
+    
+    #inquiry-list tbody tr {
+        height: 50px;
+    }
+
+    #inquiry-list tbody td {
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        border-bottom: 1px solid #595959;
+        font-size: 14px;
+    }
+
+    #inquiry-list tbody tr:hover {
+        background-color: rgb(214, 214, 214);
+        cursor: pointer;
+    }
+
+    .search-area {
+        width: 300px;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        right: 50%;
+        left: 50%;
+        margin-left: -150px;
+        position: relative;
+    }
+
+    #search-input {
+        width: 280px;
+        height: 40px;
+        margin-top: 25px;
+        margin-left: 8px;
+        border-radius: 12px;
+        border: 0.5px solid #595959;
+    }
+
+    #search-icon {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 20px;
+        top: 35px;
+    }
+
+    #search-icon:hover { cursor: pointer; }
+
+    .filter-area {
+        width: 300px;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        right: 50px;
+        text-align: right;
+    }
+
+    #filter-select {
+        width: 150px;
+        height: 30px;
+        margin-top: 30px;
+    }
+
+    .enroll-btn {
+        background-color: #0057A4;
+        width: 100px;
+        height: 50px;
+        font-size: 18px;
+        color: #FFF;
+        font-weight: 600;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        position: absolute;
+        right: 50px;
+        bottom: 100px;
+    }
+
+    /* 페이징바 */
+    .page_wrap {
+	    text-align:center;
+        width: 100%;
+	    font-size:0;
+        position: absolute;
+        bottom: -50px;
+    }
+
+    .page_nation {
+        display:inline-block;
+    }
+
+    .page_nation .none {
+        display:none;
+    }
+
+    .page_nation a {
+        display:block;
+        margin:0 3px;
+        float:left;
+        border:1px solid #e6e6e6;
+        width:28px;
+        height:28px;
+        line-height:28px;
+        text-align:center;
+        background-color:#fff;
+        font-size:13px;
+        color:#999999;
+        text-decoration:none;
+    }
+
+    .page_nation .arrow {
+        border:1px solid #ccc;
+    }
+    
+    .page_nation .pprev {
+        background:#f8f8f8 url('../../images/page_pprev.png') no-repeat center center;
+        margin-left:0;
+    }
+
+    .page_nation .prev {
+        background:#f8f8f8 url('../../images/page_prev.png') no-repeat center center;
+        margin-right:7px;
+    }
+
+    .page_nation .next {
+        background:#f8f8f8 url('../../images/page_next.png') no-repeat center center;
+        margin-left:7px;
+    }
+
+    .page_nation .nnext {
+        background:#f8f8f8 url('../../images/page_nnext.png') no-repeat center center;
+        margin-right:0;
+    }
+
+    .page_nation a.active {
+        background-color: #0057A4;
+        color:#fff;
+        border:1px solid #0057A4;
+    }
+    
+    #no-list:hover {
+    	background-color: #fff !important;
+    	cursor: default !important;
+    }

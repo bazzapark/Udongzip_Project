@@ -128,6 +128,7 @@
     <script>
     
     	var list;
+    	var filterList;
     
     	$(function() {
     		getList();
@@ -150,7 +151,7 @@
 	                	
 	                	displayList(1, listLimit, list);
 		                
-		                paging(listCount, listLimit, pageLimit, 1);
+		                paging(listCount, listLimit, pageLimit, 1, list);
 	                	
 	                } else {
 	                	

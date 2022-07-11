@@ -1,6 +1,6 @@
     
     	var listCount; // 전체 리스트의 수
-        var listLimit = 10; // 한 페이지에 보여줄 리스트 수
+        var listLimit = 5; // 한 페이지에 보여줄 리스트 수
         var pageLimit = 5; // 페이징바에 보여줄 페이지의 수
      
      function paging(listCount, listLimit, pageLimit, currentPage, filterList) {
@@ -76,7 +76,7 @@
              
              paging(listCount, listLimit, pageLimit, selectedPage, filterList); // 페이징바 출력용 함수 재호출
              
-             displayList(selectedPage, listLimit, list, filterList); // 리스트 출력용 함수 제호출
+             displayList(selectedPage, listLimit, filterList); // 리스트 출력용 함수 제호출
              
          });
          
@@ -86,7 +86,7 @@
         function displayList(currentPage, listLimit, filterList) {
             
             // 테이블에 현재 보여주는 리스트 지우기
-            $("#reservation-list tbody").text("");
+            $("#review-list tbody").text("");
             
             // 전달 받은 변수 숫자로 변환
             currentPage = Number(currentPage);
@@ -98,42 +98,55 @@
             var endIndex = (currentPage - 1) * listLimit + listLimit;
             
             if(endIndex > filterList.length) {
-            	endIndex = filterList.length
+            	endIndex = filterList.length;
             }
             
             // 반복문을 통해 출력할 테이블 만들기
             for(var i = startIndex; i < endIndex; i++) {
                 
                 listStr += "<tr>"
-                         + "<td class='reservationNo'>" + filterList[i].reservationNo + "</td>"
-                         + "<td>" + filterList[i].memberName + "(" + filterList[i].memberId  + ")" + "</td>"
-                         + "<td>" + filterList[i].houseNo + "</td>"
-                         + "<td>" + filterList[i].content + "</td>"
-                         + "<td>" + filterList[i].reservationDate + " " + filterList[i].reservationTime + "</td>"
-                         + "<td>" + filterList[i].deposit + "</td>";
+                         + "<td>" + filterList[i].reviewNo + "</td>"
+                         + "<td>" + "<img src='resources/images/houseDetailImages/user.png' class='user-icon'> <br>" + filterList[i].memberId + "</td>"
+                         + "<td>" + filterList[i].content + "</td>";
                          
-                if(filterList[i].result == "방문 대기") {
+                if(filterList[i].satisfied == "만족") {
+                
+                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/like.png' class='review-icon'> <br>" + filterList[i].satisfied + "</td>";
+                
+                } else {
+                
+                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/dislike.png' class='review-icon'> <br>" + filterList[i].satisfied + "</td>";
+                	
+                }
+                
+                listStr += "<td>" + filterList[i].createDate + "</td>";
+                         
+                if(filterList[i].result == "null") {
                     
                     listStr += "<td class='not-click'>"
-                             + "<select>"
-                             + "<option value='방문 대기' selected>방문 대기</option>"
-                             + "<option value='방문 완료'>방문 완료</option>"
-                             + "<option value='예약 취소'>예약 취소</option>"
-                             + "<option value='미방문'>미방문</option>"
-                             + "</select>"
+                             + "<button class='button report-btn'>삭제 요청</button>"
                              + "</td>"
                              + "</tr>";
                     
-                } else {
+                } else if(filterList[i].result == "D") {
                 
-                	listStr += "<td>" + filterList[i].result + "</td>"
-                	         + "</tr>"
+                	listStr += "<td>처리 중</td>"
+                	         + "</tr>";
+                
+                } else if(filterList[i].result == "Y") {
+                
+                	listStr += "<td>삭제 완료</td>"
+                	         + "</tr>";
+                } else {
+                	
+                	listStr += "<td>반려</td>"
+                	         + "</tr>";
                 
                 }
                 
             }
             
-            $("#reservation-list tbody").append(listStr);
+            $("#review-list tbody").append(listStr);
             
         }
         
@@ -144,6 +157,7 @@
 	        	if($(this).val() == '전체') {
 	        	
 	        		listCount = list.length;
+	        		filterList = list;
 	        		
 	        		if(listCount > 0) {
 	                	
@@ -153,27 +167,27 @@
 	                	
 	                } else {
 	                	
-	                	$("#reservation-list tbody").text("");
+	                	$("#review-list tbody").text("");
 	                	
 	                	$(".list-amount").text("총 " + listCount + "건");
 	                	
 	                	var noList = "<tr id='no-list'>"
-	                			   + "<td colspan='6' class='not-click'>"
+	                			   + "<td colspan='5' class='not-click'>"
 	                			   + "조회된 내역이 없습니다."
 	                			   + "<td>"
 	                			   + "</tr>";
 	                			   
-	                	$("#reservation-list tbody").append(noList);
+	                	$("#review-list tbody").append(noList);
 	                	
 	                }
 	        	
 	        	} else {
 	        	
-	        		var filterList = [];
+	        		filterList = [];
 	        		
 	        		for(var i in list) {
 	        	
-	        		if(list[i].result == $(this).val()) {
+	        		if(list[i].satisfied == $(this).val()) {
 	        			
 	        			filterList.push(list[i]);
 	        			
@@ -191,17 +205,17 @@
 			                	
 			         } else {
 			                	
-			         	$("#reservation-list tbody").text("");
+			         	$("#review-list tbody").text("");
 			         	
 			         	$(".list-amount").text("총 " + listCount + "건");
 			                	
 			            var noList = "<tr id='no-list'>"
-			                	   + "<td colspan='6' class='not-click'>"
+			                	   + "<td colspan='5' class='not-click'>"
 			                	   + "조회된 내역이 없습니다."
 			                	   + "<td>"
 			                	   + "</tr>";
 			                			   
-			            $("#reservation-list tbody").append(noList);
+			            $("#review-list tbody").append(noList);
 			                	
 			         }
 	        	
@@ -210,34 +224,55 @@
         	
         	})
         	
-        	$(document).on("click", "#reservation-list tbody tr td:not(.not-click)", function() {
+        	$(document).on("click", ".report-btn", function() {
         		
-        		var resNo = $(this).siblings(".reservationNo").text();
+        		var revNo = $(this).parent().siblings().eq(0).text();
         		
         		for(var i in list) {
         		
-        			if(list[i].reservationNo == resNo) {
+        			if(list[i].reviewNo == revNo) {
         				
-        				$("#resNo").text(list[i].reservationNo);
-        				$("#resDate").text(list[i].reservationDate + " " + list[i].reservationTime);
-        				$("#resId").text(list[i].memberId);
-        				$("#resName").text(list[i].memberName);
-        				$("#resHouse").text(list[i].houseTitle);
-        				$("#houseCheck").text(list[i].houseNo);
-        				$("#resContent").text(list[i].content);
-        				$("#resDeposit").text(list[i].deposit);
-        				$("#resResult").text(list[i].result);
+        				$("#request-modal #revNo").val(list[i].reviewNo);
+        				$("#request-modal .memId").text(list[i].memberId);
+        				$("#request-modal .revSatisfied").text(list[i].satisfied);
+        				$("#request-modal .revDate").text(list[i].createDate);
+        				$("#request-modal .revContent").text(list[i].content);
         				
         			}
         		
         		}
         		
-        		$(".modal").css("display", "block");
+        		$("#request-modal").css("display", "block");
+        	
+        	});
+        	
+        	$(".cancle-btn").click(function() {
+	        	$("#request-modal").css("display", "none");
+	        });
+	        
+	        $(document).on("click", "#review-list tbody tr td:not(.not-click)", function() {
+        		
+        		var revNo = $(this).siblings().eq(0).text();
+        		
+        		for(var i in list) {
+        		
+        			if(list[i].reviewNo == revNo) {
+        				
+        				$("#detail-modal .memId").text(list[i].memberId);
+        				$("#detail-modal .revSatisfied").text(list[i].satisfied);
+        				$("#detail-modal .revDate").text(list[i].createDate);
+        				$("#detail-modal .revContent").text(list[i].content);
+        				
+        			}
+        		
+        		}
+        		
+        		$("#detail-modal").css("display", "block");
         	
         	});
         	
         	$(".close-btn").click(function() {
-	        	$(".modal").css("display", "none");
+	        	$("#detail-modal").css("display", "none");
 	        });
         
         })

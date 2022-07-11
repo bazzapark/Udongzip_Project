@@ -76,7 +76,7 @@
              
              paging(listCount, listLimit, pageLimit, selectedPage, filterList); // 페이징바 출력용 함수 재호출
              
-             displayList(selectedPage, listLimit, list, filterList); // 리스트 출력용 함수 제호출
+             displayList(selectedPage, listLimit, filterList); // 리스트 출력용 함수 제호출
              
          });
          
@@ -86,7 +86,7 @@
         function displayList(currentPage, listLimit, filterList) {
             
             // 테이블에 현재 보여주는 리스트 지우기
-            $("#reservation-list tbody").text("");
+            $("#inquiry-list tbody").text("");
             
             // 전달 받은 변수 숫자로 변환
             currentPage = Number(currentPage);
@@ -98,42 +98,33 @@
             var endIndex = (currentPage - 1) * listLimit + listLimit;
             
             if(endIndex > filterList.length) {
-            	endIndex = filterList.length
+            	endIndex = filterList.length;
             }
             
             // 반복문을 통해 출력할 테이블 만들기
             for(var i = startIndex; i < endIndex; i++) {
                 
                 listStr += "<tr>"
-                         + "<td class='reservationNo'>" + filterList[i].reservationNo + "</td>"
-                         + "<td>" + filterList[i].memberName + "(" + filterList[i].memberId  + ")" + "</td>"
-                         + "<td>" + filterList[i].houseNo + "</td>"
-                         + "<td>" + filterList[i].content + "</td>"
-                         + "<td>" + filterList[i].reservationDate + " " + filterList[i].reservationTime + "</td>"
-                         + "<td>" + filterList[i].deposit + "</td>";
+                         + "<td>" + filterList[i].inquiryNo + "</td>"
+                         + "<td>" + filterList[i].category + "</td>"
+                         + "<td>" + filterList[i].title + "</td>"
+                         + "<td>" + filterList[i].createDate + "</td>";
                          
-                if(filterList[i].result == "방문 대기") {
-                    
-                    listStr += "<td class='not-click'>"
-                             + "<select>"
-                             + "<option value='방문 대기' selected>방문 대기</option>"
-                             + "<option value='방문 완료'>방문 완료</option>"
-                             + "<option value='예약 취소'>예약 취소</option>"
-                             + "<option value='미방문'>미방문</option>"
-                             + "</select>"
-                             + "</td>"
-                             + "</tr>";
-                    
-                } else {
-                
-                	listStr += "<td>" + filterList[i].result + "</td>"
-                	         + "</tr>"
-                
-                }
+                 if(filterList[i].answerContent == null) {
+                 	
+                 	listStr += "<td>미답변</td>"
+                 			 + "</tr>";
+                 	
+                 } else {
+                 
+                 	listStr += "<td>답변 완료</td>"
+                 			 + "</tr>";
+                 
+                 }
                 
             }
             
-            $("#reservation-list tbody").append(listStr);
+            $("#inquiry-list tbody").append(listStr);
             
         }
         
@@ -144,6 +135,7 @@
 	        	if($(this).val() == '전체') {
 	        	
 	        		listCount = list.length;
+	        		filterList = list;
 	        		
 	        		if(listCount > 0) {
 	                	
@@ -153,27 +145,27 @@
 	                	
 	                } else {
 	                	
-	                	$("#reservation-list tbody").text("");
+	                	$("#inquiry-list tbody").text("");
 	                	
 	                	$(".list-amount").text("총 " + listCount + "건");
 	                	
 	                	var noList = "<tr id='no-list'>"
-	                			   + "<td colspan='6' class='not-click'>"
+	                			   + "<td colspan='4' class='not-click'>"
 	                			   + "조회된 내역이 없습니다."
 	                			   + "<td>"
 	                			   + "</tr>";
 	                			   
-	                	$("#reservation-list tbody").append(noList);
+	                	$("#inquiry-list tbody").append(noList);
 	                	
 	                }
 	        	
 	        	} else {
 	        	
-	        		var filterList = [];
+	        		filterList = [];
 	        		
 	        		for(var i in list) {
 	        	
-	        		if(list[i].result == $(this).val()) {
+	        		if(list[i].category == $(this).val()) {
 	        			
 	        			filterList.push(list[i]);
 	        			
@@ -191,53 +183,33 @@
 			                	
 			         } else {
 			                	
-			         	$("#reservation-list tbody").text("");
+			         	$("#inquiry-list tbody").text("");
 			         	
 			         	$(".list-amount").text("총 " + listCount + "건");
 			                	
 			            var noList = "<tr id='no-list'>"
-			                	   + "<td colspan='6' class='not-click'>"
+			                	   + "<td colspan='4' class='not-click'>"
 			                	   + "조회된 내역이 없습니다."
 			                	   + "<td>"
 			                	   + "</tr>";
 			                			   
-			            $("#reservation-list tbody").append(noList);
+			            $("#inquiry-list tbody").append(noList);
 			                	
 			         }
 	        	
 	        	}
 	        	
         	
-        	})
-        	
-        	$(document).on("click", "#reservation-list tbody tr td:not(.not-click)", function() {
-        		
-        		var resNo = $(this).siblings(".reservationNo").text();
-        		
-        		for(var i in list) {
-        		
-        			if(list[i].reservationNo == resNo) {
-        				
-        				$("#resNo").text(list[i].reservationNo);
-        				$("#resDate").text(list[i].reservationDate + " " + list[i].reservationTime);
-        				$("#resId").text(list[i].memberId);
-        				$("#resName").text(list[i].memberName);
-        				$("#resHouse").text(list[i].houseTitle);
-        				$("#houseCheck").text(list[i].houseNo);
-        				$("#resContent").text(list[i].content);
-        				$("#resDeposit").text(list[i].deposit);
-        				$("#resResult").text(list[i].result);
-        				
-        			}
-        		
-        		}
-        		
-        		$(".modal").css("display", "block");
-        	
         	});
         	
-        	$(".close-btn").click(function() {
-	        	$(".modal").css("display", "none");
-	        });
+        	$(document).on("click", "#inquiry-list tbody tr td:not(.not-click)", function() {
+        		
+        		var inquiryNo = $(this).siblings().eq(0).text();
+        	
+        		$("#detail-form").children("input[name=inquiryNo]").val(inquiryNo);
+        	
+        		$("#detail-form").submit();
+        		
+        	});
         
         })

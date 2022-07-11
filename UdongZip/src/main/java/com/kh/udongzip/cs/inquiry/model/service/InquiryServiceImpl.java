@@ -2,9 +2,21 @@ package com.kh.udongzip.cs.inquiry.model.service;
 
 import java.util.ArrayList;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.udongzip.cs.inquiry.model.dao.InquiryDao;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
 
+@Service
 public class InquiryServiceImpl implements InquiryService {
+	
+	@Autowired
+	private InquiryDao inquiryDao;
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
 
 	@Override
 	public int insertInquiry(Inquiry inquiry) {
@@ -13,15 +25,13 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public ArrayList<Inquiry> selectInquiryList(Inquiry inquiry) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Inquiry> selectAgentInquiryList(int agentNo) {
+		return inquiryDao.selectAgentInquiryList(sqlSession, agentNo);
 	}
 
 	@Override
 	public Inquiry selectInquiry(int inquiryNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return inquiryDao.selectInquiry(sqlSession, inquiryNo);
 	}
 
 	@Override
@@ -32,14 +42,19 @@ public class InquiryServiceImpl implements InquiryService {
 
 	@Override
 	public int deleteInquiry(int inquiryNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return inquiryDao.deleteInquiry(sqlSession, inquiryNo);
 	}
 
 	@Override
 	public int updateAnswer(Inquiry inquiry) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectInquiryList(int memberNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

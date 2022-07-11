@@ -10,11 +10,17 @@ public interface ReviewService {
 	// 내가 쓴 리뷰 전체 조회 : 개인 회원
 	ArrayList<Review> selectReviewList(int memberNo);
 	
+	// 업체 리뷰 전체 조회
+	ArrayList<Review> selectAgentReviewList(int agentNo);
+	
 	// 리뷰 상세 조회 : 개인회원
 	Review selectReview(int reviewNo);
 	
 	// 리뷰 삭제 : 개인회원, 어드민
 	int deleteReview(int reviewNo);
+	
+	// 삭제 요청 생성
+	int insertRequest(RemoveRequest request);
 	
 	// 삭제 요청 목록 전체 조회 : 어드민
 	ArrayList<Review> selectRequestList();

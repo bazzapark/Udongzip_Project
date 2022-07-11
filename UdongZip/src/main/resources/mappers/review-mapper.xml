@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+
+	<resultMap id="reviewResultSet" type="review">
+		<result column="REVIEW_NO" property="reviewNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="AGENT_NO" property="agentNo"/>
+		<result column="RESERVATION_NO" property="reservationNo"/>
+		<result column="CONTENT" property="content"/>
+		<result column="SATISFIED" property="satisfied"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="RESULT" property="result"/>
+	</resultMap>
+
+	<select id="selectAgentReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT R1.*, IFNULL(RESULT, 'null') RESULT
+		  FROM (SELECT REVIEW_NO, CONTENT, SATISFIED, CREATE_DATE, R.STATUS, MEMBER_ID
+	    		  FROM REVIEW R, MEMBER M
+	   			 WHERE R.MEMBER_NO = M.MEMBER_NO
+	   			   AND AGENT_NO = #{agentNo}
+	     		   AND R.STATUS = 'Y') R1
+		  LEFT JOIN REMOVE_REQUEST RQ ON R1.REVIEW_NO = RQ.REVIEW_NO
+		  ORDER BY REVIEW_NO DESC
+	</select>
+	
+	<insert id="insertRequest" parameterType="removeRequest">
+		INSERT INTO REMOVE_REQUEST(REQUEST_NO, AGENT_NO, REVIEW_NO, REASON)
+		VALUES(SEQ_REQ.NEXTVAL, #{agentNo}, #{reviewNo}, #{reason})
+	</insert>
+
+	
+</mapper>
