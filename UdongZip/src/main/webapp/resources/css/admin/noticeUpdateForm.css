@@ -24,3 +24,9 @@
         .update-table *{
             margin: 7px;
         }
+        
+        .update-btn{
+            width: 75%;
+            margin:auto;
+        }
+        

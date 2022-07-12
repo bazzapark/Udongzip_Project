@@ -26,20 +26,21 @@
             <br>
 
             <div class="update-area" >
-                <form id="updateForm" method="post" action="">
+                <form id="updateForm" method="post" action="update.no">
+                <input type="hidden" name="noticeNo" value="${ n.noticeNo }">
                     <table class="update-table">
                         <tr>
                             <th><label for="title">제목</label></th>
-                            <td><input type="text" id="title" class="form-control" value="수정할제목" name="" required></td>
+                            <td><input type="text" id="title" class="form-control" value="${ n.title }" name="title" required></td>
                         </tr>
                         <tr>
                             <th><label for="content">내용</label></th>
-                            <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="" required>수정할내용</textarea></td>
+                            <td><textarea id="content" class="form-control" rows="10" style="resize:none;" value="${ n.content }" name="content" required>${ n.content }</textarea></td>
                         </tr>
                     </table>
                     <br>
 
-                    <div align="center">
+                    <div align="right" class="update-btn">
                         <button type="submit" class="btn btn-primary">수정하기</button>
                         <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                     </div>

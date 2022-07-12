@@ -65,6 +65,14 @@
 				             DEFAULT)
 	</insert>
 	
+	<!-- 관리자 : 공지사항 내용 수정 -->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE NOTICE
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
 	<!-- 업체 회원 : 내가 쓴 1:1문의 내역 조회 -->
 	<select id="selectAgentInquiryList" parameterType="_int" resultMap="inquiryResultSet">
 		SELECT *

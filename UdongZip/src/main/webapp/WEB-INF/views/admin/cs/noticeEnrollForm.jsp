@@ -39,7 +39,7 @@
                     </table>
                     <br>
 
-                    <div align="center">
+                    <div align="right" class="enroll-btn">
                         <button type="submit" class="btn btn-primary">등록하기</button>
                         <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                     </div>

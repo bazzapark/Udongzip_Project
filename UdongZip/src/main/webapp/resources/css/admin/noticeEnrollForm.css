@@ -24,3 +24,7 @@
         .enroll-table *{
             margin: 7px;
         }
+        .enroll-btn{
+            width: 75%;
+            margin: auto;
+        }

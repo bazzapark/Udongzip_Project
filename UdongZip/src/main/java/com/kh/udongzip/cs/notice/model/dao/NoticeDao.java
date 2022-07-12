@@ -25,5 +25,10 @@ public class NoticeDao {
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
 		return sqlSession.insert("csMapper.insertNotice", notice);
 	}
+	
+	// 공지사항 수정
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice notice) {
+		return sqlSession.update("csMapper.updateNotice", notice);
+	}
 
 }

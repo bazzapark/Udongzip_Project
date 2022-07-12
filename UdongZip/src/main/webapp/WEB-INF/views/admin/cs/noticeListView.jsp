@@ -72,7 +72,7 @@
     
                     $("#notice-list>tbody>tr").click(function() {
     
-                        location.href = "detail.no?nno=" + $(this).children(".nno").eq(0).text();
+                        location.href = "updateForm.no?nno=" + $(this).children(".nno").eq(0).text();
                     });
                 });
 
