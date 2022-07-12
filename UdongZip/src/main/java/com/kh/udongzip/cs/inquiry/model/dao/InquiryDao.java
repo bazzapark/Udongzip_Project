@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
+import com.kh.udongzip.cs.notice.model.vo.Notice;
 
 @Repository
 public class InquiryDao {
@@ -15,6 +16,7 @@ public class InquiryDao {
 		return (ArrayList)sqlSession.selectList("csMapper.selectAgentInquiryList", agentNo);
 	}
 	
+	// 상세 조회 : 관리자/개인/업체 회원
 	public Inquiry selectInquiry(SqlSessionTemplate sqlSession, int inquiryNo) {
 		return sqlSession.selectOne("csMapper.selectInquiry", inquiryNo);
 	}
@@ -22,5 +24,11 @@ public class InquiryDao {
 	public int deleteInquiry(SqlSessionTemplate sqlSession, int inquiryNo) {
 		return sqlSession.update("csMapper.deleteInquiry", inquiryNo);
 	}
-
+	
+	// 관리자 : 전체 조회
+	public ArrayList<Inquiry> selectadminInquiryList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("csMapper.selectadminInquiryList");
+	}
+	
 }

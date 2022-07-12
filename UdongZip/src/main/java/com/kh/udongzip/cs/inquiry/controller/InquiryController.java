@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kh.udongzip.cs.inquiry.model.service.InquiryService;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
+import com.kh.udongzip.cs.notice.model.vo.Notice;
 
 @Controller
 public class InquiryController {
@@ -108,5 +109,47 @@ public class InquiryController {
 		}
 		
 	}
+	
+	
+	
+	
+	/**
+	* 관리자 1:1 문의 내역 페이지 이동 메소드
+	*
+	* @version 1.0
+	* @author 홍민희
+	* @return 업체회원 1:1 문의 내역 페이지
+	*
+	*/
+	@RequestMapping("adminlist.in")
+	public String selectinquiryList(Model model) {
+		
+		ArrayList<Inquiry> list = inquiryService.selectadminInquiryList();
+		
+		model.addAttribute("list", list);
+		
+		return "admin/cs/inquiryListView";
+	}
+	
+	/**
+	* 관리자 1:1 문의 내역 페이지 상세 메소드
+	*
+	* @version 1.0
+	* @author 홍민희
+	* @return 업체회원 1:1 문의 상세 페이지
+	*
+	*/
+	@ResponseBody
+	@RequestMapping("admindetail.in")
+	public Inquiry selectadminInquiry(int inquiryNo) {
+		
+		Inquiry i = inquiryService.selectInquiry(inquiryNo);
+		
+		return i;
+	}
+	
+	
+	
+	
 
 }

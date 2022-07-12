@@ -16,7 +16,10 @@ public interface InquiryService {
 	// 전체 조회 : 개인 회원
 	ArrayList<Inquiry> selectInquiryList(int memberNo);
 	
-	// 상세 조회 : 개인/업체 회원
+	// 전체 조회 : 관리자 
+	ArrayList<Inquiry> selectadminInquiryList();
+	
+	// 상세 조회 : 관리자/개인/업체 회원
 	Inquiry selectInquiry(int inquiryNo);
 	
 	// 문의 수정 : 개인/업체 회원

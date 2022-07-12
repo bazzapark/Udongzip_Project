@@ -29,6 +29,7 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.selectAgentInquiryList(sqlSession, agentNo);
 	}
 
+	// 상세 조회 : 관리자/개인/업체 회원
 	@Override
 	public Inquiry selectInquiry(int inquiryNo) {
 		return inquiryDao.selectInquiry(sqlSession, inquiryNo);
@@ -45,6 +46,7 @@ public class InquiryServiceImpl implements InquiryService {
 		return inquiryDao.deleteInquiry(sqlSession, inquiryNo);
 	}
 
+	// 관리자 : 답변
 	@Override
 	public int updateAnswer(Inquiry inquiry) {
 		// TODO Auto-generated method stub
@@ -55,6 +57,12 @@ public class InquiryServiceImpl implements InquiryService {
 	public ArrayList<Inquiry> selectInquiryList(int memberNo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	// 관리자 : 조회
+	@Override
+	public ArrayList<Inquiry> selectadminInquiryList() {
+		return inquiryDao.selectadminInquiryList(sqlSession);
 	}
 
 

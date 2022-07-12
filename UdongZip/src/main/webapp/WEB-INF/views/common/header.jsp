@@ -165,10 +165,7 @@
 		              <a class="dropdown-item" href="adminlist.no">공지사항</a>
 		            </li>
 		            <li>
-		              <a class="dropdown-item" href="#">FAQ</a>
-		            </li>
-		            <li>
-		              <a class="dropdown-item" href="#">1:1문의</a>
+		              <a class="dropdown-item" href="adminlist.in">1:1문의</a>
 		            </li>
 		          </ul>
 		        </li>

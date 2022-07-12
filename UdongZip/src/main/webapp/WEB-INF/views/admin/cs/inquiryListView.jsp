@@ -40,53 +40,25 @@
                         <th>문의 분류</th>
                         <th>작성일</th>
                         <th>답변일</th>
-                        <th>완료</th>
+                        <th>활성화</th>
                     </tr>
                     </thead>
                     <tbody align="center">
-                    <tr>
-                        <td>14</td>
-                        <td>회원01</td>
-                        <td>null</td>
-                        <td>로그인</td>
-                        <td>2022-06-25</td>
-                        <td>2022-06-27</td>
-                        <td>N</td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>null</td>
-                        <td>업체05</td>
-                        <td>매물</td>
-                        <td>2022-06-25</td>
-                        <td>2022-06-27</td>
-                        <td>Y</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>회원04</td>
-                        <td>null</td>
-                        <td>로그인</td>
-                        <td>2022-06-25</td>
-                        <td>2022-06-27</td>
-                        <td>Y</td>
-                    </tr>
+	                    <c:forEach var="i" items="${ list }">
+		                    <tr>
+		                        <td>${ i.inquiryNo }</td>
+		                        <td>${ i.memberNo }</td>
+		                        <td>${ i.agentNo }</td>
+		                        <td>${ i.category }</td>
+		                        <td>${ i.createDate }</td>
+		                        <td>${ i.answerDate }</td>
+		                        <td>${ i.status }</td>
+		                    </tr>
+	                	</c:forEach>
                     </tbody>
                 </table>
             </div>   
 
-            <!-- 페이징바 -->
-            <div id="pagingArea">
-                <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </div>
 
             <br><br>
             
@@ -102,37 +74,38 @@
                     <button type="button" class="btn btn-outline-secondary btn-sm modal-close">&times;</button>
                 </div>
 
-                <form action="" method="">
-                    <div class="modal-body">
-                        <table class="table">
-                            <tr>
-                                <th>문의분류</th>
-                                <td>로그인</td>
-                                <th>작성일</th>
-                                <td>2022-06-25</td>
-                            </tr>
-                            <tr>
-                                <th>문의 제목</th>
-                                <td colspan="3">개빡돈</td>
-                            </tr>
-                            <tr>
-                                <th>문의 내용</th>
-                                <td colspan="3" style="height:100px">
-                                    <textarea name="" cols="30" rows="10" style="resize:none;"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>답변 내용</th>
-                                <td colspan="3" style="height:100px">
-                                    <textarea name="" cols="30" rows="10" style="resize:none;"></textarea>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-outline-dark">답변하기</button>
-                        </div>
-                    </div>
+                <form action="" method="post">
+                	<input type="hidden" name="inquiryNo">
+	                    <div class="modal-body">
+	                        <table class="table">
+	                            <tr>
+	                                <th>문의분류</th>
+	                                <td id="category"></td>
+	                                <th>작성일</th>
+	                                <td id="createDate"></td>
+	                            </tr>
+	                            <tr>
+	                                <th>문의 제목</th>
+	                                <td colspan="3" id="title"></td>
+	                            </tr>
+	                            <tr>
+	                                <th>문의 내용</th>
+	                                <td colspan="3" style="height:100px">
+	                                    <textarea id="content" name="content" cols="30" rows="10" style="resize:none;"></textarea>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <th>답변 내용</th>
+	                                <td colspan="3" style="height:100px">
+	                                    <textarea id="answerContent" name="answerContent" cols="30" rows="10" style="resize:none;"></textarea>
+	                                </td>
+	                            </tr>
+	                        </table>
+	
+	                        <div class="modal-footer">
+	                            <button type="submit" class="btn btn-outline-dark">답변하기</button>
+	                        </div>
+	                    </div>
                 </form>
 
             </div>
@@ -160,7 +133,31 @@
             });
         });
     </script>
-
+    
+    <script>
+	    $(function() {
+	       
+	       // 업체 회원 상세 조회 모달창 출력
+	       $("#inquiry-list>tbody").on("click", "tr", function() {
+	          $.ajax({
+	             url: "admindetail.in",
+	             data: {inquiryNo: $(this).children().eq(0).text()},
+	             success: function(inquiry) {
+	                $("#category").text(inquiry.category);
+	                $("#createDate").text(inquiry.createDate);
+	                $("#title").text(inquiry.title);
+	                $("#content").text(inquiry.content);
+	                $("#answerContent").text(inquiry.answerContent);
+	                
+	             },
+	             error: function() {
+	                console.log("관리자 1:1문의 상세 조회 ajax 실패");
+	             }
+	          })
+	       })
+	    })
+    
+    </script>
     
 </body>
 </html>
