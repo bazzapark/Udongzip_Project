@@ -63,6 +63,7 @@
             <br><br>
             
         </div>
+		<jsp:include page="../../common/footer.jsp" /> <!-- 푸터 -->
     </div>
 
     <!-- 문의 클릭 시 모달 -->
@@ -110,7 +111,6 @@
 
             </div>
         </div>
-		<jsp:include page="../../common/footer.jsp" /> <!-- 푸터 -->
     </div>
 
     <script>

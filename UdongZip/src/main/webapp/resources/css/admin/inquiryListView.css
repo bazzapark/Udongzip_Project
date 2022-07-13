@@ -32,7 +32,7 @@
     
             /* 문의 테이블 영역 */
             .content-wrap>.table-list {
-                /* border: 3px solid blue; */
+                /* border: 3px solid blue;*/
                 width: 900px;
                 height: 200px;
                 margin: auto;
@@ -40,7 +40,8 @@
                 vertical-align: middle;
                 table-layout: fixed;
             }
-            #inquiry-list{margin-top: 50px;}
+            #inquiry-list{margin-top: 50px;
+                margin-bottom: 120px;}
             .content-wrap .table-list thead{
                 background-color: #595959;
                 color: white;
