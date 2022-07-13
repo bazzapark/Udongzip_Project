@@ -31,12 +31,17 @@
                         <td>
                             <div class="form-floating">
 								<input type="text" class="form-control short-input" id="agentId" name="agentId" required>
-								<label for="agentId">아이디</label> &nbsp;
-								<button type="button" class="button" id="idCheck">아이디 중복 확인</button>
+								<label for="agentId">아이디</label>
 							</div>
-							<div class="validate-area" id="id-validate"></div>
                         </td>
-                        <td></td>
+                        <td>
+                        	<button type="button" class="button" id="idCheck">중복 확인</button>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="2">
+                    		<div class="validate-area" id="id-validate"></div>
+                    	</td>
                     </tr>
                     <tr>
                         <td>
@@ -44,9 +49,13 @@
                                 <input type="password" id="agentPwd" name="agentPwd" class="form-control short-input" required>
                                 <label for="agentPwd">비밀번호</label>
                             </div>
-                            <div class="validate-area" id="pwd-validate"></div>
                         </td>
                         <td></td>
+                    </tr>
+                    <tr>
+                    	<td>
+                    		<div class="validate-area" id="pwd-validate"></div>
+                    	</td>
                     </tr>
                     <tr>
                         <td>
@@ -54,9 +63,13 @@
                                 <input type="password" id="checkPwd" class="form-control short-input" required>
                                 <label for="checkPwd">비밀번호 확인</label>
                             </div>
-                            <div class="validate-area" id="check-validate"></div>
                         </td>
                         <td></td>
+                    </tr>
+                    <tr>
+                    	<td>
+                    		<div class="validate-area" id="check-validate"></div>
+                    	</td>
                     </tr>
                     <tr>
                         <td>
@@ -67,16 +80,19 @@
                         </td>
                         <td></td>
                     </tr>
+                    <tr></tr>
                     <tr>
                         <td>
                             <div class="form-floating">
                                 <input type="email" id="agentEmail" name="agentEmail" class="form-control short-input" required>
                                 <label for="agentEmail">email</label>
-                                <button type="button" class="button" id="emailCheck">email 인증</button>
                             </div>
                         </td>
-                        <td></td>
+                        <td>
+                        	<button type="button" class="button" id="emailCheck">email 인증</button>
+                        </td>
                     </tr>
+                    <tr></tr>
                     <tr>
                         <td>
                             <div class="form-floating">
@@ -87,40 +103,42 @@
                         </td>
                         <td></td>
                     </tr>
+                    <tr></tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="form-floating">
                                 <input type="text" id="agentAddress" name="agentAddress" class="form-control long-input" required>
                                 <label for="agentAddress">주소</label>
                             </div>
                         </td>
-                        <td></td>
                     </tr>
+                    <tr></tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <div class="form-floating">
                                 <textarea name="introduce" id="introduce"  class="form-control" required></textarea>
                                 <label for="introduce">소개</label>
                             </div>
                         </td>
-                        <td></td>
                     </tr>
+                    <tr></tr>
                     <tr>
                         <td>
                             <div class="form-floating">
-                                <input type="text" id="companyNo" name="companyNo" class="form-control short-input" pattern="[0-9]+" maxlength="10" required>
+                                <input type="text" id="companyNo" name="companyNo" class="form-control short-input" pattern="[0-9]+" maxlength="10" required style="width:200px;">
                                 <label for="companyNo" class="input-label">사업자 번호</label>
                             </div>
                             <div class="validate-area">숫자만 입력하세요.</div>
                         </td>
                         <td>
                             <div class="form-floating">
-                                <input type="text" id="ceoName" name="ceoName" class="form-control short-input" required>
+                                <input type="text" id="ceoName" name="ceoName" class="form-control short-input" required style="width:200px;">
                                 <label for="ceoName" class="input-label">대표자명</label>
                             </div>
                             <div class="validate-area">사업자등록증과 일치해야 합니다.</div>
                         </td>
                     </tr>
+                    <tr></tr>
                     <tr>
                     	<td colspan="2"> 관련 서류 (사업자등록증, 중개사등록증)</td>
                     </tr>
@@ -142,7 +160,7 @@
                     <tr>
                     	<td colspan="2" align="center">
                     		<br><br>
-                    		<button type="button" class="enroll-btn button">가입하기</button>
+                    		<button type="submit" onclick="return checkValidate();" class="enroll-btn button">가입하기</button>
                     	</td>
                     </tr>
                 </table>
@@ -161,17 +179,13 @@
                         <h3>이메일 인증</h3>
                         <hr>
                         <form>
-                            <table class="modal-table">
-                                <tr style="height: 100px;">
-                                    <td colspan="3">
-                                    	<div class="input-group">
-			                                <input type="text" id="code" class="input short-input" pattern="[0-9]" maxlength="5">
-			                                <label for="code" class="input-label">인증번호</label>
-			                            </div>
-                                    </td>
-                                    <td id="timer"></td>
-                                </tr>
-                            </table>
+                        	<br>
+                        	<div id="timer-area">인증 제한시간 : <span id="timer"></span></div>
+                        	<div class="form-floating">
+			                	<input type="text" id="code" class="form-control" pattern="[0-9]" maxlength="5">
+			                    <label for="code">인증번호</label>
+			               	</div>
+			               	<br>
                             <button type="button" class="button confirm-btn">인증</button>
                             <button type="button" class="button close-btn">취소</button>
                         </form>
@@ -188,7 +202,7 @@
 		
 		$("#emailCheck").on("click", function() {
 			
-			if($(this).siblings("#agentEmail").val().length == 0) {
+			if($("#agentEmail").val().length == 0) {
 				
 				alert("이메일을 입력하세요.");
 				

@@ -250,7 +250,7 @@
                                 <tr style="height: 100px;">
                                     <td colspan="4">
                                     	<div class="form-floating">
-								            <input type="text" class="form-control" placeholder="아이디" name="memberId">
+								            <input type="text" class="form-control" placeholder="아이디" name="userId" id="userId">
 								        	<label for="">아이디</label>
 								        </div>
                                     </td>
@@ -291,7 +291,7 @@
 				
 				$.ajax({
 					url : findPwdAction,
-					data : { userId : $("#findId").val() },
+					data : { userId : $("#userId").val() },
 					type : "POST",
 					success : function(data) {
 						

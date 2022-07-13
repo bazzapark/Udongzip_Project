@@ -44,13 +44,21 @@
     	margin-top: 5px;
     }
     
-    .input-group select {
-    	width: 120px;
+    .form-floating select {
+    	width: 120px !important;
     }
     
-    .unit {
-    	position: relative;
-    	top: 10px;
+    .form-floating {
+    	margin: 10px 0px !important;
+    }
+    
+    #subway-column div {
+    	float: left;
+    }
+    
+    textarea {
+    	width: 600px !important;
+    	height: 600px !important;
     }
 
     .input {
@@ -82,9 +90,9 @@
         outline-color: #0057A4;
     }
 
-    .short-input { width: 250px; }
+    .short-input { width: 250px !important; }
 
-    .long-input { width: 550px; }
+    .long-input { width: 550px !important; }
 
     .info-table textarea {
         width: 550px;

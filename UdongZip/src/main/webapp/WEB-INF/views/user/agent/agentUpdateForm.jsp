@@ -220,7 +220,6 @@
                         	<div class="form-floating">
 			                	<input type="text" id="code" class="form-control" pattern="[0-9]" maxlength="5">
 			                    <label for="code">인증번호</label>
-			                    
 			               	</div>
 			               	<br>
                             <button type="button" class="button confirm-btn">인증</button>
@@ -259,6 +258,7 @@
 							alert("이미 인증된 이메일입니다.");
 							
 							$("#agent-update-form .update-btn").attr("disabled", false);
+							$("#agent-update-form .update-btn").css("background-color", "#595959");
 							
 						} else {
 							

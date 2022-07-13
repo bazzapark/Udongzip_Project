@@ -5,16 +5,6 @@
 	var runningTimer;
 	
 	$(function() {
-	
-		$(".enroll-btn").on("click", function() {
-		
-			if(idValidate && pwdValidate && pwdValidate2 && emailValidate) {
-				$("#agent-enroll-form").submit();
-			} else {
-				alert("모든 항목을 양식에 맞게 작성해주세요.");
-			}
-		
-		});
                 
         // id 유효성 검사
         $("#agentId").on("keyup", function() {
@@ -44,13 +34,13 @@
     // pwd 유효성 검사
     $("#agentPwd").on("keyup", function() {
         
-        var regExp = /^[a-z0-9!@#$%^]{8,20}$/i;
+        var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
         if(!regExp.test($(this).val())) {
 
             $("#pwd-validate").removeClass("possible")
             .addClass("impossible")
-            .html("유효하지 않은 형식입니다.<br>영문자(대소문자), 숫자, 특수문자(!@#$%^)로만 (8~20글자)");
+            .html("유효하지 않은 형식입니다.<br>대소문자, 숫자, 특수문자(!@#$%^) 조합 (8글자 이상)");
             pwdValidate = false;
             
             
@@ -63,25 +53,40 @@
             
         }
         
-    });
-    
-    // pwd 일치 검사
-    $("#checkPwd").on("keyup", function() {
+        if($("#checkPwd").val() == $("#agentPwd").val() &&  $("#agentPwd").val().length > 0) {
 
-        if($(this).val() != $("#agentPwd").val()) {
+			$("#check-validate").removeClass("impossible")
+            .addClass("possible")
+            .html("비밀번호가 일치합니다.");
+            pwdValidate2 = true;
 
+        } else {
+            
             $("#check-validate").removeClass("possible")
             .addClass("impossible")
             .html("비밀번호가 일치하지 않습니다.");
             pwdValidate2 = false;
             
-            
-        } else {
-            
-            $("#check-validate").removeClass("impossible")
+        }
+        
+    });
+    
+    // pwd 일치 검사
+    $("#checkPwd").on("keyup", function() {
+    
+    	if($(this).val() == $("#agentPwd").val() &&  $("#agentPwd").val().length > 0) {
+
+			$("#check-validate").removeClass("impossible")
             .addClass("possible")
             .html("비밀번호가 일치합니다.");
             pwdValidate2 = true;
+
+        } else {
+            
+            $("#check-validate").removeClass("possible")
+            .addClass("impossible")
+            .html("비밀번호가 일치하지 않습니다.");
+            pwdValidate2 = false;
             
         }
         
@@ -167,6 +172,18 @@
     });
 
 });
+
+	function checkValidate() {
+	
+		if(idValidate && pwdValidate && pwdValidate2 && emailValidate) {
+		
+			return true;
+		} else {
+		
+			alert("모든 항목을 양식에 맞게 작성해주세요.");
+			return false;
+		}
+	}
 
 	// 이메일 인증 모달창 띄우기
     function openModal() {

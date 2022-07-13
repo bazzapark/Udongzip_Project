@@ -38,16 +38,16 @@
                     <tr>
                         <th style="width: 200px; height: 250px;">주소</th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="address1" name="address1" class="input long-input" required>
-                                <label for="address1" class="input-label">도로명 주소</label>
+                            <div class="form-floating">
+                                <input type="text" id="address1" name="address1" class="form-control long-input" required>
+                                <label for="address1">도로명 주소</label>
                             </div>
-                            <div class="input-group">
-                                <input type="text" id="address2" name="address2" class="input long-input" required>
-                                <label for="address2" class="input-label">상세 주소</label>
+                            <div class="form-floating">
+                                <input type="text" id="address2" name="address2" class="form-control long-input" required>
+                                <label for="address2">상세 주소</label>
                             </div>
-                            <div class="input-group">
-                                <input type="text" id="zipCode" name="zipCode" pattern="[0-9]+" maxlength="5" class="input short-input" required>
+                            <div class="form-floating">
+                                <input type="text" id="zipCode" name="zipCode" pattern="[0-9]+" maxlength="5" class="form-control short-input" required">
                                 <label for="zipCode" class="input-label">우편번호</label>
                                 <input type="hidden" name="lat" id="lat">
                                 <input type="hidden" name="lng" id="lng">
@@ -128,15 +128,13 @@
                     <tr>
                         <th style="width: 200px; height: 140px;">가격</th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="deposit" name="deposit" pattern="[0-9]+" class="input short-input" required>
-                                <label for="deposit" class="input-label">전세(보증)금</label> &nbsp;
-                                <span class="unit">만원</span>
+                            <div class="form-floating">
+                                <input type="text" id="deposit" name="deposit" pattern="[0-9]+" class="form-control short-input" required>
+                                <label for="deposit" class="input-label">전세(보증)금 (만원)</label>
                             </div>
-                            <div class="input-group">
-                                <input type="text" id="monthlyCost" name="monthlyCost" pattern="[0-9]+" class="input short-input" required>
-                                <label for="monthlyCost" class="input-label">월세</label> &nbsp;
-                                <span class="unit">만원</span>
+                            <div class="form-floating">
+                                <input type="text" id="monthlyCost" name="monthlyCost" pattern="[0-9]+" class="form-control short-input" required>
+                                <label for="monthlyCost">월세 (만원)</label>
                             </div>
                         </td>
                     </tr>
@@ -152,10 +150,9 @@
                     <tr>
                         <th style="width: 200px; height: 110px;">관리비</th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="manageCost" name="manageCost" pattern="[0-9]+" class="input short-input" required>
-                                <label for="manageCost" class="input-label">관리비</label> &nbsp;
-                                <span class="unit">만원</span>
+                            <div class="form-floating">
+                                <input type="text" id="manageCost" name="manageCost" pattern="[0-9]+" class="form-control short-input" required>
+                                <label for="manageCost">관리비 (만원)</label>
                             </div>
                             <b>포함 항목</b> &nbsp;
                             <c:forEach var="manage" items="${ manageList }">
@@ -170,8 +167,9 @@
                         	<span class="info-text">* 년(4자리)/월/일</span>
                         </th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="moveinDate" name="moveinDate" class="input short-input" required>
+                            <div class="form-floating">
+                                <input type="date" id="moveinDate" name="moveinDate" class="form-control short-input" required>
+                            	<label for="moveinDate">입주일</label>
                             </div>
                             <input type="checkbox" id="moveinNow">
                             <label for="moveinNow">즉시입주 가능</label>
@@ -200,27 +198,27 @@
                         	<span class="info-text">* 입력 시 자동 환산됩니다.</span>
                         </th>
                         <td>
-                            <div class="input-group">
-                                <input type="text" id="size_m2" name="size_m2" pattern="[0-9.]+" class="input short-input" required>
-                                <label for="size_m2" class="input-label">m2</label>
+                            <div class="form-floating">
+                                <input type="text" id="size_m2" name="size_m2" pattern="[0-9.]+" class="form-control short-input" required>
+                                <label for="size_m2">m2</label>
                             </div>
-                            <div class="input-group">
-                                <input type="text" id="size_p" name="size_p" pattern="[0-9.]+" class="input short-input" required>
-                                <label for="size_p" class="input-label">평</label>
+                            <div class="form-floating">
+                                <input type="text" id="size_p" name="size_p" pattern="[0-9.]+" class="form-control short-input" required>
+                                <label for="size_p">평</label>
                             </div>
                         </td>
                         <th style="width: 200px; height: 150px;">층수</th>
                         <td>
-                            <div class="input-group">
-                                <select name="buildingFloor" id="buildingFloor" class="input" required>
+                            <div class="form-floating">
+                                <select name="buildingFloor" id="buildingFloor" class="form-control" required>
                                 	<c:forEach var="i" begin="1" end="80">
                                     	<option value="${ i }">${ i }층</option>
                                     </c:forEach>
                                 </select>
                                 <label for="buildingFloor" class="input-label">건물 전체 층수</label>
                             </div>
-                            <div class="input-group">
-                                <select name="floor" id="floor" class="input" required>
+                            <div class="form-floating">
+                                <select name="floor" id="floor" class="form-control" required>
                                     <option value="지하">지하</option>
                                     <option value="반지하">반지하</option>
                                     <option value="옥탑">옥탑</option>
@@ -228,27 +226,28 @@
                                     	<option value="${ i }">${ i }층</option>
                                     </c:forEach>
                                 </select>
-                                <label for="floor" class="input-label">매물 층수</label>
+                                <label for="floor">매물 층수</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th style="width: 200px; height: 50px;">방 유형</th>
                         <td colspan=>
-                            <div class="input-group">
-                                <select name="roomType" id="roomType" class="input" required>
+                            <div class="form-floating">
+                                <select name="roomType" id="roomType" class="form-control short-input" required>
                                     <option value="오픈형 원룸">오픈형 원룸</option>
                                     <option value="분리형 원룸">분리형 원룸</option>
                                     <option value="복층형 원룸">복층형 원룸</option>
                                     <option value="투룸">투룸</option>
                                 </select>
+                                <label for="roomType">방 유형</label>
                             </div>
                             <input type="hidden" name="roomCount" id="roomCount" value="1">
                         </td>
                         <th style="width: 200px; height: 60px;">방향</th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <select name="direction" class="input" required>
+                            <div class="form-floating">
+                                <select id="direction" name="direction" class="form-control" required>
                                     <option value="동향">동향</option>
                                     <option value="서향">서향</option>
                                     <option value="남향">남향</option>
@@ -258,6 +257,7 @@
                                     <option value="북동향">북동향</option>
                                     <option value="북서향">북서향</option>
                                 </select>
+                                <label for="direction">방향</label>
                             </div>
                         </td>
                     </tr>
@@ -266,9 +266,9 @@
                         	지하철 <br>
                         	<span class="info-text">* 가장 가까운 역 1개만 선택</span>
                         </th>
-                        <td>
-                            <div class="input-group">
-                                <select name="line" class="input" required>
+                        <td id="subway-column">
+                            <div class="form-floating">
+                                <select name="line" id="line" class="form-control short-input" required>
                                 	<option>호선</option>
                                     <option value="1호선">1호선</option>
                                     <option value="2호선">2호선</option>
@@ -285,26 +285,29 @@
                                     <option value="수인분당선">수인분당선</option>
                                     <option value="신분당선">신분당선</option>
                                 </select>
-                                <select name="subwayNo" class="input" required>
-                                    <option>역 이름</option>
-                                </select>
+                                <label for="line">호선</label>
+                            </div>
+                            <div class="form-floating">
+	                            <select name="subwayNo" id="subwayNo" class="form-control short-input" required>
+	                            </select>
+	                            <label for="subwayNo">역</label>
                             </div>
                         </td>
+                        <br clear="both">
                         <th>
                         	주차 가능 <br>
                         	<span class="info-text">* 차량 대수를 입력하세요.</span>
                         </th>
                         <td>
-                        	<div class="input-group">
-                                <input type="text" id="parking" name="parking" pattern="[0-9]+" class="input" style="width: 120px;" required>
-                                <label for="parking" class="input-label">주차 가능</label> &nbsp;
-                                <span class="unit">대</span>
+                        	<div class="form-floating">
+                                <input type="text" id="parking" name="parking" pattern="[0-9]+" class="form-control" style="width: 120px;" required>
+                                <label for="parking" class="input-label">주차 가능 (대)</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th style="width: 200px; height: 170px;">옵션</th>
-                        <td colspan="3">
+                        <td colspan="3" style="width: 700px;">
                         	<c:forEach var="option" items="${ optionList }" varStatus="status">
                         		<c:choose>
 	                        		<c:when test="${ status.count mod 6 eq 0 }">
@@ -340,8 +343,8 @@
                         	<span class="info-text"><span id="title-length">0</span>/50</span>
                         </th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <input type="text" id="title" name="title" class="input long-input" maxlength="50" required>
+                            <div class="form-floating">
+                                <input type="text" id="title" name="title" class="form-control long-input" maxlength="50" required>
                                 <label for="title" class="input-label">매물 제목</label>
                             </div>
                         </td>
@@ -352,8 +355,8 @@
                         	<span class="info-text"><span id="description-length">0</span>/950</span>
                         </th>
                         <td colspan="3">
-                            <div class="input-group">
-                                <textarea id="description" name="description" class="input long-input" maxlength="950" required></textarea>
+                            <div class="form-floating">
+                                <textarea id="description" name="description" class="form-control long-input" maxlength="950" required></textarea>
                                 <label for="description" class="input-label">매물 상세정보</label>
                             </div>
                         </td>

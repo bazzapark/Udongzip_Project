@@ -11,43 +11,13 @@
         width: 600px;
         margin: 30px auto;
         border-collapse: separate;
-        border-spacing: 0 20px;
+        border-spacing: 0 10px;
+        margin-bottom: 0;
+        table-layout: fixed;
     }
     
     .info-table tr {
         margin-top: 20px;
-    }
-
-    .input-group { position: relative; }
-
-    .input {
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        color: black;
-        outline: 1px solid #aeaeae;
-        background-color: #fff;
-    }
-
-    .input-label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: translate(10px, 10px);
-        transition: transform .25s;
-    }
-
-    .input:focus+.input-label,
-    .input:valid+.input-label {
-        transform: translate(10px, -14px) scale(.8);
-        color: #0057A4;
-        padding-inline: 5px;
-        background-color: #fff;
-    }
-
-    .input:is(:focus, :valid) {
-        outline-color: #0057A4;
-        background-color: #fff;
     }
 
     .short-input { width: 250px; }
@@ -80,7 +50,6 @@
     }
     
     #idCheck {
-    	margin-top: 5px;
     	margin-left: 10px;
     	color: #595959;
     	font-size: 13px;
@@ -120,6 +89,11 @@
     
     .impossible {
     	color: red;
+    }
+    
+    textarea {
+    	height: 200px !important;
+    	width: 600px !important;
     }
     
     .modal-table {
@@ -182,4 +156,11 @@
     
     .close-btn {
     	color: #595959;
+    }
+    
+    #timer-area {
+    	height: 20px;
+    	width: 200px;
+    	font-size: 12px;
+    	text-align: left;
     }

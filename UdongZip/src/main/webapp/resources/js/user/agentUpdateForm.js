@@ -7,19 +7,20 @@
 	   	$("#agentEmail").change(function() {
     		
     		$("#agent-update-form .update-btn").attr("disabled", true);
+    		$("#agent-update-form .update-btn").css("background-color", "#595959");
     		
     	});
     
     // pwd 유효성 검사
     $("#newPwd").on("keyup", function() {
         
-        var regExp = /^[a-z0-9!@#$%^]{8,20}$/i;
+        var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
         if(!regExp.test($(this).val())) {
 
             $("#pwd-validate").removeClass("possible")
             .addClass("impossible")
-            .html("유효하지 않은 형식입니다.<br>영문자(대소문자), 숫자, 특수문자(!@#$%^)로만 (8~20글자)");
+            .html("유효하지 않은 형식입니다.<br>대소문자, 숫자, 특수문자(!@#$%^) 조합 (8글자 이상)");
             pwdValidate = false;
             
             
@@ -32,25 +33,40 @@
             
         }
         
-    });
-    
-    // pwd 일치 검사
-    $("#checkPwd").on("keyup", function() {
+        if($("#checkPwd").val() == $("#newPwd").val() &&  $("#newPwd").val().length > 0) {
 
-        if($(this).val() != $("#newPwd").val()) {
+			$("#check-validate").removeClass("impossible")
+            .addClass("possible")
+            .html("비밀번호가 일치합니다.");
+            pwdValidate2 = true;
 
+        } else {
+            
             $("#check-validate").removeClass("possible")
             .addClass("impossible")
             .html("비밀번호가 일치하지 않습니다.");
             pwdValidate2 = false;
             
-            
-        } else {
-            
-            $("#check-validate").removeClass("impossible")
+        }
+        
+    });
+    
+    // pwd 일치 검사
+    $("#checkPwd").on("keyup", function() {
+
+    	if($(this).val() == $("#agentPwd").val() &&  $("#newPwd").val().length > 0) {
+
+			$("#check-validate").removeClass("impossible")
             .addClass("possible")
             .html("비밀번호가 일치합니다.");
             pwdValidate2 = true;
+
+        } else {
+            
+            $("#check-validate").removeClass("possible")
+            .addClass("impossible")
+            .html("비밀번호가 일치하지 않습니다.");
+            pwdValidate2 = false;
             
         }
         
@@ -73,6 +89,7 @@
     	
     		alert("인증되었습니다.");
     		$("#agent-update-form .update-btn").attr("disabled", false);
+    		$("#agent-update-form .update-btn").css("background-color", "#0057A4");
     		$("#email-modal").hide();
     		clearInterval(runningTimer);
     	
@@ -80,6 +97,7 @@
     	
     		alert("인증번호를 다시 확인하세요.");
     		$("#agent-update-form .update-btn").attr("disabled", true);
+    		$("#agent-update-form .update-btn").css("background-color", "#595959");
     		
     	}
     
