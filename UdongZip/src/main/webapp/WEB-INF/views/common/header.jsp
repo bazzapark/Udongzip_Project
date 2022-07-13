@@ -234,20 +234,95 @@
 	    </div>
 	  </div>
 	</nav>
+	
+		        <div class="pwdmodal" id="pwd-modal">
+                    <div class="pwdmodal-body">
+        
+                        <h3>비밀번호 재설정</h3>
+                        <hr>
+                        <form>
+                            <table class="pwdmodal-table">
+                            	<tr>
+                            		<td colspan="4">
+                            			비밀번호를 재설정할 아이디를 입력하세요.
+                            		</td>
+                            	</tr>
+                                <tr style="height: 100px;">
+                                    <td colspan="4">
+                                    	<div class="form-floating">
+								            <input type="text" class="form-control" placeholder="아이디" name="memberId">
+								        	<label for="">아이디</label>
+								        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button type="button" class="pwd-button pwd-confirm-btn">확인</button>
+                            <button type="button" class="pwd-button pwd-close-btn">취소</button>
+                        </form>
+                    </div>
+                </div>
 	<!------- 헤더(메뉴바) 끝 ------->
 	
 	<script>
 		$(function() {
+			
+			var findPwdAction;
 				
 			$("input[type=radio]").on("change", function() {
 				
 				if($(this).val() == "member") {
 					$("#login-modal-form").attr("action", "login.me");
+					findPwdAction = "findPwd.me";
 				} else {
 					$("#login-modal-form").attr("action", "login.ag");
+					findPwdAction = "findPwd.ag";
 				}
 				
-			})
+			});
+			
+			$("#changePwd").on("click", function() {
+				
+				$("#loginForm").modal("hide");
+				$("#pwd-modal").show();
+				
+			});
+			
+			$(".pwd-confirm-btn").on("click", function() {
+				
+				$.ajax({
+					url : findPwdAction,
+					data : { userId : $("#findId").val() },
+					type : "POST",
+					success : function(data) {
+						
+						console.log(data);
+						
+						if(data == "NNNNY") {
+							
+							alert("가입된 이메일로 임시비밀번호가 전송되었습니다");
+							$("#pwd-modal").hide();
+							
+						} else {
+							
+							alert("가입되지 않은 아이디입니다.\n회원 분류(개인/업체)를 확인해보세요.");
+							
+						}
+						
+					},
+					error : function() {
+						alert("임시비밀번호 발급에 실패했습니다.");
+						$("#pwd-modal").hide();
+					}
+				})
+				
+			});
+			
+			$(".pwd-close-btn").on("click", function() {
+				
+				$("#findId").val("");
+				$("#pwd-modal").hide();
+				
+			});
 			
 		})
 	</script>

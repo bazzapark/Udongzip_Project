@@ -26,6 +26,7 @@
         border-radius: 4px;
         color: black;
         outline: 1px solid #aeaeae;
+        background-color: #fff;
     }
 
     .input-label {
@@ -46,6 +47,7 @@
 
     .input:is(:focus, :valid) {
         outline-color: #0057A4;
+        background-color: #fff;
     }
 
     .short-input { width: 250px; }
@@ -84,6 +86,13 @@
     	font-size: 13px;
     	display: none;
     }
+    
+   	#emailCheck {
+    	margin-top: 5px;
+    	margin-left: 10px;
+    	color: #595959;
+    	font-size: 13px;
+    }
 
     .file-btn {
         background-color: #595959;
@@ -111,4 +120,66 @@
     
     .impossible {
     	color: red;
+    }
+    
+    .modal-table {
+        width: 350px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        table-layout: fixed;
+        text-align: center;
+    }
+
+    .modal-table th {
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .modal-table tr {
+        height: 30px;
+        margin-top: 20px;
+    }
+
+    .modal {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        display: none;
+
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal.show {
+        display: block;
+    }
+
+    .modal-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        width: 400px;
+        height: 300px;
+
+        padding: 40px;
+
+        text-align: center;
+
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+        transform: translateX(-50%) translateY(-50%);
+    }
+    
+    .confirm-btn {
+    	background-color: #0057A4;
+    }
+    
+    .close-btn {
+    	color: #595959;
     }

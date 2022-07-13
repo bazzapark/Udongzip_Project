@@ -1,12 +1,21 @@
 package com.kh.udongzip.member.controller;
 
+import java.security.SecureRandom;
+import java.util.Date;
+
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.udongzip.member.model.service.MemberService;
@@ -21,6 +30,74 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	
+	/**
+	* 개인회원 비밀번호 재설정 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param userId
+	* 		 재설정하고자 하는 아이디
+	* @return 임시비밀번호 발급 결과
+	*
+	*/
+	@ResponseBody
+	@PostMapping(value="findPwd.me", produces="text/html; charset=UTF-8")
+	public String findPwd(@RequestParam("userId") String memberId) {
+		
+		Member member = memberService.findPwd(memberId);
+		
+		if(member != null) {
+			
+			String email = member.getMemberEmail();
+			String tmpPassword = getRandomPassword(10);;
+			
+			String setFrom = "udongzip12@gmail.com";
+	        String toMail = email;
+	        String title = "우리동네 좋은 집, 우동집 임시비밀번호입니다.";
+	        String content = 
+	                "임시비밀번호는 [" + tmpPassword + "]입니다." + 
+	                "<br>" + 
+	                "로그인 후 꼭 비밀번호를 변경해주세요.";
+	        
+	        try {
+	            
+	            MimeMessage message = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	            mailSender.send(message);
+	            
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        member.setMemberPwd(bCryptPasswordEncoder.encode(tmpPassword));
+	        
+	        int result = memberService.updatePwd(member);
+	        
+	        if(result > 0) {
+	        	
+	        	return "NNNNY";
+	        	
+	        } else {
+	        	
+	        	return "NNNNN";
+	        	
+	        }
+			
+		} else {
+			
+			return "NNNNN";
+			
+		}
+		
+	}
 	
 	//로그인
 	@RequestMapping(value="login.me")
@@ -188,5 +265,27 @@ System.out.println("### MemberController : liginMember :: getMemberPwd = ["+ mem
 			return "common/error";
 		}
 	}
+	
+    public String getRandomPassword(int size) {
+        char[] charSet = new char[] {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '!', '@', '#', '$', '%', '^', '&' };
+
+        StringBuffer sb = new StringBuffer();
+        SecureRandom sr = new SecureRandom();
+        sr.setSeed(new Date().getTime());
+
+        int idx = 0;
+        int len = charSet.length;
+        for (int i=0; i<size; i++) {
+            // idx = (int) (len * Math.random());
+            idx = sr.nextInt(len);    // 강력한 난수를 발생시키기 위해 SecureRandom을 사용한다.
+            sb.append(charSet[idx]);
+        }
+
+        return sb.toString();
+    }
 	
 }

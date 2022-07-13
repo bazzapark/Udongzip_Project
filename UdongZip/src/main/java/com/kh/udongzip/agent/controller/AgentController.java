@@ -1,11 +1,16 @@
 package com.kh.udongzip.agent.controller;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +37,9 @@ public class AgentController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	
 	/**
 	* 업체회원 회원가입 페이지 이동용 메소드
 	*
@@ -55,13 +63,67 @@ public class AgentController {
 	*/
 	@ResponseBody
 	@RequestMapping(value="idCheck.ag", produces="text/html; charset=UTF-8")
-	public String Idchek(String agentId) {
+	public String IdChek(String agentId) {
 		
 		int agentIdCount = agentService.agentIdCheck(agentId);
 		
 		int memberIdCount = memberService.memberIdCheck(agentId);
 			
 		return ((agentIdCount + memberIdCount) > 0) ? "NNNNN" : "NNNNY";
+	}
+	
+	/**
+	* 업체회원 회원가입 email 인증 메소드 (ajax)
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param email
+	*        가입하려는 이메일
+	* @return 인증번호 발송 결과
+	*
+	*/
+	@ResponseBody
+	@PostMapping(value="emailCheck.ag", produces="text/html; charset=UTF-8")
+	public String emailChek(String email) {
+		
+		int result = agentService.agentEmailCheck(email);
+		
+		if(result > 0) {
+			
+			return "NNNNN";
+			
+		} else {
+		
+			int code = (int)(Math.random() * 90000 + 10000);
+			
+			String setFrom = "udongzip12@gmail.com";
+	        String toMail = email;
+	        String title = "우리동네 좋은 집, 우동집 이메일 인증 번호입니다.";
+	        String content = 
+	                "우동집을 방문해주셔서 감사합니다." +
+	                "<br><br>" + 
+	                "인증 번호는 [" + code + "]입니다." + 
+	                "<br>" + 
+	                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+	        
+	        try {
+	            
+	            MimeMessage message = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	            mailSender.send(message);
+	            
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return Integer.toString(code);
+			
+		}
+ 
 	}
 	
 	/**
@@ -114,6 +176,71 @@ public class AgentController {
 			
 		}
 		
+		
+	}
+	
+	/**
+	* 업체회원 비밀번호 재설정 메소드
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param userId
+	* 		 재설정하고자 하는 아이디
+	* @return 임시비밀번호 발급 결과
+	*
+	*/
+	@ResponseBody
+	@PostMapping(value="findPwd.ag", produces="text/html; charset=UTF-8")
+	public String findPwd(@RequestParam("userId") String agentId) {
+		
+		Agent agent = agentService.findPwd(agentId);
+		
+		if(agent != null) {
+			
+			String email = agent.getAgentEmail();
+			String tmpPassword = getRandomPassword(10);;
+			
+			String setFrom = "udongzip12@gmail.com";
+	        String toMail = email;
+	        String title = "우리동네 좋은 집, 우동집 임시비밀번호입니다.";
+	        String content = 
+	                "임시비밀번호는 [" + tmpPassword + "]입니다." + 
+	                "<br>" + 
+	                "로그인 후 꼭 비밀번호를 변경해주세요.";
+	        
+	        try {
+	            
+	            MimeMessage message = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	            mailSender.send(message);
+	            
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        agent.setAgentPwd(bCryptPasswordEncoder.encode(tmpPassword));
+	        
+	        int result = agentService.updatePwd(agent);
+	        
+	        if(result > 0) {
+	        	
+	        	return "NNNNY";
+	        	
+	        } else {
+	        	
+	        	return "NNNNN";
+	        	
+	        }
+			
+		} else {
+			
+			return "NNNNN";
+			
+		}
 		
 	}
 	
@@ -224,6 +351,55 @@ public class AgentController {
 	}
 	
 	/**
+	* 업체회원 비밀번호 변경 메소드
+	* 
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param agentPwd
+	* 		 현재 비밀번호
+	* @param newPwd
+	* 		 변경할 비밀번호
+	* @return 업체회원 정보관리 페이지
+	*
+	*/
+	@PostMapping("updatePwd.ag")
+	public String updatePwd(String agentPwd,
+							String newPwd,
+							Model model,
+							HttpSession session) {
+		
+		Agent loginUser = (Agent)session.getAttribute("loginUser");
+		
+		if(bCryptPasswordEncoder.matches(agentPwd, loginUser.getAgentPwd())) {
+			
+			loginUser.setAgentPwd(bCryptPasswordEncoder.encode(newPwd));
+			
+			int result = agentService.updatePwd(loginUser);
+			
+			if(result > 0) {
+				
+				session.setAttribute("loginUser", loginUser);
+				session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다. 잠시후 다시 시도해주세요.");
+				
+				return "common/error";
+			}
+			
+		} else {
+			
+			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+			
+		}
+		
+		return "redirect:updateForm.ag";
+
+	}
+	
+	/**
 	* 업체회원 탈퇴 메소드
 	*
 	* @version 1.0
@@ -271,6 +447,28 @@ public class AgentController {
 		}
 		
 	}
+	
+    public String getRandomPassword(int size) {
+        char[] charSet = new char[] {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                '!', '@', '#', '$', '%', '^', '&' };
+
+        StringBuffer sb = new StringBuffer();
+        SecureRandom sr = new SecureRandom();
+        sr.setSeed(new Date().getTime());
+
+        int idx = 0;
+        int len = charSet.length;
+        for (int i=0; i<size; i++) {
+            // idx = (int) (len * Math.random());
+            idx = sr.nextInt(len);    // 강력한 난수를 발생시키기 위해 SecureRandom을 사용한다.
+            sb.append(charSet[idx]);
+        }
+
+        return sb.toString();
+    }
 
 
 }

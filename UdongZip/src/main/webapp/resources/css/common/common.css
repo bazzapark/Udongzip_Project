@@ -201,3 +201,86 @@ nav {
   width: 70%;
 }
 /***** 메인페이지 스타일 끝 *****/
+
+    .pwdmodal-table {
+        width: 300px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .pwdmodal-table th {
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .pwdmodal-table tr {
+        height: 30px;
+        margin-top: 20px;
+    }
+
+    .pwdmodal-table td {
+        font-size: 14px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .pwdmodal {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        display: none;
+
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .pwdmodal.show {
+        display: block;
+    }
+
+    .pwdmodal-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        width: 400px;
+        height: 300px;
+
+        padding: 40px;
+
+        text-align: center;
+
+        background-color: rgb(255, 255, 255);
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+        transform: translateX(-50%) translateY(-50%);
+    }
+    
+    #detail-modal .pwdmodal-body {
+    	height: 400px;
+    }
+    
+    .pwd-button {
+        width: 90px;
+        height: 30px;
+        font-size: 14px;
+        color: #595959;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .pwd-confirm-btn {
+        background-color: #0057A4;
+        color: #fff;
+    }
+    
+    #changePwd:hover {
+    	cursor: pointer;
+    	text-decoration: underline;
+    }

@@ -39,7 +39,7 @@
                 <table id="review-list">
                     <thead align="center">
                         <tr>
-                        	<th>리뷰 번호</th>
+                            <th>리뷰 번호</th>
                             <th style="width: 150px; height: 60px;">작성자</th>
                             <th style="width: 350px;">리뷰 내용</th>
                             <th>만족도</th>

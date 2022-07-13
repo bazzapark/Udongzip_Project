@@ -5,7 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>우동집 | 우리동네집 모아보기</title>
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- css -->
 <link rel="stylesheet" href="resources/css/user/agentUpdateForm.css">
+<!-- js -->
+<script type="text/javascript" src="resources/js/user/agentUpdateForm.js"></script>
 </head>
 <body>
 
@@ -23,64 +28,70 @@
 				<input type="hidden" name="agentNo" value="${ loginUser.agentNo }">
                 <table class="info-table">
                     <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="text" class="form-control short-input no-edit" id="agentId" name="agentId" value="${ loginUser.agentId }" readonly>
+								<label for="agentId">아이디</label>
+							</div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="text" class="form-control short-input no-edit" id="agentName" name="agentName" name="agentId" value="${ loginUser.agentName }" readonly>
+								<label for="agentName">업체명</label>
+							</div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="email" class="form-control short-input" id="agentEmail" name="agentEmail" value="${ loginUser.agentEmail }">
+								<label for="agentEmail">이메일</label>
+							</div>
+                        </td>
+                        <td>
+                        	&nbsp;<button type="button" class="button" id="emailCheck">email 인증</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="text" class="form-control short-input" id="agentPhone" name="agentPhone" pattern="[0-9]+" maxlength="11" value="${ loginUser.agentPhone }" required>
+								<label for="agentphone">연락처</label>
+							</div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
-                        	<div class="input-group">
-                                <input type="text" id="agentId" name="agentId" class="input short-input no-edit" value="${ loginUser.agentId }" readonly>
-                                <label for="agentId" class="input-label">아이디</label>
-                            </div>
+                            <div class="form-floating">
+								<input type="text" class="form-control" id="agentAddress" name="agentAddress" value="${ loginUser.agentAddress }" required>
+								<label for="agentAddress">주소</label>
+							</div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                        	<div class="input-group">
-                                <input type="text" id="agentName" name="agentName" class="input short-input no-edit" value="${ loginUser.agentName }" readonly>
-                                <label for="agentName" class="input-label">업체명</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="input-group">
-                                <input type="email" id="agentEmail" name="agentEmail" class="input short-input" value="${ loginUser.agentEmail }" required>
-                                <label for="agentEmail" class="input-label">이메일</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="input-group">
-                                <input type="text" id="agentPhone" name="agentPhone" class="input short-input" pattern="[0-9]+" minlength="11" maxlength="11" value="${ loginUser.agentPhone }" required>
-                                <label for="agentphone" class="input-label">연락처</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        	<div class="input-group">
-                                <input type="text" id="agentAddress" name="agentAddress" class="input long-input" value="${ loginUser.agentAddress }" required>
-                                <label for="agentAddress" class="input-label">주소</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                        	<div class="input-group">
-                                <textarea name="introduce" id="introduce"  class="input" required>${ loginUser.introduce }</textarea>
-                                <label for="introduce" class="input-label">소개</label>
+                        	<div class="form-floating">
+                                <textarea name="introduce" id="introduce"  class="form-control" required>${ loginUser.introduce }</textarea>
+                                <label for="introduce">소개</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                        	<div class="input-group">
-                                <input type="text" id="companyNo" name="companyNo" class="input short-input no-edit" value="${ loginUser.companyNo }" readonly>
-                                <label for="companyNo" class="input-label">사업자 번호</label>
+                        	<div class="form-floating">
+                                <input type="text" id="companyNo" name="companyNo" class="form-control short-input no-edit" value="${ loginUser.companyNo }" readonly style="width:200px;">
+                                <label for="companyNo">사업자 번호</label>
                             </div>
                         </td>
                         <td>
-                        	<div class="input-group">
-                                <input type="text" id="ceoName" name="ceoName" class="input short-input no-edit" value="${ loginUser.ceoName }" readonly>
-                                <label for="ceoName" class="input-label">대표자명</label>
+                        	<div class="form-floating">
+                                <input type="text" id="ceoName" name="ceoName" class="form-control short-input no-edit" value="${ loginUser.ceoName }" readonly style="width:200px;">
+                                <label for="ceoName">대표자명</label>
                             </div>
                         </td>
                     </tr>
@@ -117,12 +128,55 @@
             </form>
 
             <br>
+            
+            <form id="pwd-update-form" action="updatePwd.ag" method="post">
+				
+				<input type="hidden" name="agentNo" value="${ loginUser.agentNo }">
+                <table class="info-table">
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="password" class="form-control short-input" id="agentPwd" name="agentPwd">
+								<label for="agentPwd">현재 비밀번호</label>
+							</div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="password" class="form-control short-input" id="newPwd" name="newPwd">
+								<label for="newPwd">변경할 비밀번호</label>
+							</div>
+							<div class="validate-area" id="pwd-validate"></div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-floating">
+								<input type="password" class="form-control short-input" id="checkPwd">
+								<label for="checkPwd">변경할 비밀번호 확인</label>
+							</div>
+							<div class="validate-area" id="check-validate"></div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <br><br>
+                            <button type="button" class="button update-btn">변경하기</button>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </form>
 
         </div>
         
         <jsp:include page="../../common/footer.jsp" />
         
-             <div class="modal">
+             <div class="modal" id="delete-modal">
                     <div class="modal-body">
         
                         <h3>회원 탈퇴</h3>
@@ -141,15 +195,36 @@
 	                            </tr>
 	                            <tr>
 	                            	<td>
-			                            <div class="input-group">
-			                                <input type="password" id="agentPwd" name="agentPwd" class="input short-input" required>
-			                                <label for="agentPwd" class="input-label">비밀번호</label>
+			                            <div class="form-floating">
+			                                <input type="password" id="agentPwd2" name="agentPwd" class="form-control" required>
+			                                <label for="agentPwd">비밀번호</label>
 		                            	</div>
 		                            </td>
 	                            </tr>
 	                        </table>
+	                        <br>
 	        				<button type="submit" class="button delete-confirm">탈퇴</button>
 	                        <button type="button" class="button close-btn">닫기</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="modal" id="email-modal">
+                    <div class="modal-body">
+        
+                        <h3>이메일 인증</h3>
+                        <hr>
+                        <form>
+                        	<br>
+                        	<div id="timer-area">인증 제한시간 : <span id="timer"></span></div>
+                        	<div class="form-floating">
+			                	<input type="text" id="code" class="form-control" pattern="[0-9]" maxlength="5">
+			                    <label for="code">인증번호</label>
+			                    
+			               	</div>
+			               	<br>
+                            <button type="button" class="button confirm-btn">인증</button>
+                            <button type="button" class="button close-btn">취소</button>
                         </form>
                     </div>
                 </div>
@@ -159,15 +234,60 @@
 </body>
 
 <script>
+
+	var authCode;
+	var currentEmail = "${ loginUser.agentEmail }";
 	
 	$(function() {
+			
+		$("#emailCheck").on("click", function() {
+			
+			if($("#agentEmail").val().length == 0) {
+				
+				alert("이메일을 입력하세요.");
+				
+			} else {
+				
+				$.ajax({
+					url : "emailCheck.ag",
+					data : { email : $("#agentEmail").val() },
+					type : "post",
+					success : function(data) {
+						
+						if(data == 'NNNNN') {
+							
+							alert("이미 인증된 이메일입니다.");
+							
+							$("#agent-update-form .update-btn").attr("disabled", false);
+							
+						} else {
+							
+							alert("인증번호가 발송되었습니다.");
+							
+							authCode = data;
+							
+							timer();
+							
+							$("#email-modal").show();
+							
+						}
+						
+					},
+					error : function() {
+						alert("인증번호 발송에 실패했습니다.");
+					}
+				});
+				
+			};
+			
+		});
 		
 		$(".delete-btn").click(function() {
-			$(".modal").css("display", "block");
+			$("#delete-modal").css("display", "block");
 		});
 
-        $(".close-btn").click(function() {
-        	$(".modal").css("display", "none");
+        $("#delete-modal .close-btn").click(function() {
+        	$("#delete-modal").css("display", "none");
         });
 		
 	})

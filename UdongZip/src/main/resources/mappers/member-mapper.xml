@@ -69,5 +69,20 @@
  		 WHERE MEMBER_NO =#{memberNo}
  	</update>
  	
+ 	<!-- id로 회원 조회: 비밀버호 재설정용 -->
+ 	<select id="findPwd" parameterType="string" resultMap="memberResultSet">
+ 		SELECT *
+ 		  FROM MEMBER
+ 		 WHERE MEMBER_ID = #{memberId}
+ 		   AND STATUS = 'Y'
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd" parameterType="member">
+ 		UPDATE MEMBER
+ 		   SET MEMBER_PWD = #{memberPwd}
+ 		 WHERE MEMBER_NO = #{memberNo}
+ 	</update>
+ 	
  
 </mapper>

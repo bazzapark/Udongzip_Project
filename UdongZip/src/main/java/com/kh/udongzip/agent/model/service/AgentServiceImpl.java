@@ -24,6 +24,12 @@ public class AgentServiceImpl implements AgentService {
 		return agentDao.agentIdCheck(sqlSession, agentId);
 	}
 	
+	// email 중복 체크 서비스
+	@Override
+	public int agentEmailCheck(String email) {
+		return agentDao.agentEmailCheck(sqlSession, email);
+	}
+	
 	// 업체회원 회원가입 서비스
 	@Override
 	public int insertAgent(Agent agent) {
@@ -40,11 +46,17 @@ public class AgentServiceImpl implements AgentService {
 	public int updateAgent(Agent agent) {
 		return agentDao.updateAgent(sqlSession, agent);
 	}
-
+	
+	// id로 회원 조회(비밀번호 재설정용)
 	@Override
-	public Agent updatePwd(String newPwd) {
-		// TODO Auto-generated method stub
-		return null;
+	public Agent findPwd(String agentId) {
+		return agentDao.findPwd(sqlSession, agentId);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public int updatePwd(Agent agent) {
+		return agentDao.updatePwd(sqlSession, agent);
 	}
 
 	@Override

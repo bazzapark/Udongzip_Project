@@ -13,6 +13,11 @@ public class AgentDao {
 		return sqlSession.selectOne("agentMapper.agentIdCheck", agentId);
 	}
 	
+	// Agent 테이블 email 중복 체크
+	public int agentEmailCheck(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("agentMapper.agentEmailCheck", email);
+	}
+	
 	// 업체회원 회원가입
 	public int insertAgent(SqlSessionTemplate sqlSession, Agent agent) {
 		return sqlSession.insert("agentMapper.insertAgent", agent);
@@ -36,6 +41,16 @@ public class AgentDao {
 	// 업체회원 탈퇴
 	public int deleteAgent(SqlSessionTemplate sqlSession, int agentNo) {
 		return sqlSession.update("agentMapper.deleteAgent", agentNo);
+	}
+	
+	// id로 회원 조회 (비밀번호 재설정용)
+	public Agent findPwd(SqlSessionTemplate sqlSession, String agentId) {
+		return sqlSession.selectOne("agentMapper.findPwd", agentId);
+	}
+	
+	// 비밀번호 변경
+	public int updatePwd(SqlSessionTemplate sqlSession, Agent agent) {
+		return sqlSession.update("agentMapper.updatePwd", agent);
 	}
 
 }

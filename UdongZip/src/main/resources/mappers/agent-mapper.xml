@@ -25,6 +25,12 @@
 		 WHERE AGENT_ID = #{agentId}
 	</select>
 	
+	<select id="agentEmailCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM AGENT
+		 WHERE AGENT_EMAIL = #{email}
+	</select>
+	
 	<insert id="insertAgent" parameterType="agent">
 		INSERT INTO AGENT(AGENT_NO, AGENT_ID, AGENT_PWD, AGENT_NAME, AGENT_PHONE, AGENT_EMAIL, AGENT_ADDRESS, INTRODUCE, COMPANY_NO, CEO_NAME, DOCUMENT1, DOCUMENT2)
 		VALUES(SEQ_AGE.NEXTVAL, #{agentId}, #{agentPwd}, #{agentName}, #{agentPhone}, #{agentEmail}, #{agentAddress}, #{introduce}, #{companyNo}, #{ceoName}, #{document1}, #{document2})
@@ -60,5 +66,20 @@
 		 WHERE AGENT_NO = #{agentNo}
 		   AND STATUS = 'Y'
 	</update>
+	
+	 <!-- id로 회원 조회: 비밀버호 재설정용 -->
+ 	<select id="findPwd" parameterType="string" resultMap="agentResultSet">
+ 		SELECT *
+ 		  FROM AGENT
+ 		 WHERE AGENT_ID = #{agentId}
+ 		   AND STATUS = 'Y'
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd" parameterType="agent">
+ 		UPDATE AGENT
+ 		   SET AGENT_PWD = #{agentPwd}
+ 		 WHERE AGENT_NO = #{agentNo}
+ 	</update>
 
 </mapper>

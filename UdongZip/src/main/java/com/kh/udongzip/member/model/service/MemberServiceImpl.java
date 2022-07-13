@@ -44,12 +44,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(sqlSession, member);
 	}
 
-	@Override
-	public Member updatePwd(String newPwd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// 회원 탈퇴
 	@Override
 	public int deleteMember(int memberNo) {
@@ -73,6 +67,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int memberIdCheck(String memberId) {
 		return memberDao.memberIdCheck(sqlSession, memberId);
+	}
+	
+	// id로 회원 조회 (비밀번호 재설정용)
+	@Override
+	public Member findPwd(String memberId) {
+		return memberDao.findPwd(sqlSession, memberId);
+	}
+	
+	// 비밀번호 변경
+	@Override
+	public int updatePwd(Member member) {
+		return memberDao.updatePwd(sqlSession, member);
 	}
 
 }

@@ -19,7 +19,7 @@ public interface MemberService {
 	int updateMember(Member member);
 	
 	// 비밀번호 수정 : 개인회원
-	Member updatePwd(String newPwd);
+	int updatePwd(Member member);
 	
 	// 회원 탈퇴 (비밀번호 X) : 개인회원, 어드민
 	int deleteMember(int memberNo);
@@ -31,5 +31,8 @@ public interface MemberService {
 	
 	// 개인회원 상세 조회 : 어드민
 	Member selectMember(int memberNo);
+	
+	// 비밀번호 재설정
+	Member findPwd(String memberId);
 	
 }

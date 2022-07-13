@@ -37,7 +37,14 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.memberIdCheck", memberId);
 	}
 
+	// Member pwd 재설정
+	public Member findPwd(SqlSessionTemplate sqlSession, String memberId) {
+		return sqlSession.selectOne("memberMapper.findPwd", memberId);
+	}
 	
+	public int updatePwd(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.updatePwd", member);
+	}
 	
 	
 }

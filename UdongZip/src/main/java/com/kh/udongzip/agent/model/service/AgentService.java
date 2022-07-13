@@ -9,6 +9,9 @@ public interface AgentService {
 	// agent ID 중복체크
 	int agentIdCheck(String agentId);
 	
+	// agent Email 중복체크
+	int agentEmailCheck(String email);
+	
 	// 업체회원 회원가입
 	int insertAgent(Agent agent);
 	
@@ -19,9 +22,10 @@ public interface AgentService {
 	int updateAgent(Agent agent);
 	
 	// 비밀번호 변경
-	Agent updatePwd(String newPwd);
+	int updatePwd(Agent agent);
 	
 	// 비밀번호 찾기 (이메일 발송)
+	Agent findPwd(String agentId);
 	
 	// 전체 조회 : 어드민
 	ArrayList<Agent> selectAgentList();
