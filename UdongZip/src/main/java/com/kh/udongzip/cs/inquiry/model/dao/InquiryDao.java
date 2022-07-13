@@ -31,4 +31,9 @@ public class InquiryDao {
 		return (ArrayList)sqlSession.selectList("csMapper.selectadminInquiryList");
 	}
 	
+	// 관리자 : 답변
+	public int updateAnswer(SqlSessionTemplate sqlSession, Inquiry inquiry) {
+		return sqlSession.update("csMapper.updateAnswer", inquiry);
+	}
+	
 }

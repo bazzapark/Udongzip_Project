@@ -82,6 +82,13 @@
 		ORDER BY INQUIRY_NO DESC
 	</select>
 	
+	<!-- 관리자 : 1:1 답변 -->
+	<update id="updateAnswer" parameterType="inquiry">
+		UPDATE INQUIRY
+		   SET ANSWER_CONTENT = #{answerContent},
+		       ANSWER_DATE = SYSDATE
+		 WHERE INQUIRY_NO = #{inquiryNo}
+	</update>
 	
 	
 	

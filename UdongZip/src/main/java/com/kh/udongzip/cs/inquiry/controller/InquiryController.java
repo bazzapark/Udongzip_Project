@@ -148,6 +148,35 @@ public class InquiryController {
 		return i;
 	}
 	
+	/**
+	* 관리자 1:1 문의 내역 페이지 답변 메소드
+	*
+	* @version 1.0
+	* @author 홍민희
+	* @return 업체회원 1:1 문의 내역 페이지
+	*
+	*/
+	@RequestMapping("answerupdate.in")
+	public String updateAnswer(Inquiry inquiry, HttpSession session, Model model) {
+		
+		System.out.println(inquiry);
+		
+		int result = inquiryService.updateAnswer(inquiry);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 답변이 전송되었습니다.");
+			
+			return "redirect:adminlist.in";
+		}
+		else {
+			
+			model.addAttribute("errorMsg", "답변 전송 실패");
+			
+			return "common/error";
+		}
+		
+	}
 	
 	
 	

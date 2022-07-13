@@ -49,8 +49,7 @@ public class InquiryServiceImpl implements InquiryService {
 	// 관리자 : 답변
 	@Override
 	public int updateAnswer(Inquiry inquiry) {
-		// TODO Auto-generated method stub
-		return 0;
+		return inquiryDao.updateAnswer(sqlSession, inquiry);
 	}
 
 	@Override

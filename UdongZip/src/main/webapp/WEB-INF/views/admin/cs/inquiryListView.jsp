@@ -74,7 +74,7 @@
                     <button type="button" class="btn btn-outline-secondary btn-sm modal-close">&times;</button>
                 </div>
 
-                <form action="" method="post">
+                <form action="answerupdate.in" method="post">
                 	<input type="hidden" name="inquiryNo">
 	                    <div class="modal-body">
 	                        <table class="table">
@@ -137,12 +137,14 @@
     <script>
 	    $(function() {
 	       
-	       // 업체 회원 상세 조회 모달창 출력
+	       // 해당 tr 내용 표시
 	       $("#inquiry-list>tbody").on("click", "tr", function() {
 	          $.ajax({
 	             url: "admindetail.in",
 	             data: {inquiryNo: $(this).children().eq(0).text()},
 	             success: function(inquiry) {
+	            	
+	            	$("input[name=inquiryNo]").val(inquiry.inquiryNo);
 	                $("#category").text(inquiry.category);
 	                $("#createDate").text(inquiry.createDate);
 	                $("#title").text(inquiry.title);
