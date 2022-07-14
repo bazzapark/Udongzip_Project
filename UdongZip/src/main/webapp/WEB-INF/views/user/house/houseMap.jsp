@@ -181,9 +181,15 @@
     				roomType : roomType
     			},
     			success : function(data) {
-    				// console.log(data);
-    				$("#result").empty();
-    				test01(data);
+    				if(data != 0) {
+    				
+    					$("#result").empty();
+    					test01(data);
+    				}
+    				else {
+    					$("#result").empty();
+    					$("#result").html("검색결과가 없습니다.");
+    				}
     			},
     			error : function() {
     				console.log("ajax 통신 실패!");
@@ -210,9 +216,14 @@
     			},
     			success : function(data) {
     				
-    				$("#result").empty();
-    				test01(data);
-    				
+    				if(data != 0) {
+    					$("#result").empty();
+        				test01(data);	
+    				}
+    				else {
+    					$("#result").empty();
+    					$("#result").html("검색결과가 없습니다.");
+    				}
     			},
     			error : function() {
     				console.log("ajax 통신 실패!");
@@ -412,25 +423,26 @@ var markers = [];
 		        var geocoder = new kakao.maps.services.Geocoder();
 		    	
 		     	// 주소로 좌표를 검색합니다
-				geocoder.addressSearch($('#search-input').val(), function(result, status) {
+				geocoder.addressSearch($('#search-input').val(), function(data, status) {
 			
 			    // 정상적으로 검색이 완료됐으면 
 			     if (status === kakao.maps.services.Status.OK) {
-			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			        var coords = new kakao.maps.LatLng($("#result>tr").children().eq(1).html(), $("#result>tr").children().eq(2).html());
 			        
 			        // 추출한 좌표를 통해 도로명 주소 추출
-			        let lat = result[0].y;
-			        let lng = result[0].x;
+			        var lat = $("#result>tr").children().eq(1).html();
+			        var lng = $("#result>tr").children().eq(2).html();
 			        getAddr(lat,lng);
+			        
 			        function getAddr(lat,lng){
-			            let geocoder = new kakao.maps.services.Geocoder();
+			            var geocoder = new kakao.maps.services.Geocoder();
 		
-			            let coord = new kakao.maps.LatLng(lat, lng);
-			            let callback = function(result, status) {
+			            var coord = new kakao.maps.LatLng(lat, lng);
+			            var callback = function(data, status) {
 			                if (status === kakao.maps.services.Status.OK) {
 			                	// 추출한 도로명 주소를 해당 input의 value값으로 적용
 			                    $('#search-input').val();
-			                    level: 8
+			                    level: 3
 			                }
 			            }
 			            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
@@ -448,7 +460,7 @@ var markers = [];
 	        clusterer.addMarkers(markers);
 			
 			// 지도의 우측에 확대 축소 컨트롤을 추가한다
-			map.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 			
 			map.setMaxLevel(8);
 			
@@ -466,6 +478,7 @@ var markers = [];
 	            };
 	        }
 			
+	        // list 클릭 시 상세보기 페이지로 이동
 	        $(function() {
 	        	
 		         $("#result").on("click", "tr", function() {
@@ -488,6 +501,7 @@ var markers = [];
 		         })
 		      });
 	        
+	        // list : hover
 	        var hoverMarker;
 	        
 	        
@@ -518,14 +532,6 @@ var markers = [];
 	         });
 		}
 		
-			
-		
-		
-		
-		
-		
-		
-	
 	</script>
 </body>
 </html>
