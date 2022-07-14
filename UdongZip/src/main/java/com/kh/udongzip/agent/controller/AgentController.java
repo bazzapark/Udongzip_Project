@@ -329,8 +329,7 @@ public class AgentController {
 	*/
 	@Auth(role=Role.AGENT)
 	@RequestMapping("updateForm.ag")
-	public String agentUpdateForm(HttpSession session) {
-		
+	public String agentUpdateForm() {
 		return "user/agent/agentUpdateForm";
 	}
 	

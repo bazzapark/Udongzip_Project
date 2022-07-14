@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(METHOD)
 public @interface Auth {
 	
-	public enum Role {ADMIN, AGENT, MEMBER}
+	public enum Role {ADMIN, AGENT, MEMBER, LOGINUSER}
 	
 	public Role role() default Role.MEMBER;
 

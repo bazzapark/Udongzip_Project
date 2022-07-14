@@ -119,6 +119,18 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				
 			}
 			
+		} else if("LOGINUSER".equals(role)) { // 권한이 로그인한 유저인 경우
+			
+			if(session.getAttribute("loginUser") == null) {
+				
+				session.setAttribute("alertMsg", "로그인이 필요한 서비스입니다.");
+				// 메인 페이지로 보냄
+				response.sendRedirect(request.getContextPath());
+				// 해당 method 실행하지 않음
+				return false;
+				
+			}
+			
 		}
 		
 		// 8. 접근 허가 (method 실행)

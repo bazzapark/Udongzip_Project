@@ -68,7 +68,7 @@
 	          </div>
 	          <div class="mb-3">
 	            <div class="form-check" id="loginFormCheckbox">
-	            	<c:choose>
+	              	<c:choose>
 		               	<c:when test="${ !empty cookie.saveId }">
 		                	<input type="checkbox" class="form-check-input" id="loginCheck" name="loginCheck" value="y" checked>
 		                </c:when>
