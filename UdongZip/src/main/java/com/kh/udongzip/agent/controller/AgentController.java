@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.udongzip.agent.model.service.AgentService;
 import com.kh.udongzip.agent.model.vo.Agent;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.SaveFileRename;
 import com.kh.udongzip.member.model.service.MemberService;
 
@@ -259,11 +263,28 @@ public class AgentController {
 	@PostMapping("login.ag")
 	public String agentLogin(@RequestParam(value="memberId")String agentId,
 							 @RequestParam(value="memberPwd")String agentPwd,
+							 String loginCheck,
+							 HttpServletResponse response,
 							 HttpSession session) {
 		
 		Agent loginUser = agentService.loginAgent(agentId);
 		
 		if(loginUser != null && bCryptPasswordEncoder.matches(agentPwd, loginUser.getAgentPwd())) {
+			
+			// 아이디 저장 체크 시
+			if(loginCheck != null && loginCheck.equals("y")) {
+				
+				Cookie cookie = new Cookie("saveId", loginUser.getAgentId());
+				cookie.setMaxAge(1 * 24 * 60 * 60);
+				response.addCookie(cookie);
+						
+			} else { // 체크 안한 경우
+						
+				Cookie cookie = new Cookie("saveId", loginUser.getAgentId());
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+						
+			};
 			
 			// 식별자 setting
 			loginUser.setIdentifier("agent");
@@ -306,8 +327,10 @@ public class AgentController {
 	* @return 업체회원 정보관리 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping("updateForm.ag")
-	public String agentUpdateForm() {
+	public String agentUpdateForm(HttpSession session) {
+		
 		return "user/agent/agentUpdateForm";
 	}
 	
@@ -321,6 +344,7 @@ public class AgentController {
 	* @return 업체회원 회원정보 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("update.ag")
 	public String agentUpdate(Agent agent,
 							  Model model,
@@ -363,6 +387,7 @@ public class AgentController {
 	* @return 업체회원 정보관리 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("updatePwd.ag")
 	public String updatePwd(String agentPwd,
 							String newPwd,
@@ -411,6 +436,7 @@ public class AgentController {
 	* @return 메인페이지로 redirect
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("delete.ag")
 	public String deleteAgent(int agentNo,
 							  String agentPwd,

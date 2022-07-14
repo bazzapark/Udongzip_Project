@@ -59,7 +59,7 @@
 		            </label>
 		        </div>
 	          <div class="form-floating">
-	            <input type="text" class="form-control" placeholder="아이디" name="memberId">
+	            <input type="text" class="form-control" placeholder="아이디" name="memberId" value="${ cookie.saveId.value }">
 	            <label for="">아이디</label>
 	          </div>
 	          <div class="form-floating mb-3">
@@ -68,9 +68,16 @@
 	          </div>
 	          <div class="mb-3">
 	            <div class="form-check" id="loginFormCheckbox">
-	              <input type="checkbox" class="form-check-input" id="loginCheck" name="loginCkeck">
+	            	<c:choose>
+		               	<c:when test="${ !empty cookie.saveId }">
+		                	<input type="checkbox" class="form-check-input" id="loginCheck" name="loginCheck" value="y" checked>
+		                </c:when>
+		                <c:otherwise>
+		                	<input type="checkbox" class="form-check-input" id="loginCheck" name="loginCheck" value="y">
+		              	</c:otherwise>
+		             </c:choose>
 	              <label class="form-check-label" for="loginCheck">
-	                	로그인 상태 유지
+	                	아이디 저장
 	              </label>
 	              <a class="" href="#" id="changePwd">비밀번호 재설정</a>
 	            </div>

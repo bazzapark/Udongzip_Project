@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.SaveFileRename;
 import com.kh.udongzip.house.model.service.HouseService;
 import com.kh.udongzip.house.model.vo.House;
@@ -42,6 +44,7 @@ public class HouseController {
 	* @return 매물 목록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping("house.ag")
 	public String agentHouseListView() {
 		return "user/house/agentHouseListView";
@@ -62,6 +65,7 @@ public class HouseController {
 	* @return 검색된 매물 리스트
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="listView.ho", produces="application/json; charset=UTF-8")
 	public String selecthouseList(int agentNo,
@@ -92,6 +96,7 @@ public class HouseController {
 	* @return 변경 성공 여부
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="changeStatus.ho", produces="text/html; charset=UTF-8")
 	public String updateSalesStatus(int houseNo,
@@ -116,6 +121,7 @@ public class HouseController {
 	* @return 매물 등록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping("enrollForm.ho")
 	public String houseEnrollForm(Model model) {
 		
@@ -167,6 +173,7 @@ public class HouseController {
 	* @return 매물 목록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("insert.ho")
 	public String insertHouse(House house,
 							  MultipartFile thumbnailFile,
@@ -233,6 +240,7 @@ public class HouseController {
 	* @return 매물 정보, 관리비 전체 항목, 옵션 전체 항목, 매물 이미지 => 수정 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping(value="updateForm.ho")
 	public String houseUpdateForm(int houseNo,
 								  Model model) {
@@ -271,6 +279,7 @@ public class HouseController {
 	* @return 매물 목록 조회 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping(value="update.ho")
 	public String updateHouse(House house,
 			  				@RequestParam(value="manageInfo", required=false) List<String> manageInfo,
@@ -362,6 +371,7 @@ public class HouseController {
 	* @return 매물 목록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("delete.ho")
 	public String deleteHouse(int houseNo,
 							  Model model,

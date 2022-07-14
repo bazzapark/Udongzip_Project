@@ -106,8 +106,6 @@ public class MemberController {
 							ModelAndView mv,
 							HttpSession session
 							) {
-System.out.println("### MemberController : liginMember :: getMemberId = ["+ member.getMemberId() +"]");
-System.out.println("### MemberController : liginMember :: getMemberPwd = ["+ member.getMemberPwd() +"]");
 		
 	// 암호화 후 로그인
 
@@ -120,6 +118,11 @@ System.out.println("### MemberController : liginMember :: getMemberPwd = ["+ mem
 	if(loginUser != null && bCryptPasswordEncoder.matches(member.getMemberPwd(), loginUser.getMemberPwd())) { //로그인성공
 		
 		loginUser.setIdentifier("member");
+		
+		if(loginUser.getMemberId().equals("admin")) {
+			loginUser.setIdentifier("root");
+		}
+		
 		session.setAttribute("loginUser", loginUser);
 		session.setAttribute("alertMsg", "로그인에 성공했습니다."); //1회 알람문구
 	
