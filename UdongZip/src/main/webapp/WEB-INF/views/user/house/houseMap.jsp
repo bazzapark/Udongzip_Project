@@ -199,7 +199,7 @@
     					var map = new kakao.maps.Map(mapContainer, mapOption);
     					
     					var noStr = "<tr>"
-    							  + "<td colspan='5'>"
+    							  + "<td colspan='5' style='cursor:default; background-color: #fff;  pointer-events: none;'>"
     							  + "검색 결과가 없습니다."
     							  + "</td>"
     							  + "</tr>"
@@ -248,8 +248,8 @@
     					// 지도를 생성한다 
     					var map = new kakao.maps.Map(mapContainer, mapOption);
     					
-    					var noStr = "<tr>"
-    							  + "<td colspan='5'>"
+    					var noStr = "<tr id='no-list'>"
+    							  + "<td colspan='5' style='cursor:default; background-color: #fff;  pointer-events: none;'>"
     							  + "검색 결과가 없습니다."
     							  + "</td>"
     							  + "</tr>"
