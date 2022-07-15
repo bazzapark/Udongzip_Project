@@ -24,7 +24,7 @@
 	   			   AND AGENT_NO = #{agentNo}
 	     		   AND R.STATUS = 'Y') R1
 		  LEFT JOIN REMOVE_REQUEST RQ ON R1.REVIEW_NO = RQ.REVIEW_NO
-		  ORDER BY REVIEW_NO DESC
+		  ORDER BY R1.REVIEW_NO DESC
 	</select>
 	
 	<insert id="insertRequest" parameterType="removeRequest">
