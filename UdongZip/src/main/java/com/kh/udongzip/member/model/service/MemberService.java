@@ -35,4 +35,7 @@ public interface MemberService {
 	// 비밀번호 재설정
 	Member findPwd(String memberId);
 	
+	// 개인회원 이메일 중복 체크
+	int memberEmailCheck(String email);
+	
 }

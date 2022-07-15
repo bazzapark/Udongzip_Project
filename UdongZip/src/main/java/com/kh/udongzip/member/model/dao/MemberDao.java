@@ -46,5 +46,9 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updatePwd", member);
 	}
 	
+	public int memberEmailCheck(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("memberMapper.memberEmailCheck", email);
+	}
+	
 	
 }

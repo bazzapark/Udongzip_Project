@@ -1,17 +1,36 @@
+	var idValidate = false;
 	var pwdValidate = false;
 	var pwdValidate2 = false;
+	var emailValidate = false;
 	var runningTimer;
 	
 	$(function() {
-	
-	   	$("#agentEmail").change(function() {
-    		
-    		emailValidate = false;
-    		
-    	});
+                
+        // id 유효성 검사
+        $("#memberId").on("keyup", function() {
+            
+            var regExp = /^[a-z][a-z\d]{3,17}$/;
+
+            if(!regExp.test($(this).val())) {
+
+                $("#id-validate").removeClass("possible")
+                .addClass("impossible")
+                .html("유효하지 않은 형식입니다.<br>영어 소문자, 숫자로만 (4~18글자)");
+                
+                
+            } else {
+                
+                $("#id-validate").removeClass("impossible")
+                .addClass("possible")
+                .html("가능한 형식의 ID입니다. 중복 확인을 해주세요.");
+                
+                
+            }
+            
+    });
     
     // pwd 유효성 검사
-    $("#newPwd").on("keyup", function() {
+    $("#memberPwd").on("keyup", function() {
         
         var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
@@ -32,7 +51,7 @@
             
         }
         
-        if($("#checkPwd").val() == $("#newPwd").val() &&  $("#newPwd").val().length > 0) {
+        if($("#checkPwd").val() == $("#agentPwd").val() &&  $("#agentPwd").val().length > 0) {
 
 			$("#check-validate").removeClass("impossible")
             .addClass("possible")
@@ -52,8 +71,8 @@
     
     // pwd 일치 검사
     $("#checkPwd").on("keyup", function() {
-
-    	if($("#checkPwd").val() == $("#newPwd").val() &&  $("#newPwd").val().length > 0) {
+    
+    	if($(this).val() == $("#memberPwd").val() &&  $("#memberPwd").val().length > 0) {
 
 			$("#check-validate").removeClass("impossible")
             .addClass("possible")
@@ -71,16 +90,37 @@
         
     });
     
-    $("#pwd-update-form .update-btn").click(function() {
+    // id중복 체크
+    $("#idCheck").on("click", function() {
     	
-    		if(pwdValidate && pwdValidate2 && $("#agentPwd").val().length > 0) {
-    			$("#pwd-update-form").submit();
-    		} else {
-    			alert("양식에 맞게 작성해주세요.");
-    		}
-    	
+    	console.log($("#memberId").val());
+    
+        $.ajax({
+            url : "idCheck.me",
+            data : { memberId : $("#memberId").val() },
+            success : function(result) {
+            	
+            	console.log(result);
+                
+                if(result == "NNNNY") {
+                    
+                    alert("사용 가능한 ID입니다.");
+                    idValidate = true;
+                    
+                } else {
+                    alert("중복된 ID입니다. 다른 ID를 사용해주세요.");
+                    $("#memberId").val("");
+                    $("#memberId").focus();
+                    idValidate = false;
+                }
+                
+            },
+            error : function() {
+                console.log("통신 실패");	
+            },
+        });
+        
     });
-
     
     $(".confirm-btn").on("click", function() {
     
@@ -100,29 +140,37 @@
     
     });
     
-    $("#email-modal .close-btn").on("click", function() {
+    $(".close-btn").on("click", function() {
 
     	$("#email-modal").hide();
-       	$("#agentEmail").val(currentEmail);
-        emailValidate = false;
-        clearInterval(runningTimer);
-        	
-    });  
+    	$("#memberEmail").val("");
+    	$("#memberEmail").focus();
+    	emailValidate = false;
+    	clearInterval(runningTimer);
+    	
+    });
 
-});  
+});
 
 	function checkValidate() {
 	
-		if(emailValidate) {
+		if(idValidate && pwdValidate && pwdValidate2 && emailValidate) {
 		
 			return true;
 			
 		} else {
 		
-			alert("이메일을 인증해주세요.");
+			alert("모든 항목을 양식에 맞게 작성해주세요.");
 			return false;
 		}
 	}
+
+	// 이메일 인증 모달창 띄우기
+    function openModal() {
+    
+    	$("#email-modal").show();
+    
+    };
     
     function timer(){
     
@@ -163,10 +211,8 @@
 	        	clearInterval(runningTimer);
 	        	alert("인증 시간이 만료되었습니다. 다시 시도해주세요.");
 	        	$("#email-modal").hide();
-	        	$("#agentEmail").val(currentEmail);
 	        
 	        }
 	   
 	    },1000); //1초마다 
-
-};
+	};

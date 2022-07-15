@@ -66,7 +66,8 @@
                             <br><br>
                             3. 실제 위치와 우측에 지도 상의 위치가 일치하지 않는 경우 <br>
                                - 도로명 주소와 상세주소를 다시 한 번 확인해주세요. <br>
-                               - 올바른 주소를 입력 했다면 고객센터로 문의해주세요. <br>
+                               - 올바른 주소를 입력 했다면 고객센터로 문의해주세요. <br><br>
+                            4. 위치 정보는 추후에 수정이 불가합니다.
                         </p>
                     </div>
                     <div id="map" class="real-map"></div>
@@ -78,28 +79,28 @@
                 <div id="img-area">
                     <div class="thumbnail-area">
                         <img class="previewer-big">
-                        <input type="file" class="file-input" name="thumbnailFile" required>
+                        <input type="file" class="file-input" name="thumbnailFile" accept="png, jpg, jpeg" required>
                         <h4 align="center">대표사진</h4>
                     </div>
                     <div class="etc-area">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg">
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                     </div>
                     <br clear="both">
                     <div class="info-text info-area">
@@ -108,6 +109,7 @@
                             * 대표사진을 포함하여 최소 4장 이상의 사진을 등록해야 하며, 최대 10장까지 등록할 수 있습니다. (한 장당 10MB 이내) <br>
                             * 매물 사진 이외의 다른 사진을 등록하는 경우 삭제 조치 될 수 있습니다. <br>
                             * 직접 찍은 사진만 등록해야 합니다. <br>
+                            * png, jpg, jpeg 파일만 등록 가능합니다.
                         </p>
                     </div>
                 </div>

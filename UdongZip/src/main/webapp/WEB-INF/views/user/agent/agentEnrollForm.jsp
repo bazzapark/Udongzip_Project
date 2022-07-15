@@ -25,6 +25,12 @@
             <br>
 
             <form id="agent-enroll-form" action="insert.ag" method="post" enctype="multipart/form-data">
+            	   <div class="info-text info-area">
+                        <p>
+                            * 모든 항목을 양식에 맞게 작성해주세요. <br>
+                            * 허위 정보 기재 또는 허위 서류를 제출하는 경우, 가입이 제한됩니다.
+                        </p>
+                    </div>
 
                 <table class="info-table">
                     <tr>
@@ -145,16 +151,19 @@
                     <tr>
                         <td>
                             <img id="img1" class="previewer"/>
-                            <input type="file" name="document" class="file-input" required>
+                            <input type="file" name="document" class="file-input" accept="png, jpg, jpeg" required>
                         </td>
                         <td>
                             <img id="img2" class="previewer"/>
-                            <input type="file" name="document" class="file-input" required>
+                            <input type="file" name="document" class="file-input" accept="png, jpg, jpeg" required>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <span class="info-text">* 영역 클릭 시 이미지 등록 가능, 다시 클릭 시 삭제</span>
+                            <span class="info-text">
+                            	* 영역 클릭 시 이미지 등록 가능, 다시 클릭 시 삭제 <br>
+                            	* png, jpg, jpeg 파일만 등록 가능합니다. (한 장당 10MB 이내)
+                            </span>
                         </td>
                     </tr>
                     <tr>

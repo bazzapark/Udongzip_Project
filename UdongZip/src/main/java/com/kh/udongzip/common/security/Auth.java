@@ -12,6 +12,6 @@ public @interface Auth {
 	
 	public enum Role {ADMIN, AGENT, MEMBER, LOGINUSER}
 	
-	public Role role() default Role.MEMBER;
+	public Role role() default Role.LOGINUSER;
 
 }

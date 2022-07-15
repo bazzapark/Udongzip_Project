@@ -83,9 +83,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 7. 요구 권한에 따른 처리
 		String role = auth.role().toString();
 		
-		if("ADMIN".equals(role)) { // 권한이 어드민인 경우
+		System.out.println(role);
+		
+		if(role.equals("ADMIN")) { // 권한이 어드민인 경우
 			
-			if("root".equals(identifier) == false) { // 식별자가 root가 아니면
+			if(!identifier.equals("root")) { // 식별자가 root가 아니면
+				
+				System.out.println(identifier);
 				
 				session.setAttribute("alertMsg", "접근 권한이 없습니다.");
 				// 메인 페이지로 보냄
@@ -95,9 +99,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				
 			}
 			
-		} else if("AGENT".equals(role)) { // 권한이 업체인 경우
+		} else if(role.equals("AGENT")) { // 권한이 업체인 경우
 			
-			if(!"root".equals(identifier) && !"agent".equals(identifier)) { // 식별자가 root와 agent가 아닌 경우
+			if("member".equals(identifier)) { // 식별자가 root나 agent가 아닌 경우
+				
+				System.out.println(identifier);
 				
 				session.setAttribute("alertMsg", "잘못된 접근입니다.");
 				// 메인 페이지로 보냄
@@ -107,9 +113,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				
 			}
 			
-		} else if("MEMBER".equals(role)) { // 권한이 업체인 경우
+		} else if(role.equals("MEMBER")) { // 권한이 개인인 경우
 			
-			if(!"root".equals(identifier) && !"member".equals(identifier)) { // 식별자가 root와 member가 아닌 경우
+			if(identifier.equals("agent")) { // 식별자가 root나 member가 아닌 경우
+				
+				System.out.println(identifier);
 				
 				session.setAttribute("alertMsg", "잘못된 접근입니다.");
 				// 메인 페이지로 보냄
@@ -119,7 +127,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				
 			}
 			
-		} else if("LOGINUSER".equals(role)) { // 권한이 로그인한 유저인 경우
+		} else if(role.equals("LOGINUSER")) { // 권한이 로그인한 유저인 경우
 			
 			if(session.getAttribute("loginUser") == null) {
 				

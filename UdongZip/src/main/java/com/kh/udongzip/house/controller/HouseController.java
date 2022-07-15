@@ -36,6 +36,9 @@ public class HouseController {
 	@Autowired
 	private HouseService houseService;
 	
+	@Autowired
+	private SaveFileRename saveFileRename;
+	
 	/**
 	* 업체회원 내 매물 목록 페이지 이동 메소드
 	*
@@ -183,7 +186,6 @@ public class HouseController {
 							  Model model,
 							  HttpSession session) {
 		
-		SaveFileRename saveFileRename = new SaveFileRename();
 		HashMap<String, Object> map = new HashMap<>();
 		ArrayList<String> imgList = new ArrayList<>();
 		
@@ -290,7 +292,6 @@ public class HouseController {
 							HttpSession session,
 							Model model) {
 		
-		SaveFileRename saveFileRename = new SaveFileRename();
 		ArrayList<String> imgList = new ArrayList<>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String path = "/Users/bazza/Udongzip_Project/UdongZip/src/main/webapp/";

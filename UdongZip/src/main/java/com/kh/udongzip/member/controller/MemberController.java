@@ -1,9 +1,8 @@
 package com.kh.udongzip.member.controller;
 
-import java.security.SecureRandom;
-import java.util.Date;
-
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.udongzip.agent.model.service.AgentService;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
+import com.kh.udongzip.common.template.TemporaryPassword;
 import com.kh.udongzip.member.model.service.MemberService;
 import com.kh.udongzip.member.model.vo.Member;
 
@@ -29,10 +32,16 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
+	private AgentService agentService;
+	
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private JavaMailSenderImpl mailSender;
+	
+	@Autowired
+	private TemporaryPassword temporaryPassword;
 	
 	/**
 	* 개인회원 비밀번호 재설정 메소드
@@ -53,7 +62,7 @@ public class MemberController {
 		if(member != null) {
 			
 			String email = member.getMemberEmail();
-			String tmpPassword = getRandomPassword(10);;
+			String tmpPassword = temporaryPassword.getRandomPassword(10);;
 			
 			String setFrom = "udongzip12@gmail.com";
 	        String toMail = email;
@@ -99,10 +108,135 @@ public class MemberController {
 		
 	}
 	
+	/**
+	* 개인회원 회원가입 ID 중복 체크 메소드 (ajax)
+	*
+	* @version 1.0
+	* @author 박민규
+	* @return 중복확인 결과
+	*
+	*/
+	@ResponseBody
+	@RequestMapping(value="idCheck.me", produces="text/html; charset=UTF-8")
+	public String IdChek(String memberId) {
+		
+		int agentIdCount = agentService.agentIdCheck(memberId);
+		
+		int memberIdCount = memberService.memberIdCheck(memberId);
+			
+		return ((agentIdCount + memberIdCount) > 0) ? "NNNNN" : "NNNNY";
+	}
+	
+	/**
+	* 개인회원 회원가입 email 인증 메소드 (ajax)
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param email
+	*        가입하려는 이메일
+	* @return 인증번호 발송 결과
+	*
+	*/
+	@ResponseBody
+	@PostMapping(value="emailCheck.me", produces="text/html; charset=UTF-8")
+	public String emailChek(String email) {
+		
+		int result = memberService.memberEmailCheck(email);
+		
+		if(result > 0) {
+			
+			return "NNNNN";
+			
+		} else {
+		
+			int code = (int)(Math.random() * 90000 + 10000);
+			
+			String setFrom = "udongzip12@gmail.com";
+	        String toMail = email;
+	        String title = "우리동네 좋은 집, 우동집 이메일 인증 번호입니다.";
+	        String content = 
+	                "우동집을 방문해주셔서 감사합니다." +
+	                "<br><br>" + 
+	                "인증 번호는 [" + code + "]입니다." + 
+	                "<br>" + 
+	                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+	        
+	        try {
+	            
+	            MimeMessage message = mailSender.createMimeMessage();
+	            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+	            helper.setFrom(setFrom);
+	            helper.setTo(toMail);
+	            helper.setSubject(title);
+	            helper.setText(content,true);
+	            mailSender.send(message);
+	            
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return Integer.toString(code);
+			
+		}
+ 
+	}
+	
+	/**
+	* 개인회원 비밀번호 변경 메소드
+	* 
+	*
+	* @version 1.0
+	* @author 박민규
+	* @param memberPwd
+	* 		 현재 비밀번호
+	* @param newPwd
+	* 		 변경할 비밀번호
+	* @return 개인회원 정보관리 페이지
+	*
+	*/
+	@Auth(role=Role.MEMBER)
+	@PostMapping("updatePwd.me")
+	public String updatePwd(String memberPwd,
+							String newPwd,
+							Model model,
+							HttpSession session) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		if(bCryptPasswordEncoder.matches(memberPwd, loginUser.getMemberPwd())) {
+			
+			loginUser.setMemberPwd(bCryptPasswordEncoder.encode(newPwd));
+			
+			int result = memberService.updatePwd(loginUser);
+			
+			if(result > 0) {
+				
+				session.setAttribute("loginUser", loginUser);
+				session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다. 잠시후 다시 시도해주세요.");
+				
+				return "common/error";
+			}
+			
+		} else {
+			
+			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+			
+		}
+		
+		return "redirect:myPage.me";
+
+	}
+	
 	//로그인
 	@RequestMapping(value="login.me")
 	public ModelAndView loginMember(
 							Member member,
+							String loginCheck,
+							HttpServletResponse response,
 							ModelAndView mv,
 							HttpSession session
 							) {
@@ -116,6 +250,21 @@ public class MemberController {
 	// 비밀반호도 일치하는지 체크
 	
 	if(loginUser != null && bCryptPasswordEncoder.matches(member.getMemberPwd(), loginUser.getMemberPwd())) { //로그인성공
+		
+		// 아이디 저장 체크 시
+		if(loginCheck != null && loginCheck.equals("y")) {
+						
+			Cookie cookie = new Cookie("saveId", loginUser.getMemberId());
+			cookie.setMaxAge(1 * 24 * 60 * 60);
+			response.addCookie(cookie);
+								
+		} else { // 체크 안한 경우
+								
+			Cookie cookie = new Cookie("saveId", loginUser.getMemberId());
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+								
+		};
 		
 		loginUser.setIdentifier("member");
 		
@@ -233,7 +382,6 @@ public class MemberController {
 		Member updateMem = memberService.selectMember(member);
 			
 		session.setAttribute("loginUser", updateMem);
-		session.setAttribute("alertMag", updateMem);
 		
 		// 1회성 알람메세지 
 		session.setAttribute("alertMsg", "회원정보가 수정 되었습니다.");
@@ -268,27 +416,5 @@ public class MemberController {
 			return "common/error";
 		}
 	}
-	
-    public String getRandomPassword(int size) {
-        char[] charSet = new char[] {
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                '!', '@', '#', '$', '%', '^', '&' };
-
-        StringBuffer sb = new StringBuffer();
-        SecureRandom sr = new SecureRandom();
-        sr.setSeed(new Date().getTime());
-
-        int idx = 0;
-        int len = charSet.length;
-        for (int i=0; i<size; i++) {
-            // idx = (int) (len * Math.random());
-            idx = sr.nextInt(len);    // 강력한 난수를 발생시키기 위해 SecureRandom을 사용한다.
-            sb.append(charSet[idx]);
-        }
-
-        return sb.toString();
-    }
 	
 }

@@ -24,6 +24,13 @@
             <br>
 
             <form id="agent-update-form" action="update.ag" method="post">
+            	 <div class="info-text info-area">
+                 	<p>
+                    	* 업체명, 사업자번호, 대표자명, 관련 서류를 변경하려면 고객센터로 문의하시길 바랍니다. <br>
+                        * 변경되는 정보에 따라 증빙 서류를 다시 요청할 수 있습니다. <br>
+                        * 이메일은 인증 후 변경 가능합니다.
+                	</p>
+                </div>
 				
 				<input type="hidden" name="agentNo" value="${ loginUser.agentNo }">
                 <table class="info-table">
@@ -107,17 +114,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <span class="info-text">
-                            	* 업체명, 사업자번호, 대표자명을 변경하려면 고객센터로 문의하시길 바랍니다. <br>
-                            	* 변경되는 정보에 따라 증빙 서류를 다시 요청할 수 있습니다. <br>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
                         <td colspan="2" align="center">
                             <br><br>
-                            <button type="submit" class="button update-btn">수정하기</button>
+                            <button type="submit" class="button update-btn" onclick="return checkValidate();">수정하기</button>
                         </td>
                     </tr>
                 </table>
@@ -236,6 +235,7 @@
 
 	var authCode;
 	var currentEmail = "${ loginUser.agentEmail }";
+	var emailValidate = true;
 	
 	$(function() {
 			
@@ -257,8 +257,7 @@
 							
 							alert("이미 인증된 이메일입니다.");
 							
-							$("#agent-update-form .update-btn").attr("disabled", false);
-							$("#agent-update-form .update-btn").css("background-color", "#595959");
+							emailValidate = true;
 							
 						} else {
 							

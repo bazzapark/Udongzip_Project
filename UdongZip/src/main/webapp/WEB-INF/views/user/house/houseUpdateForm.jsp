@@ -83,19 +83,19 @@
                 <div id="img-area">
                     <div class="thumbnail-area">
                         <img class="previewer-big" src="${ house.thumbnail }">
-                        <input type="file" class="file-input" name="thumbnailFile" value="${ house.thumbnail }">
+                        <input type="file" class="file-input" name="thumbnailFile" value="${ house.thumbnail }" accept="png, jpg, jpeg, ">
                         <input type="hidden" name="thumbnail" value="${ house.thumbnail }">
                         <h4 align="center">대표사진</h4>
                     </div>
                     <div class="etc-area">
                     	<c:forEach var="houseImg" items="${ houseImgList }" varStatus="status">
                     		<img class="previewer-small" src="${ houseImg }">
-	                        <input type="file" class="file-input" name="reUpfile" value="${ houseImg }">
+	                        <input type="file" class="file-input" name="reUpfile" value="${ houseImg }" accept="png, jpg, jpeg">
 		                    <input type="hidden" name="uploaded" value="${ houseImg }">
                     	</c:forEach>
                     	<c:forEach var="i" begin="0" end="${ 8 - fn:length(houseImgList) }">
                     		<img class="previewer-small">
-	                        <input type="file" class="file-input" name="reUpfile">
+	                        <input type="file" class="file-input" name="reUpfile" accept="png, jpg, jpeg">
                     	</c:forEach>
                     </div>
                     <br clear="both">
@@ -105,6 +105,7 @@
                             * 대표사진을 포함하여 최소 4장 이상의 사진을 등록해야 하며, 최대 10장까지 등록할 수 있습니다. (한 장당 10MB 이내) <br>
                             * 매물 사진 이외의 다른 사진을 등록하는 경우 삭제 조치 될 수 있습니다. <br>
                             * 직접 찍은 사진만 등록해야 합니다. <br>
+                            * png, jpg, jpeg 파일만 등록 가능합니다.
                         </p>
                     </div>
                 </div>

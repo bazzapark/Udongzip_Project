@@ -7,8 +7,10 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class SaveFileRename {
 	
 	/**

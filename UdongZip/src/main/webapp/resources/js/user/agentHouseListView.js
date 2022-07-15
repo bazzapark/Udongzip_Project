@@ -148,6 +148,14 @@
 		
 		$(function() {
 		
+			$("#search-input").keydown(function (key) {
+			
+		        if (key.keyCode == 13) {
+		            getList();
+		        }
+		        
+		    });
+		
 			$(".enroll-btn").on("click", function() {
 				
 				location.href="enrollForm.ho";

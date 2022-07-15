@@ -107,11 +107,24 @@
 
     });
 
-    $(".file-input").on("change", function() { // file-input의 값이 바뀌면
+    $(document).on("change", ".file-input", function() { // file-input의 값이 바뀌면
+    
+    	var maxSize = 10 * 1024 * 1024;
+    	var fileSize = this.files[0].size;
+			
+		if(fileSize > maxSize) {
+		
+			alert("10MB 이하의 이미지 파일만 등록 가능합니다.");
+			$(this).val("");
+			
+		} else {
+			
+			 // 해당 input의 형제 중 img 태그를 가져와서
+			 var imgEl = $(this).prev();
 
-        var imgEl = $(this).siblings("img"); // 해당 input의 형제 중 img 태그를 가져와서
-
-        setPreview(this, imgEl); // 프리뷰 등록 함수에 같이 전달
+        	setPreview(this, imgEl); // 프리뷰 등록 함수에 같이 전달
+		
+		}
 
     });
     

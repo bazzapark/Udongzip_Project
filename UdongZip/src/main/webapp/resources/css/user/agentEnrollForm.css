@@ -77,6 +77,13 @@
         color: gray;
     }
     
+    .info-area {
+    	width: 600px;
+    	height: 30px;
+    	margin: auto;
+    	margin-top: 20px;
+    }
+    
     .validate-area {
     	margin-top: 10px;
     	font-size: 12px;

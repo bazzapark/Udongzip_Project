@@ -82,6 +82,13 @@
         cursor: pointer;
     }
     
+    .info-area {
+    	width: 700px;
+    	height: 30px;
+    	margin: auto;
+    	margin-top: 20px;
+    }
+    
     #emailCheck {
     	color: #595959;
     }

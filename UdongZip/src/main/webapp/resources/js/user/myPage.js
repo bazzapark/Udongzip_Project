@@ -4,7 +4,7 @@
 	
 	$(function() {
 	
-	   	$("#agentEmail").change(function() {
+	   	$("#memberEmail").change(function() {
     		
     		emailValidate = false;
     		
@@ -73,13 +73,13 @@
     
     $("#pwd-update-form .update-btn").click(function() {
     	
-    		if(pwdValidate && pwdValidate2 && $("#agentPwd").val().length > 0) {
+    		if(pwdValidate && pwdValidate2 && $("#memberPwd").val().length > 0) {
     			$("#pwd-update-form").submit();
     		} else {
     			alert("양식에 맞게 작성해주세요.");
     		}
     	
-    });
+    	});
 
     
     $(".confirm-btn").on("click", function() {
@@ -103,7 +103,7 @@
     $("#email-modal .close-btn").on("click", function() {
 
     	$("#email-modal").hide();
-       	$("#agentEmail").val(currentEmail);
+       	$("#memberEmail").val(currentEmail);
         emailValidate = false;
         clearInterval(runningTimer);
         	

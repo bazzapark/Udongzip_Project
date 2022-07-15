@@ -81,4 +81,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updatePwd(sqlSession, member);
 	}
 
+	@Override
+	public int memberEmailCheck(String email) {
+		return memberDao.memberEmailCheck(sqlSession, email);
+	}
+
 }
