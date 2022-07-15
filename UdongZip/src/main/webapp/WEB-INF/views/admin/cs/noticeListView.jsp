@@ -30,7 +30,7 @@
             <!-- 게시글 관련 영역 -->
             <div id="noticelist-area">
                 <!-- 글 삭제 / 글 작성 -->
-                <form id="" action="" method="">
+                <form id="" action="delete.no" method="GET">
                     <div class="admin-btn">
                         <a class="btn btn-secondary" style="float:right;" href="enrollForm.no">글쓰기</a>
                         <button type="submit" class="btn btn-outline-danger delete-btn">삭제하기</button>
@@ -51,7 +51,7 @@
                         <tbody align="center">
 	                        <c:forEach var="n" items="${ list }">
 		                        <tr>
-		                            <td><input type="checkbox" class="each_check"></td>
+		                            <td><input type="checkbox" class="each_check" name="delList" value="${ n.noticeNo }"></td>
 		                            <td class="nno">${ n.noticeNo }</td>
 		                            <td>${ n.title }</td>
 		                            <td>${ n.createDate }</td>
@@ -70,7 +70,7 @@
             <script>
                 $(function() {
     
-                    $("#notice-list>tbody>tr").click(function() {
+                    $("#notice-list>tbody>tr>td").not(":first-child").click(function(){
     
                         location.href = "updateForm.no?nno=" + $(this).children(".nno").eq(0).text();
                     });

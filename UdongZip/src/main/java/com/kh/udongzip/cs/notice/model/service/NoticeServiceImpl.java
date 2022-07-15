@@ -42,10 +42,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.updateNotice(sqlSession, notice);
 	}
 
+	// 공지사항 삭제
 	@Override
-	public int deleteNotice(int noticeNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteNotice(Integer noticeNo) {
+		return noticeDao.deleteNotice(sqlSession, noticeNo);
 	}
 
 }

@@ -73,6 +73,15 @@
 		 WHERE NOTICE_NO = #{noticeNo}
 	</update>
 	
+	<!-- 관리자 : 공지사항 삭제 -->
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE NOTICE
+		   SET STATUS = 'N'
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	
+	
 	<!-- 관리자 : 1:1 전체 조회 -->
 	<select id="selectadminInquiryList" resultMap="inquiryResultSet">
 		SELECT INQUIRY_NO, MEMBER_NO, AGENT_NO, CATEGORY, TITLE, 

@@ -1,6 +1,7 @@
 package com.kh.udongzip.cs.notice.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -132,12 +134,47 @@ public class NoticeController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	/**
+	* 관리자 고객센터 공지사항 삭제
+	*
+	* @version 1.0
+	* @author 홍민희
+	* @return 관리자 공지사항 리스트 전체페이지
+	*
+	*/
+	@RequestMapping("delete.no")
+	public String deleteNotice(@RequestParam("delList") List<Integer> list,
+			 					HttpSession session, Model model) {
+		
+		System.out.println(list);
+		
+		int count = 0;
+		
+		for(Integer nno : list) noticeService.deleteNotice(nno);
+
+		for(int i = 0; i < list.size(); i++) {
+			
+			int result = noticeService.deleteNotice(list.get(i));
+			
+			count = result+count;
+		}
+		
+		if(list.size() == count) {
+			
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			
+			return "redirect:adminlist.no";
+			
+		}
+		else {
+
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			
+			return "common/error";
+		}
+		
+		
+	}
 	
 	
 	
@@ -177,14 +214,6 @@ public class NoticeController {
 		Notice n = noticeService.selectNotice(noticeNo);
 		return n;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

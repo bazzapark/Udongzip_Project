@@ -20,7 +20,7 @@ public interface NoticeService {
 	int updateNotice(Notice notice);
 	
 	// 삭제 : 어드민
-	int deleteNotice(int noticeNo);
+	int deleteNotice(Integer noticeNo);
 	
 	
 
