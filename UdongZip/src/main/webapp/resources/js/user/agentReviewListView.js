@@ -252,7 +252,7 @@
 	        
 	        $(document).on("click", "#review-list tbody tr td:not(.not-click)", function() {
         		
-        		var revNo = $(this).siblings().eq(0).text();
+        		var revNo = $(this).parents().children().eq(0).text();
         		
         		for(var i in list) {
         		

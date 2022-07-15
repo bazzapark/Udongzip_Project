@@ -141,7 +141,7 @@
 		      </ul> 
 	      </c:when>
 		  
-		  <c:when test="${ !empty loginUser && loginUser.identifier eq 'admin' }">
+		  <c:when test="${ !empty loginUser && loginUser.identifier eq 'root' }">
 		      <!-- 메뉴 - 관리자 -->
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item">

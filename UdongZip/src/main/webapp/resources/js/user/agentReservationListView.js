@@ -212,7 +212,7 @@
         	
         	$(document).on("click", "#reservation-list tbody tr td:not(.not-click)", function() {
         		
-        		var resNo = $(this).siblings(".reservationNo").text();
+        		var resNo = $(this).parents().children(".reservationNo").text();
         		
         		for(var i in list) {
         		

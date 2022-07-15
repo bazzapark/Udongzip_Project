@@ -23,7 +23,7 @@
         <img id="errorImg" src="resources/images/error.png" alt="">
         <div id="errorTitle">서비스 요청 실패</div>
         <div id="errorMsg">${ errorMsg }</div>
-        <button type="button" class="btn btn-outline-primary">메인으로 돌아가기</button>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back()">이전 페이지로 돌아가기</button>
       </div>
       <!------- 에러 페이지 끝 ------->
 

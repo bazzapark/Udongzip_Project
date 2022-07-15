@@ -204,7 +204,7 @@
         	
         	$(document).on("click", "#inquiry-list tbody tr td:not(.not-click)", function() {
         		
-        		var inquiryNo = $(this).siblings().eq(0).text();
+        		var inquiryNo = $(this).parents().children().eq(0).text();
         	
         		$("#detail-form").children("input[name=inquiryNo]").val(inquiryNo);
         	

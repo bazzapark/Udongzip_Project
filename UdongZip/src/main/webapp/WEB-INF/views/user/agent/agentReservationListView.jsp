@@ -73,43 +73,42 @@
                         <table class="modal-table">
                             <tr>
                                 <th style="width: 70px;">예약 번호</th>
-                                <td id="resNo">1234</td>
+                                <td id="resNo"></td>
                             </tr>
                             <tr>
                                 <th>방문 예정일</th>
-                                <td id="resDate">2022-06-25 13:00</td>
+                                <td id="resDate"></td>
                             </tr>
                             <tr>
                                 <th>고객 ID</th>
-                                <td id="resId">gd88</td>
+                                <td id="resId"></td>
                             </tr>
                             <tr>
                                 <th>고객 성함</th>
-                                <td id="resName">홍길동</td>
+                                <td id="resName"></td>
                             </tr>
                             <tr>
                                 <th style="height: 60px;">문의 매물</th>
                                 <td id="resHouse">
-                                    당산동 위치 좋은
                                 </td>
                             </tr>
                             <tr>
                                 <th>매물 확인</th>
                                 <td id="houseCheck">
-                                    <a href="">1234</a>
+                                    <a href=""></a>
                                 </td>
                             </tr>
                             <tr>
                                 <th style="height: 150px;">사전<br>문의내용</th>
-                                <td id="resContent">이 방이 진짜 있나요</td>
+                                <td id="resContent"></td>
                             </tr>
                             <tr>
                                 <th>결제 상태</th>
-                                <td id="resDeposit">결제 완료</td>
+                                <td id="resDeposit"></td>
                             </tr>
                             <tr>
                                 <th>방문 상태</th>
-                                <td id="resResult">방문 대기</td>
+                                <td id="resResult"></td>
                             </tr>
                         </table>
         

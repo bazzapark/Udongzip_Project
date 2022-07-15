@@ -140,7 +140,7 @@
         
       	$(document).on("click", "#house-list tbody tr td:not(.not-click)", function() {
 		    
-		    $("#update-form").find("input").val($(this).siblings(".houseNo").text());
+		    $("#update-form").find("input").val($(this).parents().children(".houseNo").text());
 		    
 		    $("#update-form").submit();
 		    

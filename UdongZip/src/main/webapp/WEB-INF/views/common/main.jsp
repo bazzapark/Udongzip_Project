@@ -30,26 +30,6 @@
 	        </tr>
 	      </thead>
 	      <tbody class="table-group-divider">
-	        <tr>
-	          <td>[공지] 공지사항제목</td>
-	          <td class="text-center">2022-06-25</td>
-	        </tr>
-	        <tr>
-	          <td>[공지] 공지사항제목</td>
-	          <td class="text-center">2022-06-25</td>
-	        </tr>
-	        <tr>
-	          <td>[공지] 공지사항제목</td>
-	          <td class="text-center">2022-06-25</td>
-	        </tr>
-	        <tr>
-	          <td>[공지] 공지사항제목</td>
-	          <td class="text-center">2022-06-25</td>
-	        </tr>
-	        <tr>
-	          <td>[공지] 공지사항제목</td>
-	          <td class="text-center">2022-06-25</td>
-	        </tr>
 	      </tbody>
 	    </table>
 
@@ -58,4 +38,45 @@
 	</div>
 
 </body>
+
+<script>
+	$.ajax({
+		url: "list.no",
+		success: function(result) {
+			
+			var count = 5;
+			var resultStr = "";
+			
+			if(count > result.length) {
+				count = result.length;
+			}
+			
+			for(var i = 0; i < count; i++) {
+				
+				resultStr += "<tr>"
+						   + "<td>" + result[i].title + "</td>"
+						   + "<td class='text-center'>" + result[i].createDate + "</td>"
+						   + "</tr>";
+				
+			}
+			
+			$("#mainTable").append(resultStr);
+			
+		},
+		error : function() {
+			console.log("통신 실패");
+		}
+	})
+	
+	$(function() {
+		
+		$("#mainTable tbody").on("click", "tr td", function() {
+			
+			location.href="faq.no";
+			
+		})
+		
+		
+	})
+</script>
 </html>
