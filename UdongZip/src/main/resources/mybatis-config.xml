@@ -24,7 +24,7 @@
 		<typeAlias type="com.kh.udongzip.review.model.vo.RemoveRequest" alias="removeRequest" />
 	</typeAliases>
 	
-	<!--
+
 	<mappers>
 		<mapper resource="mappers/agent-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
@@ -33,8 +33,8 @@
 		<mapper resource="mappers/cs-mapper.xml"/>
 		<mapper resource="mappers/review-mapper.xml"/>
 	</mappers>
-	-->
-	
+
+	<!--
 	<mappers>
 		<mapper resource="mysql/agent-mapper.xml"/>
 		<mapper resource="mysql/member-mapper.xml"/>
@@ -43,6 +43,6 @@
 		<mapper resource="mysql/cs-mapper.xml"/>
 		<mapper resource="mysql/review-mapper.xml"/>
 	</mappers>
-	
+	-->
 
 </configuration>
