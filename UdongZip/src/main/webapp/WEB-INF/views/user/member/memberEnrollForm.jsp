@@ -267,6 +267,10 @@
                         </form>
                     </div>
                 </div>
+                
+                <div id="loading" style="margin-left: 0px;">
+					<img src="https://www.railtrip.co.kr/image/loading2.gif">
+    			</div>
  
 </body>
 <script>
@@ -283,11 +287,15 @@
 				
 			} else {
 				
+				$("#loading").show();
+				
 				$.ajax({
 					url : "emailCheck.me",
 					data : { email : $("#memberEmail").val() },
 					type : "post",
 					success : function(data) {
+						
+						$("#loading").hide();
 						
 						if(data == 'NNNNN') {
 							

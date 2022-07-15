@@ -268,12 +268,15 @@
                         </form>
                     </div>
                 </div>
+                	<div id="loading" style="margin-left: 0px;">
+				        <img src="https://www.railtrip.co.kr/image/loading2.gif">
+    				</div>
 	<!------- 헤더(메뉴바) 끝 ------->
 	
 	<script>
 		$(function() {
 			
-			var findPwdAction;
+			var findPwdAction = "findPwd.me";
 				
 			$("input[type=radio]").on("change", function() {
 				
@@ -296,11 +299,15 @@
 			
 			$(".pwd-confirm-btn").on("click", function() {
 				
+				$("#loading").show();
+				
 				$.ajax({
 					url : findPwdAction,
 					data : { userId : $("#userId").val() },
 					type : "POST",
 					success : function(data) {
+						
+						$("#loading").hide();
 						
 						console.log(data);
 						
