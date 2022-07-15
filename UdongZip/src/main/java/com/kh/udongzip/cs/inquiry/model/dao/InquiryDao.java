@@ -36,4 +36,9 @@ public class InquiryDao {
 		return sqlSession.update("csMapper.updateAnswer", inquiry);
 	}
 	
+	// 문의 작성 : 개인/업체 회원 
+	public int insertInquiry(SqlSessionTemplate sqlSession, Inquiry inquiry) {
+		return sqlSession.insert("csMapper.insertInquiry", inquiry);
+	}
+	
 }

@@ -14,7 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="resources/css/user/serviceListView.css">
 </head>
+
 <body>
+
 
     <!-- 전체 영역 -->
     <div id="wrap">
@@ -32,7 +34,7 @@
             <div class="navi-area">
                 <ul class="navi">
                     <li class="tab-link current" data-tab="tab-1">자주 묻는 질문</li>
-                    <c:if test="${( empty loginUser)}">
+                    <c:if test="${( !empty loginUser)}">
                     	<li class="tab-link"  data-tab="tab-2">1 : 1 문의</li>
                     </c:if>
                     <li class="tab-link"  data-tab="tab-3" onclick="noticeajax()">공지사항</li>
@@ -65,27 +67,59 @@
                         <h2>1 : 1  문의하기</h2>
                         <br>
             
-                        <form id="enrollForm" method="post" action="">
-                            <table align="center">
-                                <tr>
-                                    <th>카테고리</th>
-                                    <td>
-                                        <select>
-                                            <option value="">홈페이지</option>
-                                            <option value="">매물관련</option>
-                                            <option value="">기타</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><label for="title">제목</label></th>
-                                    <td><input type="text" id="title" class="form-control" name="" required></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="content">내용</label></th>
-                                    <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="" required></textarea></td>
-                                </tr>
-                            </table>
+                        <form id="enrollForm" method="post" action="insert.in">
+                        	<c:choose>
+                        		<c:when test="${ loginUser.identifier == 'member' }">
+		                            <input type="hidden" name="memberNo" value="${ loginUser.memberNo }" />
+		                            <table align="center">
+		                                <tr>
+		                                    <th>카테고리</th>
+		                                    <td>
+		                                        <select name="category">
+		                                            <option value="계정 문의">계정 문의</option>
+		                                            <option value="매물 문의">매물 문의</option>
+		                                            <option value="예약 문의">예약 문의</option>
+		                                            <option value="기타 문의">기타 문의</option>
+		                                        </select>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <th><label for="title">제목</label></th>
+		                                    <td><input type="text" id="title" class="form-control" name="title" required></td>
+		                                </tr>
+		                                <tr>
+		                                    <th><label for="content">내용</label></th>
+		                                    <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="content" required></textarea></td>
+		                                </tr>
+		                            </table>
+		                         </c:when>
+		                         
+		                         <c:otherwise>
+		                         	<input type="hidden" name="agentNo" value="${ loginUser.agentNo }" />
+		                         	<table align="center">
+		                                <tr>
+		                                    <th>카테고리</th>
+		                                    <td>
+		                                        <select name="category">
+		                                            <option value="계정 문의">계정 문의</option>
+		                                            <option value="매물 문의">매물 문의</option>
+		                                            <option value="예약 문의">예약 문의</option>
+		                                            <option value="기타 문의">기타 문의</option>
+		                                        </select>
+		                                    </td>
+		                                </tr>
+		                                <tr>
+		                                    <th><label for="title">제목</label></th>
+		                                    <td><input type="text" id="title" class="form-control" name="title" required></td>
+		                                </tr>
+		                                <tr>
+		                                    <th><label for="content">내용</label></th>
+		                                    <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="content" required></textarea></td>
+		                                </tr>
+		                            </table>
+		                         </c:otherwise>   
+		                         
+	                          </c:choose>  
                             <br>
             
                             <div class="wt-btn" align="right">

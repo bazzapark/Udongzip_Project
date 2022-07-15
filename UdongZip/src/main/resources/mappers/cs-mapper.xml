@@ -117,5 +117,34 @@
 		 WHERE INQUIRY_NO = #{inquiryNo}
 	</update>
 	
+	<!-- 개인/업체 공용 : 1:1 문의 작성 -->
+	<insert id="insertInquiry" parameterType="inquiry">
+		INSERT INTO INQUIRY(INQUIRY_NO, MEMBER_NO, AGENT_NO, 
+                    		CATEGORY, TITLE, CONTENT, CREATE_DATE, STATUS)
+		     VALUES (SEQ_INQ.NEXTVAL,
+		     <choose>
+		     	<when test="memberNo != 0">
+		     		#{memberNo},
+		     	</when>
+		     	<otherwise>
+		     		null,
+		     	</otherwise>
+		     </choose>
+		     <choose>
+		     	<when test="agentNo != 0">
+		     		#{agentNo},
+		     	</when>
+		     	<otherwise>
+		     		null,
+		     	</otherwise>
+		     </choose>
+		            #{category},
+		            #{title},
+		            #{content},
+		            SYSDATE,
+		            'Y'
+		)
+	</insert>
+	
 
 </mapper>

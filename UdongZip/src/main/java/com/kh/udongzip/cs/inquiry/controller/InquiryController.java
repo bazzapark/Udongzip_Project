@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kh.udongzip.cs.inquiry.model.service.InquiryService;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
-import com.kh.udongzip.cs.notice.model.vo.Notice;
 
 @Controller
 public class InquiryController {
@@ -109,6 +108,39 @@ public class InquiryController {
 		}
 		
 	}
+	
+	
+	/**
+	* 사용자 1:1 문의 작성 메소드
+	*
+	* @version 1.0
+	* @author 홍민희
+	* @return 사용자 1:1 문의 작성 페이지
+	*
+	*/
+	@RequestMapping("insert.in")
+	public String insertInquiry(Inquiry inquiry, HttpSession session, Model model) {
+		
+		int result = inquiryService.insertInquiry(inquiry);
+		
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "문의가 성공적으로 작성되었습니다.");
+			
+			return "redirect:faq.no";
+		}
+		else {
+			
+			model.addAttribute("errorMsg", "문의글 작성 실패");
+			
+			return "common/error";
+		}
+		
+		
+	}
+	
+	
 	
 	
 	

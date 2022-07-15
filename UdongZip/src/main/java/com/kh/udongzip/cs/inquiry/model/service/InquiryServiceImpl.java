@@ -18,10 +18,10 @@ public class InquiryServiceImpl implements InquiryService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	// 문의 작성 : 개인/업체 회원 
 	@Override
 	public int insertInquiry(Inquiry inquiry) {
-		// TODO Auto-generated method stub
-		return 0;
+		return inquiryDao.insertInquiry(sqlSession, inquiry);
 	}
 
 	@Override
