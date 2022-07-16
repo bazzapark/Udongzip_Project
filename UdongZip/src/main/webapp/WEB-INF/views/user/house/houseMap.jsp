@@ -60,8 +60,10 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="salesType" value="월세"> 월 세</label>
-									<label><input type="checkbox" name="salesType" value="전세"> 전 세</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 1" autocomplete="off" name="salesType" value="월세">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 1"> 월 세</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 2" autocomplete="off" name="salesType" value="전세">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 2"> 전 세</label>
 								</td>
 							</tr>
 							<tr>
@@ -69,9 +71,12 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="buildingType" value="다가구주택"> 다 가 구 주 택</label>
-									<label><input type="checkbox" name="buildingType" value="단독주택"> 단 독 주 택</label>
-									<label><input type="checkbox" name="buildingType" value="오피스텔"> 오 피 스 텔</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 3" autocomplete="off" name="buildingType" value="다가구주택">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 3"> 다 가 구 주 택</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 4" autocomplete="off" name="buildingType" value="단독주택">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 4"> 단 독 주 택</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 5" autocomplete="off" name="buildingType" value="오피스텔">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 5"> 오 피 스 텔</label>
 								</td>
 							</tr>
 							<tr>
@@ -79,9 +84,12 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="floor" value="지상"> 지 상</label>
-									<label><input type="checkbox" name="floor" value="옥탑"> 옥 탑</label>
-									<label><input type="checkbox" name="floor" value="반지하"> 반 지 하</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 6" name="floor" value="지상">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 6"> 지 상</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 7" name="floor" value="옥탑">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 7"> 옥 탑</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 8" name="floor" value="반지하">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 8"> 반 지 하</label>
 								</td>
 							</tr>
 							<tr>
@@ -89,10 +97,14 @@
 							</tr>
 							<tr>
 								<td>
-									<label><input type="checkbox" name="roomType" value="오픈형 원룸"> 오 픈 형 원 룸</label>
-									<label><input type="checkbox" name="roomType" value="분리형 원룸"> 분 리 형 원 룸</label>
-									<label><input type="checkbox" name="roomType" value="복층형 원룸"> 복 층 형 원 룸</label>
-									<label><input type="checkbox" name="roomType" value="투룸"> 투 룸</label><br><br>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 9" name="roomType" value="오픈형 원룸">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 9">오픈형 원룸</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 10" name="roomType" value="분리형 원룸">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 10">분리형 원룸</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 11" name="roomType" value="복층형 원룸">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 11">복층형 원룸</label>
+									<input type="checkbox" class="btn-check" id="btn-check-outlined 12" name="roomType" value="투룸">
+									<label class="btn btn-outline-primary" for="btn-check-outlined 12"> 투 룸</label><br><br>
 								</td>
 							</tr>
 							<tr>
