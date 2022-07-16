@@ -247,7 +247,7 @@
 	});
 	 
 	$("#sendBtn").click(function() { // 전송버튼 클릭시 sendmessage호출
-		if($("input[type=text]").val().length > 0){ // 빈 공백 전송 시 연결끊김 방지 조건
+		if($("#message").val().length > 0){ // 빈 공백 전송 시 연결끊김 방지 조건
 			sendMessage($("#message").val());
 			$('#message').val('');
 		}else{
@@ -257,7 +257,7 @@
 	
 	$("#message").on("keyup",function(e){ // 전송버튼 누를필요없이 Enter키 누르면 전송해지는구문
 		 if(e.key == "Enter"){
-			 if($("input[type=text]").val().length > 0){ // 빈 공백 전송 시 연결끊김 방지 조건
+			 if($("#message").val().length > 0){ // 빈 공백 전송 시 연결끊김 방지 조건
 			 sendMessage($("#message").val());
 			$("#message").val("");
 		} else {

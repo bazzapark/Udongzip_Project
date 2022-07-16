@@ -32,6 +32,7 @@
 		<mapper resource="mappers/reservation-mapper.xml"/>
 		<mapper resource="mappers/cs-mapper.xml"/>
 		<mapper resource="mappers/review-mapper.xml"/>
+		<mapper resource="mappers/chat-mapper.xml" />
 	</mappers>
 
 	<!--
