@@ -19,5 +19,7 @@ public class ChatRoom {
 	
 	// CHATROOM 테이블에 없는 필드
 	private int unReadCount; // 
+	private String memberName;
+	private String agentName;
 
 }

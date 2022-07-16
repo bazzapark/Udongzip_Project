@@ -137,14 +137,6 @@
             $("#house-list tbody").append(listStr);
             
         }
-        
-      	$(document).on("click", "#house-list tbody tr td:not(.not-click)", function() {
-		    
-		    $("#update-form").find("input").val($(this).parents().children(".houseNo").text());
-		    
-		    $("#update-form").submit();
-		    
-		});
 		
 		$(function() {
 		
@@ -161,5 +153,13 @@
 				location.href="enrollForm.ho";
 				
 			})
+			
+			$(document).on("click", "#house-list tbody tr:not(#no-list) td:not(.not-click)", function() {
+			    
+			    $("#update-form").find("input").val($(this).parents().children(".houseNo").text());
+			    
+			    $("#update-form").submit();
+			    
+			});
 		
 		})

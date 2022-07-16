@@ -202,7 +202,7 @@
         	
         	});
         	
-        	$(document).on("click", "#inquiry-list tbody tr td:not(.not-click)", function() {
+        	$(document).on("click", "#inquiry-list tbody tr:not(#no-list) td:not(.not-click)", function() {
         		
         		var inquiryNo = $(this).parents().children().eq(0).text();
         	

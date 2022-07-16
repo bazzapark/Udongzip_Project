@@ -210,7 +210,7 @@
         	
         	})
         	
-        	$(document).on("click", "#reservation-list tbody tr td:not(.not-click)", function() {
+        	$(document).on("click", "#reservation-list tbody tr:not(#no-list) td:not(.not-click)", function() {
         		
         		var resNo = $(this).parents().children(".reservationNo").text();
         		

@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+    
+        div{
+            box-sizing : border-box;
+           /* border : 1px solid; */
+        }
+
+        .wrap{
+            width : 1000px;
+            height : 800px;
+            margin : auto; 
+           /* border : 1px solid red;*/
+        }
+		
+        .wrap>div{ width : 100%; }
+
+        #header{ height : 10%; }
+        #content{ height : 75%; }
+        #footer{height: 15%;}
+		
+        #header>div, #content>div, #footer>div{
+            height : 100%;
+            float : left;
+        }
+
+        #header_1{ width : 30%; 
+        	text-align:center;	font-size: large;  border-right: 2px solid lightgray; border-bottom: 2px solid lightgray; align-items: center; display: flex; justify-content: center; 
+        }
+        #header_2{ width : 70%; 
+        	text-align:center;  font-size: large; align-items: center; display: flex; justify-content: center; background-color:#3399ff; color: white; 
+        }
+
+        #content_1{ width : 30%;  border-right: 2px solid lightgray; padding:10px;  }
+        #content_2{ width : 70%;  background-color: #e6ecff; border-bottom: 2px solid lightgray; }
+
+        #footer_1{ width : 30%;  border-right: 2px solid lightgray;  }
+        #footer_2{ width : 60%; }
+        #footer_3{ width : 10%; }
+
+        #sendBtn{
+           margin:auto;
+           height: 100%;
+           width: 100%; 
+           text-align: center; 
+           display:inline-block;
+		   background-color:#ffffcc;
+		   border: 0;
+		   cursor: pointer;
+		   color:#595959;
+		   border-left: 2px solid lightgrey;
+        }
+        
+		#chview li{cursor: pointer;}
+        
+        #ChatTitle {
+        	font-size : 35px;
+        	font-weight : 700;
+        	text-align : center;			
+        }
+        
+        #ChatTitle-div {
+        	width : 1000px;
+        	margin : auto;
+        }
+        
+        #message{
+        	width:100%; height:100%; 
+        	font-size:15px;
+        	box-sizing : border-box; 
+            border : none;
+			outline: none;
+        }
+        
+  #content_2::-webkit-scrollbar, #content_1::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #content_2::-webkit-scrollbar-corner, #content_1::-webkit-scrollbar-corner {
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  #content_2::-webkit-scrollbar-thumb, #content_1::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
+    border-radius: 10px;
+  }
+
+  #content_2::-webkit-scrollbar-thumb:hover, #content_1::-webkit-scrollbar-thumb:hover {
+    background-color: gray;
+  }
+
+  #content_2::-webkit-scrollbar-track, #content_1::-webkit-scrollbar-track {
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+  #userTitle{
+	font-weight:bold;
+	margin: 0px;
+  }
+
+  .unread-check {
+	border-radius: 10%;
+	width:40px; 
+	background-color:#0057A4; 
+	color:white; 
+	text-align:center; 
+	float: right;
+	font-weight: 600;
+  }
+
+  #chview{
+	padding-left: 0px;
+  }
+
+  #chview li{
+	list-style: none;
+	display:inline-block;
+	width: 100%;
+	height: 50px;
+	border-bottom: 0.5px solid #595959;
+	margin-top: 30px;
+	font-weight: bold;
+  }
+
+  #chview li:hover {
+	opacity: 0.7;
+  }
+
+  /*.meid{
+	background-color: whitesmoke;
+	border-radius: 5px;
+	min-width:100px;
+	 max-width:200px; 
+	 position:relative; 
+	 left:385px; 
+	 margin-top:10px;
+  } */
+
+  /*.meid, .meid1 {
+	position: relative;
+	background: #ffffff;
+	border-radius: .4em;
+}
+
+.meid1:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 13px solid transparent;
+	border-right-color: #ffffff;
+	border-left: 0;
+	margin-top: -13px;
+	margin-left: -13px;
+} */
+
+.meid1, .meid {
+ position:relative;
+ margin: 50px;
+ margin-bottom: 0px;
+ width:240px;
+ height:auto;
+ background:white;
+ border-radius:5px;
+ padding: 10px;
+ word-wrap: break-word;
+}
+.meid1:after {
+ border-top:0px solid white;
+ border-left: 0px solid transparent;
+ border-right: 0px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ left:-15px;
+}
+.meid:after {
+ border-top:0px solid white;
+ border-left: 0px solid transparent;
+ border-right: 0px solid transparent;
+ border-bottom: 0px solid transparent;
+ content:"";
+ position:absolute;
+ top:10px;
+ left:-15px;
+}
+
+.time {
+	color: #595959;
+	font-size: 12px;
+	margin-right: 55px;
+	margin-left: 55px;
+}

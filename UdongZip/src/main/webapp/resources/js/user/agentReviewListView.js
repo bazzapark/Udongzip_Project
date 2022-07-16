@@ -250,7 +250,7 @@
 	        	$("#request-modal").css("display", "none");
 	        });
 	        
-	        $(document).on("click", "#review-list tbody tr td:not(.not-click)", function() {
+	        $(document).on("click", "#review-list tbody tr:not(#no-list) td:not(.not-click)", function() {
         		
         		var revNo = $(this).parents().children().eq(0).text();
         		

@@ -17,7 +17,7 @@
 	</resultMap>
 
 	<select id="selectAgentReviewList" parameterType="_int" resultMap="reviewResultSet">
-		SELECT R1.*, IFNULL(RESULT, 'null') RESULT
+		SELECT R1.*, NVL(RESULT, 'null') RESULT
 		  FROM (SELECT REVIEW_NO, CONTENT, SATISFIED, CREATE_DATE, R.STATUS, MEMBER_ID
 	    		  FROM REVIEW R, MEMBER M
 	   			 WHERE R.MEMBER_NO = M.MEMBER_NO

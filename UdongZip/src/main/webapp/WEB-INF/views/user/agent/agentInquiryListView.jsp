@@ -92,8 +92,6 @@
 			type : "post",
 			success : function(result) {
 				
-				console.log(result);
-				
 				list = result;
 				filterList = list;
 				listCount = result.length;
@@ -106,15 +104,15 @@
                 	
                 } else {
                 	
-                	$("#review-list tbody").text("");
+                	$("#inquiry-list tbody").text("");
                 	
                 	var noList = "<tr id='no-list'>"
                 			   + "<td colspan='4' class='not-click'>"
-                			   + "조회된 리뷰가 없습니다."
+                			   + "조회된 내역이 없습니다."
                 			   + "<td>"
                 			   + "</tr>";
                 			   
-                	$("#review-list tbody").append(noList);
+                	$("#inquiry-list tbody").append(noList);
                 	
                 }
 				
