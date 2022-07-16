@@ -183,6 +183,7 @@
     		var buildingType = getCheckList("buildingType");
     		var floor = getCheckList("floor");    		
     		var roomType = getCheckList("roomType");
+    		var address1 = $("#search-input").val();
     		
     		$.ajax({
     			url : "search.ma",
@@ -190,7 +191,8 @@
     				salesType : salesType,
     				buildingType : buildingType,
     				floor : floor,
-    				roomType : roomType
+    				roomType : roomType,
+    				address1 : address1
     			},
     			success : function(data) {
     				if(data != 0) {
@@ -230,50 +232,10 @@
     	
 		$("#searchBtn").on("click", function() {	
     		
-    		search();
+    		getList();
     	
     	});
     	
-    	function search() {
-    		
-    		$.ajax({
-    			url : "search.lo",
-    			headers : { 'Authorization' : 'KakaoAK a8b77d874cdf7d0680055d6b64f7eb45'},
-    			data : {
-    				address1 : $("#search-input").val(),
-    			},
-    			success : function(data) {
-    				
-    				if(data != 0) {
-    					$("#result").empty();
-        				test01(data);	
-    				}
-    				else {
-    					$("#result").empty();
-    					
-    					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    				    mapOption = {
-    				        center: new kakao.maps.LatLng(37.5251992697347, 126.897104767379), // 지도의 중심좌표
-    				        level: 8, // 지도의 확대 레벨
-    				        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-    				    }; 
-    					// 지도를 생성한다 
-    					var map = new kakao.maps.Map(mapContainer, mapOption);
-    					
-    					var noStr = "<tr id='no-list'>"
-    							  + "<td colspan='5' style='cursor:default; background-color: #fff;  pointer-events: none;'>"
-    							  + "검색 결과가 없습니다."
-    							  + "</td>"
-    							  + "</tr>"
-    					
-    					$("#result").html(noStr);		  
-    				}
-    			},
-    			error : function() {
-    				console.log("ajax 통신 실패!");
-    			}
-    		});
-    	}
     	
 		
 		// slide

@@ -25,9 +25,7 @@ public interface HouseService {
 	
 	// 필터 : 개인회원
 	ArrayList<House> houseFilter(Map<String, Object> map);
-	
-	// 검색 : 개인회원 (주소검색)
-	ArrayList<House> searchMap(String address1);
+
 	
 	// 매물 신고 : 개인회원
 	int updateReportCount(int houseNo);

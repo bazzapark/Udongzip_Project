@@ -155,12 +155,6 @@ public class HouseServiceImpl implements HouseService {
 	}
 	
 	@Override
-	public ArrayList<House> searchMap(String address1) {
-		
-		return houseDao.searchMap(sqlSession, address1);
-	}
-
-	@Override
 	public int updateReportCount(int houseNo) {
 		// TODO Auto-generated method stub
 		return 0;

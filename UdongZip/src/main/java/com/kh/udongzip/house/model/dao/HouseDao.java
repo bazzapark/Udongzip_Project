@@ -101,10 +101,7 @@ public class HouseDao {
 		return (ArrayList)sqlSession.selectList("houseMapper.houseFilter", map);
 	}
 	
-	// 검색 (주소)
-	public ArrayList<House> searchMap(SqlSessionTemplate sqlSession, String address1) {
-		return (ArrayList)sqlSession.selectList("houseMapper.searchMap", address1);
-	}
+	
 	
 	
 /**

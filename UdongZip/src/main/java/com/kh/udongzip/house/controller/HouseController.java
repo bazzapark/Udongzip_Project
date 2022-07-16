@@ -444,14 +444,17 @@ public class HouseController {
 	public String houseFilter(@RequestParam(value="salesType[]", required=false) ArrayList<String> salesType,
 							@RequestParam(value="buildingType[]", required=false) ArrayList<String> buildingType,
 							@RequestParam(value="floor[]", required=false) ArrayList<String> floor,
-							@RequestParam(value="roomType[]", required=false) ArrayList<String> roomType) {
-		
+							@RequestParam(value="roomType[]", required=false) ArrayList<String> roomType,
+							String address1) {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("salesType", salesType);
 		map.put("buildingType", buildingType);
 		map.put("floor", floor);
 		map.put("roomType", roomType);
+		map.put("address1", address1);
+		
+		System.out.println(map);
 		
 		ArrayList<House> list = houseService.houseFilter(map);
 		
@@ -459,15 +462,7 @@ public class HouseController {
 		return new Gson().toJson(list);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="search.lo", produces="application/json; charset=UTF-8")
-	public String searchMap(String address1) {
-		
-		ArrayList<House> list = houseService.searchMap(address1);
-		
-		return new Gson().toJson(list);
-		
-	}
+	
 	/**
 	 * 매물 상세 조회 메소드
 	 * 조회수 증가,

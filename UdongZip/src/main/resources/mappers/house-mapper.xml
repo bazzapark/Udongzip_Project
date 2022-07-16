@@ -288,20 +288,12 @@
 			<foreach item="roomType" collection="roomType" open="(" separator="," close=")">
 				#{roomType}
 			</foreach>			
+		</if>
+		<if test="address1 != null">
+					AND ADDRESS1 LIKE '%${address1}%'
 		</if> 
   	</select>
   	
-  	<!-- 검색 (주소) -->
-  	<select id="searchMap" parameterType="string" resultMap="houseResultSet">
-  		SELECT *
-		FROM HOUSE
-		WHERE STATUS = 'Y'
-		AND SALES_STATUS = 'Y'
-		 <if test="address1 != null">
-					AND ADDRESS1 LIKE '%${address1}%'
-		</if>
-  	</select>
-	
 	<!-- 매물 상세 조회 -->
 	<select id="selectHouse" parameterType="_int" resultMap="houseResultSet">
 		SELECT *
