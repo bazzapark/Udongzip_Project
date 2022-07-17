@@ -61,7 +61,7 @@
                     	<th>문의번호</th>
                         <th>제목</th>
                         <th>작성일</th>
-                        <th>상태-해야함</th>
+                        <th>문의상태</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                         <td class="bno">${ i.inquiryNo }</td>
                         <td>${ i.title }</td>
                         <td>${ i.createDate }</td>
-                        <td>${ i.answerDate }</td>
+                        <td>${ i.status }</td>
                     </tr>
                  </c:forEach>
                  
