@@ -1,19 +1,13 @@
 package com.kh.udongzip.cs.inquiry.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
-
-import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
-import com.kh.udongzip.cs.notice.model.vo.Notice;
-import com.kh.udongzip.common.model.vo.PageInfo;
-import com.kh.udongzip.member.model.vo.Member;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
 
 @Repository
 public class InquiryDao {
@@ -32,9 +26,14 @@ public class InquiryDao {
 	}
 	
 	// 관리자 : 전체 조회
-	public ArrayList<Inquiry> selectadminInquiryList(SqlSessionTemplate sqlSession) {
+	public ArrayList<Inquiry> selectadminInquiryList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
-		return (ArrayList)sqlSession.selectList("csMapper.selectadminInquiryList");
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("csMapper.selectadminInquiryList", null, rowBounds);
 	}
 	
 	// 관리자 : 답변
@@ -46,21 +45,11 @@ public class InquiryDao {
 	public int insertInquiry(SqlSessionTemplate sqlSession, Inquiry inquiry) {
 		return sqlSession.insert("csMapper.insertInquiry", inquiry);
 	}
-	
-	// 페이징
-	public int selectListCount(SqlSessionTemplate sqlSession, Member member) {
-		
-		return sqlSession.selectOne("inquiryMapper.selectListCount", member);
-	}
 
-	// 1:1 문의 리스트 조회
-	public ArrayList<Inquiry> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Member member) {
+	// 문의 카운트 조회 : 관리자 
+	public int selectListCount(SqlSessionTemplate sqlSession) {
 		
-		int limit = pi.getBoardLimit();
-		int offset = (pi.getCurrentPage() -1) * limit;
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("inquiryMapper.selectList", member, rowBounds);
+		return sqlSession.selectOne("csMapper.selectListCount");
 	}
+	
 }

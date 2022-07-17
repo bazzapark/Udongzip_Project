@@ -80,6 +80,12 @@
 		 WHERE NOTICE_NO = #{noticeNo}
 	</update>
 	
+	<!-- 관리자 : 1:1 전체 카운트 조회 -->
+	<select id="selectListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM INQUIRY
+	WHERE STATUS = 'Y'
+	</select>
 	
 	
 	<!-- 관리자 : 1:1 전체 조회 -->

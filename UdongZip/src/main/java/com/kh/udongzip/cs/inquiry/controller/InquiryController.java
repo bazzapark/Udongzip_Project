@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.udongzip.common.model.vo.PageInfo;
-import com.kh.udongzip.common.security.Auth;
-import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.cs.inquiry.model.service.InquiryService;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
-import com.kh.udongzip.member.model.vo.Member;
 
 @Controller
 public class InquiryController {
@@ -36,7 +32,6 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
-	@Auth(role=Role.AGENT)
 	@RequestMapping("inquiry.ag")
 	public String agentInquiryListView() {
 		return "user/agent/agentInquiryListView";
@@ -52,7 +47,6 @@ public class InquiryController {
 	* @return 문의 목록
 	*
 	*/
-	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="agentListView.in", produces="applicatoin/json; charset=UTF-8")
 	public String selectAgentInquiryList(int agentNo) {
@@ -73,7 +67,6 @@ public class InquiryController {
 	* @return 업체회원 문의 상세 정보 페이지
 	*
 	*/
-	@Auth(role=Role.AGENT)
 	@PostMapping("agentDetail.in")
 	public String selectAgentInquiry(int inquiryNo,
 									 Model model) {
@@ -96,7 +89,6 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
-	@Auth(role=Role.AGENT)
 	@PostMapping("delete.in")
 	public String deleteInquiry(int inquiryNo,
 								Model model,
@@ -129,7 +121,6 @@ public class InquiryController {
 	* @return 사용자 1:1 문의 작성 페이지
 	*
 	*/
-	@Auth(role=Role.LOGINUSER)
 	@RequestMapping("insert.in")
 	public String insertInquiry(Inquiry inquiry, HttpSession session, Model model) {
 		
@@ -162,15 +153,24 @@ public class InquiryController {
 	*
 	* @version 1.0
 	* @author 홍민희
-	* @return 업체회원 1:1 문의 내역 페이지
+	* @return 업체회원 1:1 문의 전체조회 페이지
 	*
 	*/
-	@Auth(role=Role.ADMIN)
 	@RequestMapping("adminlist.in")
-	public String selectinquiryList(Model model) {
+	public String selectinquiryList(
+			@RequestParam(value="ipage", defaultValue="1") int currentPage
+			,Model model) {
 		
-		ArrayList<Inquiry> list = inquiryService.selectadminInquiryList();
+		int listCount = inquiryService.selectListCount();
 		
+		int pageLimit = 10;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getpageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Inquiry> list = inquiryService.selectadminInquiryList(pi);
+		
+		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "admin/cs/inquiryListView";
@@ -184,7 +184,6 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 상세 페이지
 	*
 	*/
-	@Auth(role=Role.ADMIN)
 	@ResponseBody
 	@RequestMapping("admindetail.in")
 	public Inquiry selectadminInquiry(int inquiryNo) {
@@ -202,7 +201,6 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
-	@Auth(role=Role.ADMIN)
 	@RequestMapping("answerupdate.in")
 	public String updateAnswer(Inquiry inquiry, HttpSession session, Model model) {
 		
@@ -225,44 +223,7 @@ public class InquiryController {
 		
 	}
 	
-	@RequestMapping ("inquirylist.bo")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
-	                         Model model, HttpSession session) {
-		
-		Member member = (Member) session.getAttribute("loginUser");
-		
-		int listCount = inquiryService.selectListCount(member);
-		
-		
-		int pageLimit = 10;
-		int boardLimit = 5;
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		ArrayList<Inquiry> list = inquiryService.selectInquiryList(pi, member);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		return "user/inquiry/inquiryListView";
-	}
 	
 	
-	// 상세조회
-	@RequestMapping("inquirydetail.bo") // inquiry
-	public ModelAndView selectInquiry(@RequestParam (value="bno", defaultValue="1") int inquiryNo, ModelAndView mv) {
-		
-		Inquiry i = inquiryService.selectInquiry(inquiryNo);
-		
-		if(i != null) {
-			
-			mv.addObject("i", i).setViewName("user/inquiry/inquiryDetailView");
-			
-		}
-		else {
-			
-			mv.addObject("errorMsg", "1:1문의 상세조회 실패").setViewName("common/error");
-		}
-		return mv;
-	}
+
 }
