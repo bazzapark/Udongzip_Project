@@ -70,9 +70,10 @@
             <script>
                 $(function() {
     
-                    $("#notice-list>tbody>tr>td").not(":first-child").click(function(){
+                    $(document).on("click", "#notice-list>tbody>tr>td:not(:first-child)", function(){
+                    	
     
-                        location.href = "updateForm.no?nno=" + $(this).children(".nno").eq(0).text();
+                        location.href = "updateForm.no?nno=" + $(this).parents().children(".nno").eq(0).text();
                     });
                 });
 

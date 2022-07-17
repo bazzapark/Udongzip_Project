@@ -34,7 +34,7 @@
             <div class="navi-area">
                 <ul class="navi">
                     <li class="tab-link current" data-tab="tab-1">자주 묻는 질문</li>
-                    <c:if test="${( !empty loginUser)}">
+                    <c:if test="${ !empty loginUser and loginUser.identifier ne 'root' }">
                     	<li class="tab-link"  data-tab="tab-2">1 : 1 문의</li>
                     </c:if>
                     <li class="tab-link"  data-tab="tab-3" onclick="noticeajax()">공지사항</li>
@@ -69,7 +69,7 @@
             
                         <form id="enrollForm" method="post" action="insert.in">
                         	<c:choose>
-                        		<c:when test="${ loginUser.identifier == 'member' }">
+                        		<c:when test="${ loginUser.identifier == 'member' or loginUser.identifier == 'root' }">
 		                            <input type="hidden" name="memberNo" value="${ loginUser.memberNo }" />
 		                            <table align="center">
 		                                <tr>
