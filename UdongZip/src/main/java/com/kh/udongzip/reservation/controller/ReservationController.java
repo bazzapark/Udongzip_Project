@@ -96,6 +96,7 @@ public class ReservationController {
 	@PostMapping("insert.rs")
 	public String insertReservation(String partner_order_id, String partner_user_id, 
 			String pg_token, Reservation reservation, HttpSession session, Model model) throws Exception {
+		System.out.println(reservation);
 		
 		int resResult = reservationService.insertReservation(reservation);
 		
@@ -166,14 +167,12 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("payApproval.do")
-	public String payApproval(String pg_token, HttpSession session) {
-		session.setAttribute("pg_token", pg_token);
+	public String payApproval() {
 		return "common/payApproval";
 	}
 	
 	@RequestMapping("payCancel.do")
 	public String payCancel(HttpSession session) {
-		
 		session.setAttribute("alertMsg", "결제를 취소하셨습니다.");
 		return "redirect:/";
 	}
@@ -191,7 +190,7 @@ public class ReservationController {
 	 * @author 양아란
 	 * @return 
 	 */
-	@PostMapping("kakaoPay.rs")
+	@PostMapping("kakaopay.rs")
 	public String kakaoPay(HttpSession session) throws Exception {
 		
 			// 결제 승인 API
@@ -233,8 +232,6 @@ public class ReservationController {
 			
 			br.close();
 			urlConn.disconnect();
-			
-			session.setAttribute("alertMsg", "예약이 완료되었습니다.");
 			
 			return "redirect:/";
 			

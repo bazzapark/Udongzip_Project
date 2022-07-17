@@ -41,7 +41,7 @@
 	<insert id="insertReservation" parameterType="reservation">
 		INSERT INTO RESERVATION (RESERVATION_NO, MEMBER_NO, AGENT_NO, HOUSE_NO, RESERVATION_DATE, RESERVATION_TIME, CONTENT, RESULT, DEPOSIT, CREATE_DATE)
 		VALUES (SEQ_RES.NEXTVAL, #{memberNo}, #{agentNo}, #{houseNo}, #{reservationDate}, 
-				#{reservationTime}, #{content}, "방문 대기", "결제 완료", SYSDATE);
+				#{reservationTime}, #{content}, '방문 대기', '결제 완료', SYSDATE)
 	</insert>
 
 	

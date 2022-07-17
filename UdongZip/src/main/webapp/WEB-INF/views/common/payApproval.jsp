@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>우동집 | 우리동네집 모아보기</title>
+
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- CSS 파일 -->
 <link rel="stylesheet" href="resources/css/common/common.css">
@@ -31,24 +35,11 @@
   </div>
   
   <script>
-  
   $(function() {
-	  kakaopay();
+	  console.log("pg_token : ${ pg_token }");
   })
   
-  
-  function kakaopay() {
-	  
-	  var form = document.createElement("form");
-	  form.action = "kakaopay.rs";
-	  form.method = "";
-	  form.style.display = "none";
-	  document.body.appendChild(form);
-	  form.submit();
-  }
-  
-  
-  
   </script>
+
 </body>
 </html>

@@ -563,7 +563,7 @@
 		
 		// 상담 예약 모달창 버튼 활성화
 		$("#reservation").mouseenter(function() {
-			if (${ loginUser != null and loginUser.identifier eq 'member' }) {
+			if (${ not empty loginUser and loginUser.identifier eq 'member' }) {
 				$(this).attr("data-bs-toggle", "modal");
 			} else {
 				$(this).attr("data-bs-toggle", "");
@@ -574,7 +574,7 @@
 		$("#reservation").click(function() {
 			
 			// 로그인 상태
-			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+			if (${ not empty loginUser and loginUser.identifier == 'member' }) {
 				$.ajax({
 					url: "select.ag",
 					data: {
@@ -615,7 +615,7 @@
 			form.action = "insert.rs";
 			form.method = "POST";
 			input1.name = "partner_order_id"; // 가맹점 주문번호
-			input1.value = ${ house.houseNo } + ${ house.agentNo } + ${ loginUser.memberNo }
+			input1.value = ${ house.houseNo } + ${ house.agentNo } + Number(${ loginUser.memberNo })
 			input2.name = "partner_user_id"; // 가맹점 회원 ID (문의 업체)
 			input2.value = $("#agentName").text();
 			
@@ -623,11 +623,11 @@
 			input3.value = "ready";
 			
 			input4.name = "memberNo";
-			input4.value = ${ loginUser.memberNo };
+			input4.value = Number(${ loginUser.memberNo });
 			input5.name = "agentNo";
-			input5.value = ${ house.agentNo };
+			input5.value = Number(${ house.agentNo });
 			input6.name = "houseNo";
-			input6.value = $("#houseNo").text();
+			input6.value = Number($("#houseNo").text());
 			input7.name = "reservationDate";
 			input7.value = $("#bookingDate").val();			
 			input8.name = "reservationTime";
@@ -647,7 +647,7 @@
 			form.style.display = "none";
 			document.body.appendChild(form);
 			form.submit();
-		}) 
+		})
 	  
 	  // 날짜, 시간 변수 셋팅
 	  // 현재 시간이 오후 6시 이상이면 minDate를 내일 날짜로 설정
@@ -714,12 +714,12 @@
 	$(function() {
 		
 		// 매물 찜 조회
-		if (${ loginUser != null and loginUser.identifier == 'member' }) { // 로그인한 상태
+		if (${ not empty loginUser and loginUser.identifier == 'member' }) { // 로그인한 상태
 			$.ajax({
 				url: "select.zz",
 				data: {
-					memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
-					houseNo: ${ house.houseNo }
+					memberNo: Number(${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
+					houseNo: Number(${ house.houseNo })
 				},
 				type: "POST",
 				success: function(result) {
@@ -741,14 +741,14 @@
 		$("#zzimBtn").click(function() {
 			
 			// 로그인 상태
-			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+			if (${ not empty loginUser and loginUser.identifier == 'member' }) {
 				// 찜이 되어있는 경우 - 찜 삭제
 				if ($("#zzimImg").attr("class") == "isZzim") {
 					$.ajax({
 						url: "delete.zz",
 						data: {
-							memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
-							houseNo: ${ house.houseNo }
+							memberNo: Number(${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
+							houseNo: Number(${ house.houseNo })
 						},
 						type: "POST",
 						success: function(result) {
@@ -769,8 +769,8 @@
 					$.ajax({
 						url: "insert.zz",
 						data: {
-							memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
-							houseNo: ${ house.houseNo }
+							memberNo: Number(${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
+							houseNo: Number(${ house.houseNo })
 						},
 						type: "POST",
 						success: function(result) {
@@ -818,7 +818,7 @@
 		console.log("loginUser : ${ loginUser }")
 		// 허위 신고 모달창 버튼 활성화
 		$("#notify").mouseenter(function() {
-			if (${ loginUser != null and loginUser.identifier eq 'member' }) {
+			if (${ not empty loginUser and loginUser.identifier eq 'member' }) {
 				$(this).attr("data-bs-toggle", "modal");
 			} else {
 				$(this).attr("data-bs-toggle", "");
@@ -827,7 +827,7 @@
 		
 		// 허위 신고 모달창 버튼 클릭
 		$("#notify").click(function() {
-			if (${ loginUser == null or loginUser.identifier ne 'member' }) {
+			if (${ empty loginUser or loginUser.identifier ne 'member' }) {
 				alert("개인 회원 로그인 후 사용 가능한 서비스입니다. ")
 				return false;
 			}
