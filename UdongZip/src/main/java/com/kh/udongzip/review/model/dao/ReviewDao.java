@@ -27,21 +27,20 @@ public class ReviewDao {
  * @version 1.0
  * @author 양아란
  */
-	// 리뷰 전체 조회수
+	// 리뷰 전체 조회수 : 개인 회원
 	public int selectListCount(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("reviewMapper.selectListCount", m);
 	}
 	
-	// 리뷰 전체 조회
+	// 리뷰 전체 조회 : 개인 회원
 	public ArrayList<Review> agentSelectReviewList(SqlSessionTemplate sqlSession, PageInfo pi, Member m) {
-		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList) sqlSession.selectList("reviewMapper.agentSelectReviewList", m, rowBounds);
 	}
 	
-	// 삭제 요청 전체 조회
+	// 리뷰 삭제 요청 전체 조회 : 어드민
 	public ArrayList<RemoveRequest> selectRequestList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
@@ -49,22 +48,22 @@ public class ReviewDao {
 		return (ArrayList) sqlSession.selectList("reviewMapper.selectRequestList", map, rowBounds);
 	}
 	
-	// 삭제 요청 전체 조회 수
+	// 리뷰 삭제 요청 전체 조회 수 : 어드민
 	public int selectRequestListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("reviewMapper.selectReuqestListCount", map);
 	}
 	
-	// 삭제 요청 상세 조회
+	// 리뷰 삭제 요청 상세 조회 : 어드민
 	public RemoveRequest selectRequest(SqlSessionTemplate sqlSession, int requestNo) {
 		return sqlSession.selectOne("reviewMapper.selectRequest", requestNo);
 	}
 	
-	// 리뷰 삭제
+	// 리뷰 삭제 : 개인회원, 어드민
 	public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
 		return sqlSession.update("reviewMapper.deleteReview", reviewNo);
 	}
 	
-	// 삭제 요청 반려
+	// 리뷰 삭제 요청 반려 : 어드민
 	public int updateRequest(SqlSessionTemplate sqlSession, RemoveRequest request) {
 		return sqlSession.update("reviewMapper.updateRequest", request);
 	}

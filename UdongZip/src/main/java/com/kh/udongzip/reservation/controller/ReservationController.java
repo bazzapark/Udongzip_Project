@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,7 @@ public class ReservationController {
 	
 	/**
 	* 업체회원 예약 상태 변경 메소드 (ajax)
+	* 결제 취소 메소드
 	*
 	* @version 1.0
 	* @author 박민규
@@ -74,32 +76,90 @@ public class ReservationController {
 	* @param result
 	*        예약 상태
 	* @return 변경 성공 여부
+	 * @throws Exception 
 	*
 	*/
 	@ResponseBody
 	@PostMapping(value="changeResult.res", produces="text/html; charset=UTF-8")
 	public String updateResult(int reservationNo,
-							   String resultStatus) {
+							   String resultStatus) throws Exception {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("reservationNo", reservationNo);
 		map.put("resultStatus", resultStatus);
 		
+		if (resultStatus.equals("방문 완료")) {
+			
+			Reservation reservation = reservationService.selectReservation(reservationNo);
+			
+			// 결제 취소 API
+			String url = "https://kapi.kakao.com/v1/payment/cancel";
+			
+			URL requestUrl = new URL(url);
+			HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
+			urlConn.setRequestMethod("POST");
+			urlConn.setRequestProperty("Authorization", "KakaoAK 13acc9f723b2683c3fc9614c6a32cbfd");
+			urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+			urlConn.setDoInput(true);
+			urlConn.setDoOutput(true);
+			Map<String, String> params = new HashMap<String, String>(); // 파라미터 설정
+			params.put("cid", "TC0ONETIME");
+			params.put("tid", reservation.getTid());
+			params.put("cancel_amount", Integer.toString(reservation.getCancelAmount()));
+			params.put("cancel_tax_free_amount", Integer.toString(reservation.getCancelTaxFreeAmount()));
+			String strParams = new String();
+			for (Map.Entry<String, String> param : params.entrySet()) {
+				strParams += (param.getKey() + "=" + param.getValue() + "&");
+			}
+			OutputStream out = urlConn.getOutputStream(); 
+			out.write(strParams.getBytes()); 
+			out.flush(); 
+			out.close(); 
+			
+			String line;
+			String responseText = "";
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+			
+			while ((line = br.readLine()) != null) {
+				responseText += line;
+			}
+			
+			br.close();
+			urlConn.disconnect();
+			
+			JsonObject resultObj =  JsonParser.parseString(responseText).getAsJsonObject();
+			
+			if (map.containsKey("msg")) {
+				return "NNNNN";
+			}
+			
+		} 
+		
 		int result = reservationService.updateResult(map);
 		
 		if(result > 0) {
+			
 			return "NNNNY";
+		
 		} else {
+			
 			return "NNNNN";
 		}
 		
 	}
 	
 	/**
+	 * 예약 추가 메소드 : 개인 회원
+	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param reservation
+	 * 
+	 * @param reservation Reservation 객체
+	 * @param partner_order_id 가맹점 코드 (업체 회원 번호)
+	 * @param partner_user_id 가맹점 이름 (업체 회원 업체명)
+	 * 
 	 * @return 결제 승인 페이지
 	 */
 	@PostMapping("insert.rs")
@@ -175,11 +235,19 @@ public class ReservationController {
 	}
 	
 	/**
-	 * 카카오 페이 결제 취소 메소드
+	 * 카카오 페이 결제 취소 메소드 : 개인 회원
+	 * 
+	 * @version 1.0
 	 * @author 양아란
+	 * 
+	 * @param session Session 객체
+	 * @param model Model 객체
+	 * 
+	 * @return 매물 상세 페이지
 	 */
 	@RequestMapping("payCancel.do")
 	public String payCancel(HttpSession session, Model model) {
+		
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		int reservationNo = reservationService.selectNewReservation(memberNo);
@@ -188,21 +256,29 @@ public class ReservationController {
 			
 			int result = reservationService.deleteReservation(reservationNo);
 			if (result > 0) {
-				session.setAttribute("alertMsg", "결제를 취소하셨습니다.");
-				return "redirect:/";
+				session.setAttribute("alertMsg", "결제가 취소되었습니다.");
+				return "redirect:list.ma";
 			} else {
-				model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 다시 시도해주세요. ");
+				model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 1:1 문의 남겨주시기 바랍니다.");
 				return "common/error";
 			}
 		} else {
-			model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 다시 시도해주세요. ");
+			model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 1:1 문의 남겨주시기 바랍니다.");
 			return "common/error";
 		}
 	}
 	
 	/**
-	 * 카카오 페이 결제 에러 메소드
+	 * 카카오 페이 결제 에러 메소드 : 개인 회원
+	 * 
+	 * @version 1.0
 	 * @author 양아란
+	 * 
+	 * @param model Model 객체
+	 * @param session Session 객체
+	 * 
+	 * @return 매물 상세 페이지
+	 * 
 	 */
 	@RequestMapping("payError.do")
 	public String payError(Model model, HttpSession session) {
@@ -215,24 +291,28 @@ public class ReservationController {
 			
 			int result = reservationService.deleteReservation(reservationNo);
 			if (result > 0) {
-				session.setAttribute("alertMsg", "결제를 취소하셨습니다.");
+				session.setAttribute("alertMsg", "결제 요청을 실패했습니다. 다시 시도해주세요.");
 				return "redirect:/";
 			} else {
-				model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 다시 시도해주세요. ");
+				model.addAttribute("errorMsg", "결제 요청을 실패했습니다. 다시 시도해주세요. ");
 				return "common/error";
 			}
 		} else {
-			model.addAttribute("errorMsg", "결제 취소에 실패하였습니다. 다시 시도해주세요. ");
+			model.addAttribute("errorMsg", "결제 요청을 실패했습니다. 다시 시도해주세요. ");
 			return "common/error";
 		}
 	}
 	
 	/**
-	 * 카카오 페이 결제 승인 메소드
+	 * 카카오 페이 결제 승인 메소드 : 개인 회원
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @return 예약 정보 업데이트
+	 * 
+	 * @param pg_token 결제 요청 성공시 전달받는 값
+	 * @session Session 객체
+	 * 
+	 * @return 예약 정보 변경 메소드
 	 */
 	@RequestMapping("kakaopay.rs")
 	public String kakaoPay(@RequestParam (value="pg_token") String pg_token, HttpSession session) throws Exception {
@@ -282,9 +362,15 @@ public class ReservationController {
 	}
 	
 	/**
-	 * 예약 업데이트 메소드
+	 * 예약 정보 변경 메소드 : 개인 회원
 	 * 
+	 * @version 1.0
 	 * @author 양아란
+	 * 
+	 * @param session Session 객체
+	 * @param model Model 객체
+	 * 
+	 * @return 매물 상세 페이지
 	 */
 	@RequestMapping("update.rs")
 	public String updateReservation(HttpSession session, Model model) {
@@ -301,13 +387,13 @@ public class ReservationController {
 			int result = reservationService.updateReservation(reservation);
 			if (result > 0) {
 				session.setAttribute("alertMsg", "예약이 완료되었습니다.");
-				return "redirect:/";
+				return "redirect:reservationlist.bo?cpage=1";
 			} else {
-				model.addAttribute("errorMsg", "예약이 실패했습니다. 결제가 된 경우 1:1 문의 작성해주세요. ");
+				model.addAttribute("errorMsg", "예약이 실패했습니다. 1:1 문의 남겨주시기 바랍니다.");
 				return "common/error";
 			}
 		} else {
-			model.addAttribute("errorMsg", "예약이 실패했습니다. 결제가 된 경우 1:1 문의 작성해주세요. ");
+			model.addAttribute("errorMsg", "예약이 실패했습니다. 1:1 문의 남겨주시기 바랍니다.");
 			return "common/error";
 		}
 		
@@ -354,6 +440,13 @@ public class ReservationController {
 		// 폼 띄어주기
 		return "user/reservation/reservationFome";
 	}
+	
+	/**
+	 * 결제 취소 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 */
 	
 
 }

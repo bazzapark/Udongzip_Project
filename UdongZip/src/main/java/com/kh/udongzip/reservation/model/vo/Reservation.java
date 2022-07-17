@@ -28,13 +28,13 @@ public class Reservation {
 	private String memberId;
 	private String houseTitle;
 	
+	// RESERVATION 테이블에 없는 필드
+	private String agentName;
+	private int reviewNo;
+	
 	// 환불에 필요한 정보
 	private String cid;
 	private String tid;
 	private int cancelAmount; // CANCEL_AMOUNT
-	private int cancelTaxFreeMount; // CANCEL_TAX_FREE_MOUNT
-
-	// 없는 필드
-	private String agentName;
-	private int reviewNo;
+	private int cancelTaxFreeAmount; // CANCEL_TAX_FREE_AMOUNT
 }

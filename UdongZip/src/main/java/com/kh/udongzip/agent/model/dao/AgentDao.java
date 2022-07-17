@@ -62,7 +62,7 @@ public class AgentDao {
  * @version 1.0
  * @author 양아란
  */
-	// 업체회원 전체 조회, 가입 미승인, 검색 필터
+	// 업체회원 전체 조회, 가입 미승인, 검색 필터 : 어드민
 	public ArrayList<Agent> selectAgentList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
@@ -70,12 +70,12 @@ public class AgentDao {
 		return (ArrayList) sqlSession.selectList("agentMapper.selectAgentList", map, rowBounds);
 	}
 	
-	// 업체회원 전체조회, 가입 미승인 업체 회원 전체 조회 수
+	// 업체회원 전체조회, 가입 미승인 업체 회원 전체 조회 수 : 어드민
 	public int selectListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("agentMapper.selectListCount", map);
 	}
 	
-	// 업체 회원 가입 승인, 탈퇴 처리
+	// 업체 회원 가입 승인, 탈퇴 처리 : 어드민
 	public int adminUpdate(SqlSessionTemplate sqlSession, Agent agent) {
 		return sqlSession.update("agentMapper.adminUpdate", agent);
 	}

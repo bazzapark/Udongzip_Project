@@ -408,13 +408,18 @@ public class MemberController {
 	}
 	
 	/**
-	 * 개인 회원 전체 조회 메소드
+	 * 개인 회원 전체 조회 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param cpage 현재 페이지
+	 * @param keyword 검색 키워드
+	 * @param model 모델 객체
+	 * 
 	 * @return 개인 회원 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("list.me")
 	public String selectMemberList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String keyword) {
 		
@@ -442,13 +447,16 @@ public class MemberController {
 	}
 	
 	/**
-	 * 개인 회원 상세 조회 메소드
+	 * 개인 회원 상세 조회 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param memberNo 개인 회원 번호
+	 * 
 	 * @return 개인 회원 상세 조회 모달창
 	 */
+	@Auth(role=Role.ADMIN)
 	@ResponseBody
 	@PostMapping("select.me")
 	public Member selectMember(int memberNo) {
@@ -459,13 +467,18 @@ public class MemberController {
 	}
 	
 	/**
-	 * 개인 회원 탈퇴 메소드
+	 * 개인 회원 탈퇴 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param memberNo 개인 회원 번호
+	 * @param model 모델 객체
+	 * @param session 세션 객체
+	 * 
 	 * @return 개인 회원 상세 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@PostMapping("adminDelete.me")
 	public String adminDeleteMember(int memberNo, Model model, HttpSession session) {
 		int result = memberService.deleteMember(memberNo);

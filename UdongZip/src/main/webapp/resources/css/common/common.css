@@ -196,10 +196,6 @@ nav {
   padding-left: 20px;
   width: 70%;
 }
-
-#mainTable tbody tr:hover {
-  cursor: pointer;
-}
 /***** 메인페이지 스타일 끝 *****/
 
     .pwdmodal-table {

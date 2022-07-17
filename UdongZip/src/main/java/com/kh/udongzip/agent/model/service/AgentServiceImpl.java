@@ -91,19 +91,19 @@ public class AgentServiceImpl implements AgentService {
  * @version 1.0
  * @author 양아란
  */
-	// 업체회원 전체 조회, 가입 미승인, 검색 필터 메소드
+	// 업체회원 전체 조회, 가입 미승인, 검색 필터 메소드 : 어드민
 	@Override
 	public ArrayList<Agent> selectAgentList(PageInfo pi, HashMap<String, String> map) {
 		return agentDao.selectAgentList(sqlSession, pi, map);
 	}
 	
-	// 업체회원 전체조회, 가입 미승인, 검색필터 수 메소드
+	// 업체회원 전체조회, 가입 미승인, 검색필터 수 메소드 : 어드민
 	@Override
 	public int selectListCount(HashMap<String, String> map) {
 		return agentDao.selectListCount(sqlSession, map);
 	}
 	
-	// 업체 회원 가입 승인, 탈퇴 처리 메소드
+	// 업체 회원 가입 승인, 탈퇴 처리 메소드 : 어드민
 	@Override
 	public int adminUpdate(Agent agent) {
 		return agentDao.adminUpdate(sqlSession, agent);

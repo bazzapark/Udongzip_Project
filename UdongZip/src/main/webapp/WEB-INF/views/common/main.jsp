@@ -18,7 +18,7 @@
 		<div id="content-area">
 
 			<div id="mainTitle">우리 동네의 집들을 모아서 보세요.</div>
-	    <table class="table align-middle table-hover table-sm mb-5" id="mainTable">
+	    <table class="table align-middle table-sm mb-5" id="mainTable">
 	      <thead>
 	        <tr>
 	          <th scope="col">공지사항</th>
@@ -40,46 +40,44 @@
 </body>
 
 <script>
-	$.ajax({
-		url: "list.no",
-		success: function(result) {
-			
-			var count = 5;
-			var resultStr = "";
-			
-			if(count > result.length) {
-				count = result.length;
-			}
-			
-			if (count = 0) {
-				resultStr += "<tr><td class='text-center' colspan='2'>공지사항이 없습니다.</td></tr>"
-			} else {
-				for(var i = 0; i < count; i++) {
-					
-					resultStr += "<tr>"
-							   + "<td>" + result[i].title + "</td>"
-							   + "<td class='text-center'>" + result[i].createDate + "</td>"
-							   + "</tr>";
-					
+
+	function getList() {
+		$.ajax({
+			url: "list.no",
+			type: "GET",
+			success: function(result) {
+				
+				var count = 5;
+				var resultStr = "";
+				if(count > result.length) {
+					count = result.length;
 				}
+				
+				if (count == 0) {
+					resultStr += "<tr><td class='text-center' colspan='2'>공지사항이 없습니다.</td></tr>"
+				} else {
+					
+					for(var i = 0; i < count; i++) {
+						
+						resultStr += "<tr>"
+								   + "<td>" + result[i].title + "</td>"
+								   + "<td class='text-center'>" + result[i].createDate + "</td>"
+								   + "</tr>";
+					}
+				}
+				
+				$("#mainTable>tbody").append(resultStr);
+				
+			},
+			error : function() {
+				console.log("메인 공지 사항 Ajax 통신 실패");
 			}
-			
-			$("#mainTable").append(resultStr);
-			
-		},
-		error : function() {
-			console.log("통신 실패");
-		}
-	})
+		})
+	}
 	
 	$(function() {
 		
-		$("#mainTable tbody").on("click", "tr td", function() {
-			
-			location.href="faq.no";
-			
-		})
-		
+		getList();
 		
 	})
 </script>

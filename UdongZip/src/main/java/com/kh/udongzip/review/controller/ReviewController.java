@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.member.model.vo.Member;
 import com.kh.udongzip.review.model.service.ReviewService;
@@ -96,12 +98,20 @@ public class ReviewController {
 	}
 	
 	/**
-	 * 리뷰 삭제 요청 전체 조회 메소드
-	 * 삭제전, 키워드 검색 메소드
+	 * 리뷰 삭제 요청 전체 조회 메소드 : 어드민
+	 * 삭제전, 키워드 검색
 	 * 
 	 * @version 1.0
 	 * @author 양아란
+	 * 
+	 * @param cpage 현재 페이지
+	 * @param classification 전체 / 삭제 전 / 검색
+	 * @param keyword 검색 키워드
+	 * @param model 모델 객체
+	 * 
+	 * @return 리뷰 삭제 요청 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("list.rv")
 	public String selectRemoveList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
 		
@@ -135,13 +145,16 @@ public class ReviewController {
 	}
 	
 	/**
-	* 삭제요청 상세 조회 메소드
+	* 리뷰 삭제요청 상세 조회 메소드 : 어드민
 	*
 	* @version 1.0
 	* @author 양아란
-	* @param requestNo
-	* @return 삭제 요청 상세 모달창
+	* 
+	* @param requestNo 리뷰 삭제 요청 번호
+	* 
+	* @return 리뷰 삭제 요청 상세 모달창
 	*/
+	@Auth(role=Role.ADMIN)
 	@ResponseBody
 	@PostMapping("select.rv")
 	public RemoveRequest selectAgent(int requestNo) {
@@ -150,13 +163,18 @@ public class ReviewController {
 	}
 	
 	/**
-	 * 삭제 요청 반려, 삭제 처리 메소드
+	 * 삭제 요청 반려, 삭제 처리 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 * 
 	 * @return 삭제 요청 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@PostMapping("adminUpdate.rv")
 	public String adminUpdate(RemoveRequest request, Model model, HttpSession session) {
 		
@@ -249,7 +267,7 @@ public class ReviewController {
 		
 		if(result >0) { // 성공
 			
-			session.setAttribute("alertMsg", "서옹적으로 리뷰가 삭제되었습니다.");
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
 			
 			return "redirect:reviewlist.bo";
 		}

@@ -13,10 +13,11 @@
  -->
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+ 
 <!-- 부트스트랩 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,21 +146,21 @@
 		      <!-- 메뉴 - 관리자 -->
 		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">일반 회원 관리</a>
+		          <a class="nav-link" href="list.me?cpage=1">일반 회원 관리</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="#">업체 회원 관리</a>
+		          <a class="nav-link" href="list.ag?cpage=1">업체 회원 관리</a>
 		        </li>
 		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            신고·요청 관리
+		          <a class="nav-link dropdown-toggle" href="" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            	신고·요청 관리
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="">
 		            <li>
-		              <a class="dropdown-item" href="#">허위 매물 신고</a>
+		              <a class="dropdown-item" href="list.rp?cpage=1">허위 매물 신고</a>
 		            </li>
 		            <li>
-		              <a class="dropdown-item" href="#">리뷰 삭제 요청</a>
+		              <a class="dropdown-item" href="list.rv?cpage=1">리뷰 삭제 요청</a>
 		            </li>
 		          </ul>
 		        </li>
