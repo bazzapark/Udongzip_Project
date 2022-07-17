@@ -1,9 +1,14 @@
 package com.kh.udongzip.agent.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.udongzip.agent.model.vo.Agent;
+import com.kh.udongzip.common.model.vo.PageInfo;
 
 @Repository
 public class AgentDao {
@@ -52,5 +57,30 @@ public class AgentDao {
 	public int updatePwd(SqlSessionTemplate sqlSession, Agent agent) {
 		return sqlSession.update("agentMapper.updatePwd", agent);
 	}
+	
+/**
+ * @version 1.0
+ * @author 양아란
+ */
+	// 업체회원 전체 조회, 가입 미승인, 검색 필터
+	public ArrayList<Agent> selectAgentList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList) sqlSession.selectList("agentMapper.selectAgentList", map, rowBounds);
+	}
+	
+	// 업체회원 전체조회, 가입 미승인 업체 회원 전체 조회 수
+	public int selectListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("agentMapper.selectListCount", map);
+	}
+	
+	// 업체 회원 가입 승인, 탈퇴 처리
+	public int adminUpdate(SqlSessionTemplate sqlSession, Agent agent) {
+		return sqlSession.update("agentMapper.adminUpdate", agent);
+	}
+/**
+ * 
+ */
 
 }

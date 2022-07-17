@@ -1,11 +1,10 @@
 /***** 관리자 - 업체 회원 전체 조회 스타일 *****/
 /* 업체회원 검색 타이틀, 검색창 */
-#agentListTitlebar {
+#memberListTitlebar {
   display: flex;
   position: relative;
-  margin-top: 100px;
 }
-#agentListTitlebar > button {
+#memberListTitlebar > button {
   position: absolute;
   right: 25%;
   height: 14px;
@@ -36,5 +35,8 @@
 #agentDetailModal .modal-footer button {
   margin: auto;
   width: 30%;
+}
+#agentDetailModal table td {
+	word-break: break-all;
 }
 /***** 관리자 - 업체 회원 전체 조회 스타일 끝 *****/

@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
@@ -144,19 +146,38 @@ public class HouseDao {
 	}
 	
 	// 매물 찜 조회
-	public int selectZzim(SqlSessionTemplate sqlSession, Map<String, Integer> map) {
+	public Integer selectZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.selectOne("houseMapper.selectZzim", map);
 	}
 	
 	// 매물 찜 추가
-	public int insertZzim(SqlSessionTemplate sqlSession, Map<String, Integer> map) {
+	public int insertZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.insert("houseMapper.insertZzim", map);
 	}
 	
 	// 매물 찜 삭제
-	public int deleteZzim(SqlSessionTemplate sqlSession, Map<String, Integer> map) {
+	public int deleteZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.delete("houseMapper.deleteZzim", map);
 	}
+	
+	// 허위 매물 신고 추가 메소드
+	public int updateReportCount(SqlSessionTemplate sqlSession, int houseNo) {
+		return sqlSession.update("houseMapper.updateReportCount", houseNo);
+	}
+	
+	// 허위 매물 전체 조회 수 메소드
+	public int selectReportHouseCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("houseMapper.selectReportHouseCount", map);
+	}
+	
+	// 허위 매물 전체 조회 메소드
+	public ArrayList<House> selectReportHouse(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList) sqlSession.selectList("houseMapper.selectReportHouse", map, rowBounds);
+	}
+	
 /**
  * 
  */

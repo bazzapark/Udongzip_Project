@@ -1,6 +1,12 @@
 package com.kh.udongzip.agent.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -14,19 +20,29 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.udongzip.agent.model.service.AgentService;
 import com.kh.udongzip.agent.model.vo.Agent;
+import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.common.security.Auth;
 import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.SaveFileRename;
 import com.kh.udongzip.common.template.TemporaryPassword;
+import com.kh.udongzip.house.model.service.HouseService;
+import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.member.model.service.MemberService;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.review.model.service.ReviewService;
+import com.kh.udongzip.review.model.vo.Review;
 
 @Controller
 public class AgentController {
@@ -36,6 +52,12 @@ public class AgentController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private HouseService houseService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -477,6 +499,166 @@ public class AgentController {
 		}
 		
 	}
+	
+	/**
+	* 업체회원 상세 조회 메소드
+	*
+	* @version 1.0
+	* @author 양아란
+	* @param agentNo
+	* 		 업체회원 번호
+	* @return 매물 상세 조회 페이지 - 상담 예약 모달창
+	*/
+	@ResponseBody
+	@PostMapping("select.ag")
+	public Agent selectAgent(int agentNo) {
+		Agent agent = agentService.selectAgent(agentNo);
+		return agent;
+	}
+	
+	/**
+	* 업체회원 상세 조회 페이지 이동 메소드
+	*
+	* @version 1.0
+	* @author 양아란
+	* @param agentNo
+	* 		 업체회원 번호
+	* @return 업체 회원 상세 조회 페이지
+	* @throws Exception 
+	*/
+	@GetMapping("/detail.ag")
+	public String detailAgent(@RequestParam(value="ano") int agentNo, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) throws Exception {
+		
+		// 1. 업체 회원 상세 조회
+		Agent agent = agentService.selectAgent(agentNo);
+		
+		 if (agent != null) { 
+			 
+			model.addAttribute("agent", agent); 
+			
+			// 2. 업체 주소로 위도, 경도 값 찾기
+			String url = "https://dapi.kakao.com/v2/local/search/address.json";
+				   url += "?query=" + URLEncoder.encode(agent.getAgentAddress(), "UTF-8");
+				   url += "&page=1&size=1";
+			
+			URL requestUrl = new URL(url);
+			HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
+			urlConn.setRequestMethod("GET");
+			urlConn.setRequestProperty("Authorization", "KakaoAK cfcaaf9c4a0f2e0ba0cbc2a71f5d23a8");
+			
+			String line;
+			String reponseText = "";
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+			
+			while ((line = br.readLine()) != null) {
+				reponseText += line;
+			}
+			
+			br.close();
+			urlConn.disconnect();
+			
+			JsonObject result = JsonParser.parseString(reponseText).getAsJsonObject().get("documents").getAsJsonArray().get(0).getAsJsonObject().get("address").getAsJsonObject();
+			String lat = result.get("y").getAsString();
+			String lng = result.get("x").getAsString();
+			
+			model.addAttribute("lat", lat);
+			model.addAttribute("lng", lng);
+			
+			// 3. 업체 매물 리스트 조회
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("agentNo", agentNo);
+			map.put("category", null);
+			map.put("keyword", null);
+			ArrayList<House> houseList = houseService.selectHouseList(map);
+			model.addAttribute("houseList", houseList);
+			
+			// 4. 업체 리뷰 전체 조회
+			Member m = new Member();
+			m.setIdentifier("agent");
+			m.setMemberNo(agentNo);
+			// 페이징 처리 변수 셋팅
+			int listCount = reviewService.selectListCount(m);
+			int pageLimit = 5;
+			int boardLimit = 5;
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+			
+			// 업체 회원 리뷰 전체 조회
+			ArrayList<Review> reviewList = reviewService.agentSelectReviewList(pi, m);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("reviewList", reviewList);
+			
+			return "user/agent/agentDetailView";
+		 	
+		 } else { 
+			model.addAttribute("errorMsg", "업체 회원 상세 조회에 실패했습니다. 다시 시도해주세요. "); 
+			return "common/error"; 
+		 }
+	}
+	
+	/**
+	 * 업체 회원 전체 조회 메소드
+	 * 가입 미승인, 키워드 검색 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 업체 회원 전체 조회 페이지
+	 */
+	@RequestMapping("list.ag")
+	public String selectAgentList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("classification", classification);
+		map.put("keyword", keyword);
+		
+		// 페이징 처리 변수 셋팅
+		int listCount = agentService.selectListCount(map);
+		int pageLimit = 5;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+					
+		ArrayList<Agent> list = agentService.selectAgentList(pi, map);
+		
+		if (list == null) {
+			model.addAttribute("errorMsg", "회원 가입 미승인 업체 회원 조회에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		if (classification != null) {
+			model.addAttribute("classification", "&classification=" + classification);
+		}
+		if (keyword != null) {
+			model.addAttribute("keyword", "&keyword=" + keyword);
+		}
+		
+		return "admin/agent/agentListView";	
+	}
+	
+	/**
+	 * 업체 회원 가입 승인, 탈퇴 처리 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 업체 회원 전체 조회 페이지
+	 */
+	@PostMapping("adminUpdate.ag")
+	public String adminUpdate(Agent agent, Model model, HttpSession session) {
+		int result = agentService.adminUpdate(agent);
+		if (result > 0) {
+			session.setAttribute("alertMsg", "업체 회원 수정이 완료되었습니다.");
+			return "redirect:/list.ag";
+		} else {
+			model.addAttribute("errorMsg", "업체 회원 수정에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
+	}
+	
+	
 
 
 }

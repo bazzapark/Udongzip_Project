@@ -1,8 +1,12 @@
 package com.kh.udongzip.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.member.model.vo.Member;
 
 @Repository
@@ -50,5 +54,22 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.memberEmailCheck", email);
 	}
 	
+	// 개인 회원 전체 조회 수
+	public int selectListCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("memberMapper.selectListCount", keyword);
+	}
+	
+	// 개인 회원 전체 조회
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList) sqlSession.selectList("memberMapper.selectMemberList", keyword, rowBounds);
+	}
+	
+	// 개인 회원 상세 조회
+	public Member selectMember(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("memberMapper.selectMember", memberNo);
+	}
 	
 }

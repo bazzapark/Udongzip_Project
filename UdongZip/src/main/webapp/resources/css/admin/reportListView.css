@@ -3,11 +3,10 @@
 #removeListTitlebar {
   display: flex;
   position: relative;
-  margin-top: 100px;
 }
-#content-area div:first-child > button {
+#removeListTitlebar > button {
   position: absolute;
-  right: 0;
+  right: 25%;
   height: 14px;
   bottom: 35%;
   font-size: 14px;
@@ -19,6 +18,16 @@
   font-weight: 900;
   font-size: 20px;
   width: 50%;
+}
+#removeFilterbar {
+  height: 14px;
+  width: 25%;
+  position: absolute;
+  bottom: 20%;
+  right: 0;	
+}
+#removeFilterbar > * {
+  font-size: 14px;
 }
 
 /* 리뷰삭제 요청 상세조회 모달 */
@@ -44,6 +53,9 @@
   margin: auto;
   width: 30%;
 }
+#removeDetailModal table td {
+	word-break: break-all;
+}
 /***** 관리자 - 리뷰 삭제 요청 전체 조회 스타일 끝 *****/
 /***** 관리자 - 허위 매물 신고 전체 조회 스타일 *****/
 /* 허위매물 검색 타이틀, 검색창 */
@@ -54,7 +66,7 @@
 }
 #reportListTitlebar > button {
   position: absolute;
-  right: 0;
+  right: 25%;
   height: 14px;
   bottom: 35%;
   font-size: 14px;
@@ -64,7 +76,16 @@
   font-size: 20px;
   width: 50%;
 }
-
+#reportFilterbar {
+  height: 14px;
+  width: 25%;
+  position: absolute;
+  bottom: 20%;
+  right: 0;	
+}
+#reportFilterbar > * {
+  font-size: 14px;
+}
 /* 허위매물 상세조회 모달 */
 #reportDetailModal .modal-title {
   left: 35%;
@@ -79,5 +100,8 @@
 #reportDetailModal .modal-footer button {
   margin: auto;
   width: 30%;
+}
+#reportDetailModal table td {
+	word-break: break-all;
 }
 /***** 관리자 - 허위 매물 신고 전체 조회 스타일 끝 *****/

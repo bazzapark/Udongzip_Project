@@ -25,8 +25,8 @@
 <!-- CSS파일 -->
 <link rel="stylesheet" href="resources/css/user/houseDetailView.css">
 
-<!-- JS파일 -->
-<script defer src="resources/js/user/houseDetailView.js"></script>
+<!-- 카카오 지도 API -->
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=084a0d93b202ede69ef974d4cc624440&libraries=services"></script>
 
 </head>
 <body>
@@ -46,35 +46,35 @@
             <table class="table align-middle">
               <tr>
                 <th class="col-4">매물 번호</th>
-                <td>${ house.houseNo }</td>
+                <td id="houseNo">${ house.houseNo }</td>
               </tr>
               <tr>
                 <th>업체명</th>
-                <td></td>
+                <td id="agentName">${ house.agentName }</td>
               </tr>
               <tr>
                 <th>대표자명</th>
-                <td></td>
+                <td id="ceoName"></td>
               </tr>
               <tr>
                 <th>연락처</th>
-                <td></td>
+                <td id="agentPhone"></td>
               </tr>
               <tr>
                 <th>주소</th>
-                <td></td>
+                <td id="agentAddress"></td>
               </tr>
               <tr>
                 <th>예약금</th>
-                <td>30,000원</td>
+                <td>20,000원</td>
               </tr>
               <tr>
                 <th>상담 일시</th>
                 <td>
                   <div class="dateTimePicker">
-                    <input type="text" id="bookingDate" name="bookingDate" class="text-center" placeholder="날짜 선택" readonly/>
+                    <input type="text" id="bookingDate" name="reservationDate" class="text-center" placeholder="날짜 선택" readonly/>
                     <span id="mouseEnterTime">
-                      <input type="text" id="bookingTime" name="bookingTime" class="text-center" placeholder="시간 선택" readonly disabled="true"/>
+                      <input type="text" id="bookingTime" name="reservationTime" class="text-center" placeholder="시간 선택" readonly disabled="true"/>
                     </span>
                   </div>
                 </td>
@@ -82,7 +82,7 @@
               <tr>
                 <th>상담 내용</th>
                 <td>
-                  <textarea name="consultContent" id="consultContent" maxlength="30"></textarea>
+                  <textarea name="consultContent" id="content" maxlength="100" name="content"></textarea>
                 </td>
               </tr>
             </table>
@@ -95,7 +95,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
             <span id="mouseEnterBooking">
-              <button type="button" class="btn btn-primary" disabled="true">예약하기</button>
+              <button type="button" class="btn btn-primary" disabled="true" id="reservationBtn">예약하기</button>
             </span>
           </div>
         </div>
@@ -117,7 +117,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-            <button type="button" class="btn btn-danger">신고하기</button>
+            <button type="button" class="btn btn-danger" id="notifyBtn" data-bs-dismiss="modal">신고하기</button>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@
     <div id="content-area">
 
       <!-- 매물 사진 -->
-      <div id="landDetailImg" class="carousel carousel-dark slide mt-5" data-bs-ride="true">
+      <div id="landDetailImg" class="carousel carousel-dark slide mt-5" data-bs-ride="carousel">
         <div class="carousel-indicators">
         	<c:choose>
         		<c:when test="${ not empty images }">
@@ -153,12 +153,12 @@
         			<c:forEach var="i" begin="0" end="${ images.size() - 1 }">
 		        		<c:choose>
 		        			<c:when test="${ i eq 0 }">
-		        				<div class="carousel-item active">
+		        				<div class="carousel-item active" data-bs-interval="3000">
 		        					<img src="${ images[i] }" class="d-block w-100" alt="...">
 		       					</div>
 		        			</c:when>
 		        			<c:otherwise>
-		        				<div class="carousel-item">
+		        				<div class="carousel-item" data-bs-interval="3000">
 		        					<img src="${ images[i] }" class="d-block w-100" alt="...">
 		       					</div>
 		        			</c:otherwise>
@@ -187,18 +187,17 @@
         <div class="row mb-3">
           <div class="col-3">
           	<button class="btn btn-link btn-sm" id="zzimBtn">
-            	<div id="zzimImg"></div>
+            	<div id="zzimImg" class="notZzim"></div>
           	</button>
           </div>
-          <div class="col pt-2 text-end"><a href="" id="notify" data-bs-toggle="modal" data-bs-target="#notifyModal">허위매물 신고하기</a></div>
+          <div class="col pt-2 text-end"><a href="" id="notify" data-bs-toggle="" data-bs-target="#notifyModal">허위매물 신고하기</a></div>
         </div>
         <div class="row text-center mb-2"><div class="col" id="landId">매물번호 ${ house.houseNo }</div></div>
-        <div class="row text-center mb-3"><div class="col"><a href="" id="agentId">${ house.agentName }</a></div></div>
+        <div class="row text-center mb-3"><div class="col"><a href="detail.ag?ano=${ house.agentNo }" id="agentId">${ house.agentName }</a></div></div>
         <div class="row text-center">
-          <div class="col"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#consultBookingModal">상담 예약</button></div>
+          <div class="col"><button class="btn btn-primary" data-bs-toggle= "" data-bs-target="#consultBookingModal" id="reservation">상담 예약</button></div>
         </div>
       </div>
-
 
       <!-- 매물 상세 정보 -->
       <table class="table table table-borderless mb-5 mt-5 landDetailTable">
@@ -211,14 +210,29 @@
           <tr>
             <th scope="row">${ house.salesType }</th>
             <td>
-	            <c:choose>
-	            	<c:when test="${ house.salesType eq '전세' }">
-	            		${ house.deposit }
-	            	</c:when>
-	            	<c:otherwise>
-	            		${ house.deposit } / ${ house.monthlyCost }
-	            	</c:otherwise>
-	            </c:choose>
+            	<c:choose>
+            		<c:when test="${ Integer.toString(house.deposit).length() >= 5 }">
+            			<c:choose>
+            				<c:when test="${ house.salesType eq '전세' }">
+            					${ Integer.toString(house.deposit).substring(0, Integer.toString(house.deposit).length() - 4) }억
+            					${ Integer.toString(house.deposit).substring(Integer.toString(house.deposit).length() - 4) }
+            				</c:when>
+            				<c:otherwise>
+            					${ house.deposit } / ${ house.monthlyCost }
+            				</c:otherwise>
+            			</c:choose>
+            		</c:when>
+            		<c:otherwise>
+            			<c:choose>
+            				<c:when test="${ house.salesType eq '전세' }">
+            					${ house.deposit }
+            				</c:when>
+            				<c:otherwise>
+            					${ house.deposit } / ${ house.monthlyCost }
+            				</c:otherwise>
+            			</c:choose>
+            		</c:otherwise>
+            	</c:choose>
             </td>
           </tr>
           <c:if test="${ not empty house.manageCost }">
@@ -237,19 +251,7 @@
           <c:if test="${ not empty house.roomType }">
           	<tr>
           		<th scope="row">방 종류</th>
-          		<td>
-          			<c:choose>
-          				<c:when test="${ house.roomType == 1 }">
-          					오픈형
-          				</c:when>
-          				<c:when test="${ house.roomType == 2 }">
-          					분리형
-          				</c:when>
-          				<c:otherwise>
-          					복층형
-          				</c:otherwise>
-          			</c:choose>
-          		</td>
+          		<td>${ house.roomType }</td>
           	</tr>
           </c:if>
           <c:if test="${ not empty options }">
@@ -261,7 +263,7 @@
           <c:if test="${ house.roomCount ne 0 }">
           	<tr>
           		<th scope="row">방 수</th>
-          		<td>${ house.roomCount }</td>
+          		<td>${ house.roomCount }개</td>
           	</tr>
           </c:if>
           <c:if test="${ not empty house.buildingFloor }">
@@ -283,49 +285,34 @@
           <c:if test="${ not empty house.size_m2 }">
           	<tr>
           		<th scope="row">공급면적</th>
-          		<td><span>${ house.size_m2 } m²</span>
-          			<button class="btn btn-outline-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-  							<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-  							<path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-					</svg> <span>평</span></button>
+          		<td>
+	          		<span id="size" class="m2">${ house.size_m2 } m²</span>
+	          		<button id="sizeChange" class="btn btn-outline-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+					<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+					<path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+					</svg><span id="change">평</span></button>
 				</td>
           	</tr>
           </c:if>
           <c:if test="${ not empty house.direction }">
           	<tr>
           		<th scope="row">방향</th>
-          		<td>
-          			<c:if test="${ house.direction == 'S' }">
-          				남향
-          			</c:if>
-          			<c:if test="${ house.direction == 'SW' }">
-          				남서향
-          			</c:if>
-          			<c:if test="${ house.direction == 'W' }">
-          				서향
-          			</c:if>
-          			<c:if test="${ house.direction == 'NW' }">
-          				북서향
-          			</c:if>
-          			<c:if test="${ house.direction == 'E' }">
-          				동향
-          			</c:if>
-          			<c:if test="${ house.direction == 'SE' }">
-          				남동향
-          			</c:if>
-          			<c:if test="${ house.direction == 'N' }">
-          				북향
-          			</c:if>
-          			<c:if test="${ house.direction == 'NE' }">
-          				북동향
-          			</c:if>
-          		</td>
+          		<td>${ house.direction }</td>
           	</tr>
           </c:if>
           <c:if test="${ not empty house.parking }">
           	<tr>
           		<th scope="row">주차</th>
-          		<td>${ house.parking }</td>
+          		<td>
+          			<c:choose>
+          				<c:when test="${ house.parking eq 0 }">
+          					불가
+          				</c:when>
+          				<c:otherwise>
+          					${ house.parking }대 가능
+          				</c:otherwise>
+          			</c:choose>
+          		</td>
           	</tr>
           </c:if>
           <c:if test="${ not empty house.pet }">
@@ -352,26 +339,47 @@
         </thead>
         <tbody>
           <tr>
-            <td>${ house.address1 } ${ house.address2 }</td>
-          </tr>
-          <tr>
-            <td><div class="container-fluid rounded-4 bg-light" id="landDetailMap">지도자리</div></td>
-          </tr>
-          <tr>
             <td>
-              <input type="radio" class="btn-check" name="btnradio" id="pinBank" autocomplete="off">
-              <label class="btn btn-outline-light rounded-circle" for="pinBank"><img src="resources/images/houseDetailImages/pin-bank.png" alt=""></label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="pinHospital" autocomplete="off">
-              <label class="btn btn-outline-light rounded-circle" for="pinHospital"><img src="resources/images/houseDetailImages/pin-hospital.png" alt=""></label>
-            
-              <input type="radio" class="btn-check" name="btnradio" id="pinStore" autocomplete="off">
-              <label class="btn btn-outline-light rounded-circle" for="pinStore"><img src="resources/images/houseDetailImages/pin-store.png" alt=""></label>
+            	${ house.address1 }
+            	<c:if test="${ house.address2 != 'none'}">
+            		 ${ house.address2 }
+            	</c:if>
+           </td>
+          </tr>
+          <tr>
+            <td><div class="container-fluid rounded-4 bg-light" id="landDetailMap"></div></td>
+          </tr>
+          <tr>
+           <td id="category" class="justify-content-center">
+               <figure id="MT1" src="resources/images/houseDetailImages/pin-shopping.png">
+               	<img src="resources/images/houseDetailImages/pin-shopping.png" alt="" >
+			    <figcaption>마트</figcaption>
+			   </figure>
+			   <figure id="CS2" src="resources/images/houseDetailImages/pin-convenience.png">
+               	<img src="resources/images/houseDetailImages/pin-convenience.png" alt="" >
+			    <figcaption>편의점</figcaption>
+			   </figure>
+			   <figure id="BK9" src="resources/images/houseDetailImages/pin-bank.png">
+               	<img src="resources/images/houseDetailImages/pin-bank.png" alt="" >
+			    <figcaption>은행</figcaption>
+			   </figure>
+			   <figure id="FD6" src="resources/images/houseDetailImages/pin-restaurant.png">
+               	<img src="resources/images/houseDetailImages/pin-restaurant.png" alt="" >
+			    <figcaption>음식점</figcaption>
+			   </figure>
+			   <figure id="CE7" src="resources/images/houseDetailImages/pin-cafe.png">
+               	<img src="resources/images/houseDetailImages/pin-cafe.png" alt="" >
+			    <figcaption>카페</figcaption>
+			   </figure>
+			   <figure id="HP8" src="resources/images/houseDetailImages/pin-hospital.png">
+               	<img src="resources/images/houseDetailImages/pin-hospital.png" alt="" >
+			    <figcaption>병원</figcaption>
+			   </figure>
             </td>
           </tr>
         </tbody>
       </table>
-
+      
       <!-- 상세 설명 -->
       <table class="table table table-borderless mb-5 landDetailTable">
         <thead>
@@ -394,98 +402,451 @@
     <jsp:include page="../../common/footer.jsp" /> <!-- 푸터 -->
   </div>
   
-  
   <script>
-  // 찜 기능 관련
-  $(function() {
+  
+  	// 카카오 지도 API
+  	$(function() {
+  		
+  		// 카테고리 변수 생성
+  		var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), // 편의 시설 카테고리 클릭 시 엘리먼트
+  		    markers = [], // 마커를 담을 배열입니다
+  		    currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
+  		 
+  		// 지도 생성
+  		var mapContainer = document.getElementById('landDetailMap'), // 지도를 표시할 div 
+  		    mapOption = {
+  		        center: new kakao.maps.LatLng(${ house.lat }, ${ house.lng }), // 지도의 중심좌표
+  		        level: 5 // 지도의 확대 레벨
+  		    };  
+  		var map = new kakao.maps.Map(mapContainer, mapOption); 
+  		
+  		// 매물 위치
+  		var housePin = 'resources/images/houseDetailImages/pin-home.png', // 마커이미지의 주소입니다    
+  	    pinSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+  	    pinOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	  	var pinImg = new kakao.maps.MarkerImage(housePin, pinSize, pinOption),
+	  	    pinPosition = new kakao.maps.LatLng(${ house.lat }, ${ house.lng }); // 마커가 표시될 위치입니다
+	  	var pin = new kakao.maps.Marker({
+	  	    position: pinPosition, 
+	  	    image: pinImg // 마커이미지 설정 
+	  	});
+	  	pin.setMap(map);  
+  		
+  		
+  		// 장소 검색 객체를 생성합니다
+  		var ps = new kakao.maps.services.Places(map); 
+
+  		// 각 카테고리에 클릭 이벤트를 등록합니다
+  		addCategoryClickEvent();
+
+  		// 카테고리 검색을 요청하는 함수입니다
+  		function searchPlaces() {
+  		    if (!currCategory) {
+  		        return;
+  		    }
+  		    
+  		    // 지도에 표시되고 있는 마커를 제거합니다
+  		    removeMarker();
+  		    
+  		    ps.categorySearch(currCategory, placesSearchCB, {useMapBounds:true}); 
+  		}
+
+  		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+  		function placesSearchCB(data, status, pagination) {
+  		    if (status === kakao.maps.services.Status.OK) {
+
+  		        // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
+  		        displayPlaces(data);
+  		    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+  		        // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
+
+  		    } else if (status === kakao.maps.services.Status.ERROR) {
+  		        // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
+  		        
+  		    }
+  		}
+
+  		// 지도에 마커를 표출하는 함수입니다
+  		function displayPlaces(places) {
+
+  		    // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
+  		    // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
+  		    var imgUrl = document.getElementById(currCategory).getAttribute('src');
+
+  		    for ( var i = 0; i < places.length; i++ ) {
+
+  		            // 마커를 생성하고 지도에 표시합니다
+  		            var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), imgUrl);
+
+  		            // 마커와 검색결과 항목을 클릭 했을 때
+  		            // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+  		            (function(marker, place) {
+  		                kakao.maps.event.addListener(marker, 'click', function() {
+  		                    displayPlaceInfo(place);
+  		                });
+  		            })(marker, places[i]);
+  		    }
+  		}
+
+  		// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+  		function addMarker(position, imgUrl) {
+  		    var imageSrc = imgUrl, // 마커 이미지 url, 스프라이트 이미지를 씁니다
+  		        imageSize = new kakao.maps.Size(40, 40),  // 마커 이미지의 크기
+  		        imgOption = { offset: new kakao.maps.Point(11, 28) },
+  		        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOption),
+  		            marker = new kakao.maps.Marker({
+  		            position: position, // 마커의 위치
+  		            image: markerImage 
+  		        });
+
+  		    marker.setMap(map); // 지도 위에 마커를 표출합니다
+  		    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+  		    return marker;
+  		}
+
+  		// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+  		function removeMarker() {
+  		    for ( var i = 0; i < markers.length; i++ ) {
+  		        markers[i].setMap(null);
+  		    }   
+  		    markers = [];
+  		}
+
+  		// 각 카테고리에 클릭 이벤트를 등록합니다
+  		function addCategoryClickEvent() {
+  		    var category = document.getElementById('category'),
+  		        children = category.children;
+
+  		    for (var i=0; i<children.length; i++) {
+  		        children[i].onclick = onClickCategory;
+  		    }
+  		}
+
+  		// 카테고리를 클릭했을 때 호출되는 함수입니다
+  		function onClickCategory() {
+  		    var id = this.id,
+  		        className = this.className;
+
+  		    placeOverlay.setMap(null);
+
+  		    if (className === 'on') {
+  		        currCategory = '';
+  		        changeCategoryClass();
+  		        removeMarker();
+  		    } else {
+  		        currCategory = id;
+  		        changeCategoryClass(this);
+  		        searchPlaces();
+  		    }
+  		}
+
+  		// 클릭된 카테고리에만 클릭된 스타일을 적용하는 함수입니다
+  		function changeCategoryClass(el) {
+  		    var category = document.getElementById('category'),
+  		        children = category.children,
+  		        i;
+
+  		    for ( i=0; i<children.length; i++ ) {
+  		        children[i].className = '';
+  		    }
+
+  		    if (el) {
+  		        el.className = 'on';
+  		    } 
+  		} 
+  		
+  	})
+  
+	// 상담 예약 기능
+	$(function() {
+		
+		// 상담 예약 모달창 버튼 활성화
+		$("#reservation").mouseenter(function() {
+			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+				$(this).attr("data-bs-toggle", "modal");
+			} else {
+				$(this).attr("data-bs-toggle", "");
+			}
+		})
+		
+		// 상담 예약 모달창 버튼 클릭
+		$("#reservation").click(function() {
+			
+			// 로그인 상태
+			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+				$.ajax({
+					url: "select.ag",
+					data: {
+						agentNo: ${ house.agentNo }
+					},
+					type: "POST",
+					success: function(agent) {
+						$("#ceoName").text(agent.ceoName);
+						$("#agentPhone").text(agent.agentPhone);
+						$("#agentAddress").text(agent.agentAddress);
+					},
+					error: function() {
+						console.log("상담 예약 모달창 정보 조회 ajax 실패");
+					}
+				})
+				
+			// 로그아웃 상태
+			} else {
+				alert("개인 회원 로그인 후 사용 가능한 서비스입니다. ");
+				return false;
+			}
+		})
+		
+		// 상담 예약 모달창 예약 버튼 클릭
+ 		$("#reservationBtn").click(function() {
+			
+			var form = document.createElement("form");
+			var input1 = document.createElement("input");
+			var input2 = document.createElement("input");
+			var input4 = document.createElement("input");
+			var input5 = document.createElement("input");
+			var input6 = document.createElement("input");
+			var input7 = document.createElement("input");
+			var input8 = document.createElement("input");
+			var input9 = document.createElement("input");
+			
+			form.action = "kakaoPay.rs";
+			form.method = "POST";
+			input1.name = "partner_order_id"; // 가맹점 주문번호
+			input1.value = ${ house.houseNo } + ${ house.agentNo } + ${ loginUser.memberNo }
+			input2.name = "partner_user_id"; // 가맹점 회원 ID (문의 업체)
+			input2.value = $("#agentName").text();
+			
+			input4.name = "memberNo";
+			input4.value = ${ loginUser.memberNo };
+			input5.name = "agentNo";
+			input5.value = ${ house.agentNo };
+			input6.name = "houseNo";
+			input6.value = $("#houseNo").text();
+			input7.name = "reservationDate";
+			input7.value = $("#bookingDate").val();			
+			input8.name = "reservationTime";
+			input8.value = $("#bookingTime").val();
+			input9.name = "content";
+			input9.value = $("#content").val();
+			
+			form.appendChild(input1);
+			form.appendChild(input2);
+			form.appendChild(input4);
+			form.appendChild(input5);
+			form.appendChild(input6);
+			form.appendChild(input7);
+			form.appendChild(input8);
+			form.appendChild(input9);
+			form.style.display = "none";
+			document.body.appendChild(form);
+			form.submit();
+		})
 	  
-	  // 매물 찜 조회
-	  if (${ loginUser != null }) { // 로그인한 상태
-		  $.ajax({
-			  url: "select.zz",
-			  data: {
-				  memberNo: ${ loginUser.memberNo },
-				  houseNo: ${ house.houseNo }
-			  },
-			  type: "POST",
-			  success: function(result) {
-				  if (result == ${ house.houseNo }) { // 찜한 경우
-					  console.log("찜했더래요.");
-				  	  $("#zzimImg").attr("class", "isZzim");
-				  } else { // 찜하지 않은 경우
-					  console.log("찜 안했더래요.");
-					  $("#zzimImg").attr("class", "notZzim");
-				  }
-			  },
-			  error: function() {
-				  console.log("찜 조회 ajax 통신 실패");
-			  }
-		  })
-	  } else { // 로그인하지 않은 상태
-		  console.log("로그인 안했더래요.");
-		  $("#zzimImg").attr("class", "notZzim");
-	  }
+	  // 날짜, 시간 변수 셋팅
+	  // 현재 시간이 오후 6시 이상이면 minDate를 내일 날짜로 설정
+	  let minDate = (new Date().getHours() >= 18) ? new Date(new Date().setDate(new Date().getDate() + 1)) : new Date();
 	  
-	  
-	  
-	  $("#zzimBtn").click(function() {
-		  console.log("클릭 했더래요.");
-		// 찜이 되어있는 경우 - 찜 삭제
-		  if ($("#zzimImg").attr("class") == "isZzim") {
-			  console.log("찜이더래요.");
-			  $.ajax({
-				  url: "delete.zz",
-				  data: {
-					  memberNo: ${ loginUser.memberNo },
-					  houseNo: ${ house.houseNo }
-				  },
-				  type: "POST",
-				  success: function(result) {
-					  console.log("삭제성공이더래요.");
-					  console.log(result);
-					  /* if (result <= 0) {
-						  alert("찜 삭제에 실패했습니다. 다시 시도해주세요.");
-						  return false;
-					  } else {
-						  $("#zzimImg").attr("class", "notZzim");
-					  } */
-				  },
-				  error: function() {
-					  console.log("찜 삭제 ajax 통신 실패");
-				  }
-			  })
-		  
-		  // 찜이 되어있지 않은 경우 - 찜 추가
-		  } else {
-			  console.log("찜아니더래요.");
-			  $.ajax({
-				  url: "insert.zz",
-				  data: {
-					  memberNo: ${ loginUser.memberNo },
-					  houseNo: ${ house.houseNo }
-				  },
-				  type: "POST",
-				  success: function(result) {
-					  console.log("추가성공이더래요.");
-					  console.log(result);
-					  /* if (result <= 0) {
-						  alert("찜 하기에 실패했습니다. 다시 시도해주세요.");
-						  return false;
-					  } else {
-						  $("#zzimImg").attr("class", "isZzim");
-					  } */
-				  },
-				  error: function() {
-					  console.log("찜 추가 ajax 통신 실패");
-				  }
-			  })
-		  }
+	  // 현재 날짜를 #bookingDate의 string 형식으로 설정
+	  let today = new Date().getFullYear() + "-"
+	  	  today += ((new Date().getMonth() + 1 <= 9) ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)) + "-"
+	  	  today += ((new Date().getDate() <= 9) ? '0' + (new Date().getDate()) : (new Date().getDate()));
+	
+	  // Datepicker 설정
+	  $("#bookingDate").datepicker();
+	  $("#bookingDate").datepicker("option", "dateFormat", "yy-mm-dd");
+	  $("#bookingDate").datepicker("option", "minDate", minDate);
+	  $("#bookingDate").datepicker("option", "maxDate", "+1W");
+	
+	  // Timepicker 설정
+	  $("#bookingTime").timepicker({
+	    zindex: 99999,
+	    timeFormat: 'hh:mm p',
+	    interval: 60,
+	    minTime: '10',
+	    maxTime: '18',
+	    startTime: '10:00',
+	    dynamic: false,
+	    dropdown: true,
+	    scrollbar: true,
+	    disabled: true
+	  });
+	
+	  // 날짜 먼저 선택할 수 있는 기능
+	  $("#mouseEnterTime").mouseenter(function() {
+	    if ($("#bookingDate").val() != "") {
+	      $("#bookingTime").attr("disabled", false);
+	      
+	      // 선택한 날짜가 오늘 날짜이면 현재 시간 기준으로 minTime 변경
+	      if ($("#bookingDate").val() == today) {
+	        $("#bookingTime").timepicker("option", "minTime", String(minDate.getHours() + 1));
+	      }
+	    }
+	  });
+	  $("#mouseEnterTime").click(function() {
+	    if ($("#bookingDate").val() == "") {
+	      alert("날짜를 먼저 선택해주세요.");
+	      return false;
+	    }
 	  })
-	  
-  })
+	
+	  // 날짜, 시간 선택시에만 예약하기 버튼 활성화
+	  $("#mouseEnterBooking").mouseenter(function() {
+	    if ($("#bookingDate").val() != "" && $("#bookingTime").val() != "") {
+	      $("#consultBookingModal .btn-primary").attr("disabled", false);
+	    } 
+	  })
+	  $("#mouseEnterBooking").click(function() {
+	    if ($("#bookingDate").val() == "" || $("#bookingTime").val() == "") {
+	      alert("상담하실 날짜와 시간을 선택해주세요.");
+	      return false;
+	    }
+	  })
+	});
   
-  
-  
+	// 찜 기능 관련
+	$(function() {
+		
+		// 매물 찜 조회
+		if (${ loginUser != null and loginUser.identifier == 'member' }) { // 로그인한 상태
+			$.ajax({
+				url: "select.zz",
+				data: {
+					memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+					houseNo: ${ house.houseNo }
+				},
+				type: "POST",
+				success: function(result) {
+					if (result != ${ house.houseNo }) { // 찜하지 않은 경우
+						$("#zzimImg").attr("class", "notZzim");
+					} else { // 찜한 경우
+					  	$("#zzimImg").attr("class", "isZzim");
+					}
+				},
+				error: function() {
+					console.log("찜 조회 ajax 통신 실패");
+				}
+			})
+		} else { // 로그아웃 상태
+			$("#zzimImg").attr("class", "notZzim");
+		}
+		
+		// 찜 버튼 클릭  
+		$("#zzimBtn").click(function() {
+			
+			// 로그인 상태
+			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+				// 찜이 되어있는 경우 - 찜 삭제
+				if ($("#zzimImg").attr("class") == "isZzim") {
+					$.ajax({
+						url: "delete.zz",
+						data: {
+							memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+							houseNo: ${ house.houseNo }
+						},
+						type: "POST",
+						success: function(result) {
+							if (result <= 0) {
+								alert("찜 삭제에 실패했습니다. 다시 시도해주세요.");
+								return false;
+							} else {
+								$("#zzimImg").attr("class", "notZzim");
+							}
+						},
+						error: function() {
+							console.log("찜 삭제 ajax 통신 실패");
+						}
+					})
+				  
+				// 찜이 되어있지 않은 경우 - 찜 추가
+				} else if ($("#zzimImg").attr("class") == "notZzim") {
+					$.ajax({
+						url: "insert.zz",
+						data: {
+							memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+							houseNo: ${ house.houseNo }
+						},
+						type: "POST",
+						success: function(result) {
+							if (result <= 0) {
+								alert("찜 하기에 실패했습니다. 다시 시도해주세요.");
+								return false;
+							} else {
+								$("#zzimImg").attr("class", "isZzim");
+							}
+						},
+						error: function() {
+							console.log("찜 추가 ajax 통신 실패");
+						}
+					})
+				}
+				
+			// 로그아웃 상태
+			} else {
+				alert("개인 회원 로그인 후 사용 가능한 서비스입니다. ");
+				return false;
+			}
+		})
+	})
+	
+	$(function() {
+		
+		// 평, m2 변환 버튼 클릭
+		$("#sizeChange").click(function() {
+			if ($("#size").attr("class") == "m2") {
+				$("#size").text(${ house.size_p } + "평");
+				$("#change").text("m²");
+				$(".m2").attr("class", "p");
+			} else {
+				$("#size").text(${ house.size_m2 } + "m²");
+				$("#change").text("평");
+				$(".p").attr("class", "m2");
+			}
+		})
+		
+		
+	})
+	
+	// 허위 매물 신고
+	$(function() {
+		
+		// 허위 신고 모달창 버튼 활성화
+		$("#notify").mouseenter(function() {
+			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+				$(this).attr("data-bs-toggle", "modal");
+			} else {
+				$(this).attr("data-bs-toggle", "");
+			}
+		})
+		
+		// 허위 신고 모달창 버튼 클릭
+		$("#notify").click(function() {
+			if (${ loginUser == null or loginUser.identifier ne 'member' }) {
+				alert("개인 회원 로그인 후 사용 가능한 서비스입니다. ")
+				return false;
+			}
+		})
+		
+		// 허위 신고 버튼 클릭
+		$("#notifyBtn").click(function() {
+			$.ajax({
+				url: "update.rp",
+				data: {houseNo: ${ house.houseNo }},
+				type: "POST",
+				succeess: function(result) {
+					if (result <= 0) {
+						alert("허위 매물 신고에 실패했습니다. 다시 시도해주세요.");
+						return false;
+					}
+				},
+				error: function() {
+					console.log("허위 매물 신고 추가 ajax 실패");
+				}
+			})
+		})
+		
+	})
   </script>
   
 </body>

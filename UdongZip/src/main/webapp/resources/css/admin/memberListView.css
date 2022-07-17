@@ -3,7 +3,13 @@
 #memberListTitlebar {
   display: flex;
   position: relative;
-  margin-top: 100px;
+}
+#memberListTitlebar > button {
+  position: absolute;
+  right: 25%;
+  height: 14px;
+  bottom: 35%;
+  font-size: 14px;
 }
 #memberListTitle {
   font-weight: 900;
@@ -29,5 +35,8 @@
 #memberDetailModal .modal-footer button {
   margin: auto;
   width: 30%;
+}
+#memberDetailModal table td {
+	word-break: break-all;
 }
 /***** 관리자 - 일반회원 전체조회 스타일 끝 *****/

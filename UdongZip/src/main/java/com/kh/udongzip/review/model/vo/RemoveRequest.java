@@ -19,5 +19,11 @@ public class RemoveRequest {
 	private String reason;       // 요청 사유
 	private String requestDate;  // 요청일
 	private String result;       // 처리결과 (삭제/반려/대기)
+	
+	// 없는 필드
+	private String agentName;	 // 요청 업체명
+	private String memberId; 	 // 작성자 회원 아이디
+	private String satisfied;	 // 만족도
+	private String createDate;	 // 리뷰 작성일
 
 }

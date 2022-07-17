@@ -81,5 +81,48 @@
  		   SET AGENT_PWD = #{agentPwd}
  		 WHERE AGENT_NO = #{agentNo}
  	</update>
+ 	
+	<!-- 업체 회원 전체 조회 -->
+	<select id="selectAgentList" parameterType="hashmap" resultMap="agentResultSet">
+		SELECT *
+		FROM AGENT
+		<!-- 미승인 업체인 경우 -->
+		<if test="classification == 'permission'">
+			WHERE PERMISSION = 'N'
+		</if>
+		<!-- 키워드 검색인 경우 -->
+		<if test="classification == 'keyword'">
+			WHERE UPPER(AGENT_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+	</select>
+	
+	<!-- 업체 회원 전체 조회 수 -->
+	<select id="selectListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM AGENT
+		<!-- 미승인 업체인 경우 -->
+		<if test="classification == 'permission'">
+			WHERE PERMISSION = 'N'
+		</if>
+		<!-- 키워드 검색인 경우 -->
+		<if test="classification == 'keyword'">
+			WHERE UPPER(AGENT_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+	</select>
+	
+	<!-- 업체 회원 가입 승인, 탈퇴 처리 -->
+	<update id="adminUpdate" parameterType="agent">
+		UPDATE AGENT
+		SET 
+		<choose>
+			<when test="identifier == 'signUp'">
+				PERMISSION = 'Y'
+			</when>
+			<otherwise>
+				STATUS = 'N'
+			</otherwise>
+		</choose>
+		WHERE AGENT_NO = #{agentNo}
+	</update>
 
 </mapper>

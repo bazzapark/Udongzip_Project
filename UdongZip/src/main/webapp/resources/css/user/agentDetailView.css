@@ -32,4 +32,8 @@
   height: 200px;
   margin: auto;
 }
+#landImgList .carousel-caption h5 {
+	font-size: 20px;
+	font-weight: 900;
+}
 /***** 개인 회원 - 업체 회원 상세 조회 스타일 끝 *****/

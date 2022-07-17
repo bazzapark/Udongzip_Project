@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.common.security.Auth;
-import com.kh.udongzip.common.security.Auth.Role;
+import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.common.template.SaveFileRename;
 import com.kh.udongzip.house.model.service.HouseService;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
-import com.kh.udongzip.member.model.vo.Member;
 
 @Controller
 public class HouseController {
@@ -476,47 +477,33 @@ public class HouseController {
 	 * 		   매물 번호
 	 * @return 매물 상세 조회 페이지
 	 */
-	// 1. 전체 조회에서 houseNo 가져와야 함
-	// 2. 새로운 탭으로 출력해야 함
 	@RequestMapping("detail.ho")
-	public ModelAndView selectHouse(ModelAndView mv) {
-		
-		// 수정해야 하는 부분
-		int houseNo = 32264729;
-		Member loginUser = new Member();
-		loginUser.setMemberNo(1);
-		loginUser.setMemberId("udong");
-		loginUser.setMemberPwd("1234");
-		loginUser.setMemberName("김우동");
-		loginUser.setMemberPhone("01022221111");
-		loginUser.setMemberEmail("udong@udong.com");
-		loginUser.setStatus("Y");
-		mv.addObject("loginUser", loginUser);
+	public ModelAndView selectHouse(@RequestParam (value="hno") int houseNo, ModelAndView mv) {
 		
 		// 매물 상세 조회 조회수 증가 메소드
-		int result = houseService.updateCount(houseNo);
+		int count = houseService.updateCount(houseNo);
 		
-		if (result > 0) { // 조회수 증가 성공
+		if (count > 0) { // 조회수 증가 성공
 			
 			// 매물 상세 조회
 			House house = houseService.selectHouse(houseNo);
 			
+			// 매물 이미지 조회
+			ArrayList<String> images = houseService.selectHouseImages(houseNo);
+			
 			// 매물 옵션 조회
-			List<String> optionStr = Arrays.asList(houseService.selectOptionInfo(houseNo).split(";"));
+			List<String> optionStr = Arrays.asList(house.getOptionInfo().split(";"));
 			List<Integer> optionInt = new ArrayList<Integer>();
 			
 			// 옵션명을 담을 변수
 			ArrayList<String> options = null;
 			
 			// 매물 관리비 조회
-			List<String> manageStr = Arrays.asList(houseService.selectManageInfo(houseNo).split(";"));
+			List<String> manageStr = Arrays.asList(house.getManageInfo().split(";"));
 			List<Integer> manageInt = new ArrayList<Integer>();
 			
 			// 관리비 항목명을 담을 변수
 			ArrayList<String> manages = null;
-			
-			// 매물 이미지 조회
-			ArrayList<String> images = houseService.selectHouseImages(houseNo);
 			
 			if (house != null) { // 매물 상세 조회 성공
 				
@@ -572,13 +559,13 @@ public class HouseController {
 	 */
 	@ResponseBody
 	@PostMapping("select.zz")
-	public int selectZzim(int houseNo, int memberNo) {
+	public Integer selectZzim(Integer houseNo, Integer memberNo) {
 
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("houseNo", houseNo);
 		map.put("memberNo", memberNo);
 		
-		int result = houseService.selectZzim(map);
+		Integer result = houseService.selectZzim(map);
 		return result;
 	}
 	
@@ -626,6 +613,98 @@ public class HouseController {
 		
 		int result = houseService.deleteZzim(map);
 		return result;
+	}
+	
+	/**
+	 * 허위 매물 신고 추가 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * @param houseNo
+	 * 		   매물 번호
+	 * @return 매물 상세 조회 페이지
+	 */
+	@ResponseBody
+	@PostMapping("update.rp")
+	public int updateReportCount(int houseNo) {
+		int result = houseService.updateReportCount(houseNo);
+		return result;
+	}
+	
+	/**
+	 * 허위 매물 신고 전체 조회 메소드
+	 * 5회 이상, 키워드 검색 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 */
+	@RequestMapping("list.rp")
+	public String selectRemoveList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("classification", classification);
+		map.put("keyword", keyword);
+		
+		// 페이징 처리 변수 셋팅
+		int listCount = houseService.selectReportHouseCount(map);
+		int pageLimit = 5;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+					
+		ArrayList<House> list = houseService.selectReportHouse(pi, map);
+		
+		if (list == null) {
+			model.addAttribute("errorMsg", "매물 신고 전체 조회에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		if (classification != null) {
+			model.addAttribute("classification", "&classification=" + classification);
+		}
+		if (keyword != null) {
+			model.addAttribute("keyword", "&keyword=" + keyword);
+		}
+		
+		return "admin/report/reportListView";
+	}
+	
+	/**
+	* 매물신고 상세 조회 메소드
+	*
+	* @version 1.0
+	* @author 양아란
+	* @param houseNo
+	* @return 매물 신고 상세 모달창
+	*/
+	@ResponseBody
+	@PostMapping("select.rp")
+	public House selectHouse(int houseNo) {
+		House report = houseService.selectHouse(houseNo);
+		return report;
+	}
+	
+	/**
+	 * 신고 매물 삭제 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * @param houseNo
+	 * @return 매물 신고 전체 조회 페이지
+	 */
+	@PostMapping("adminUpdate.rp")
+	public String adminUpdate(int houseNo, Model model, HttpSession session) {
+		
+		int result = houseService.deleteHouse(houseNo);
+		
+		if (result > 0) {
+			session.setAttribute("alertMsg", "허위 매물 신고 처리가 완료되었습니다.");
+			return "redirect:/list.rp";
+		} else {
+			model.addAttribute("errorMsg", "허위 매물 신고 처리에 실패했습니다. 다시 시도해주세요.");
+			return "common/error";
+		}
 	}
 	
 	

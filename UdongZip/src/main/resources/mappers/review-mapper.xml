@@ -15,6 +15,19 @@
 		<result column="MEMBER_ID" property="memberId"/>
 		<result column="RESULT" property="result"/>
 	</resultMap>
+	
+	<resultMap id="requestResultSet" type="removeRequest">
+		<result column="REQUEST_NO" property="requestNo" />
+		<result column="AGENT_NO" property="agentNo" />
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REASON" property="reason" />
+		<result column="REQUEST_DATE" property="requestDate" />
+		<result column="RESULT" property="result" />
+		<result column="AGENT_NAME" property="agentName" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="SATISFIED" property="satisfied" />
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
 
 	<select id="selectAgentReviewList" parameterType="_int" resultMap="reviewResultSet">
 		SELECT R1.*, NVL(RESULT, 'null') RESULT
@@ -31,6 +44,102 @@
 		INSERT INTO REMOVE_REQUEST(REQUEST_NO, AGENT_NO, REVIEW_NO, REASON)
 		VALUES(SEQ_REQ.NEXTVAL, #{agentNo}, #{reviewNo}, #{reason})
 	</insert>
-
+	
+ 	<!-- 리뷰 전체 조회 수 -->
+	<select id="selectListCount" parameterType="member" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE STATUS = 'Y'
+		<choose>
+			<when test="identifier == 'member'">
+				AND MEMBER_NO = #{memberNo}
+			</when>
+			<when test="identifier == 'agent'">
+				AND AGENT_NO = #{memberNo}
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 리뷰 전체 조회 -->
+	<select id="agentSelectReviewList" parameterType="member" resultMap="reviewResultSet">
+		SELECT *
+		FROM REVIEW R, MEMBER M
+		WHERE R.MEMBER_NO = M.MEMBER_NO
+		  AND R.STATUS = 'Y'
+		  <choose>
+		  	<when test="identifier == 'member'">
+		  		AND MEMBER_NO = #{memberNo}
+		  	</when>
+		  	<when test="identifier == 'aegnt'">
+		  		AND AGENT_NO = #{memberNo}
+		  	</when>
+		  </choose>
+	</select>
+	
+	<!-- 리뷰 삭제 요청 전체 조회 수 -->
+	<select id="selectReuqestListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
+		WHERE R.AGENT_NO = A.AGENT_NO
+		AND R.REVIEW_NO = RV.REVIEW_NO
+		AND RV.MEMBER_NO = M.MEMBER_NO
+		<!-- 처리전(대기) -->
+		<if test="classification == 'result'">
+			AND RESULT = 'D'
+		</if>
+		<!-- 키워드 검색 -->
+		<if test="classification == 'keyword'">
+			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+	</select>
+	
+	<!-- 리뷰 삭제 요청 전체 조회 -->
+	<select id="selectRequestList" parameterType="hashmap" resultMap="requestResultSet">
+		SELECT *
+		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
+		WHERE R.AGENT_NO = A.AGENT_NO
+		AND R.REVIEW_NO = RV.REVIEW_NO
+		AND RV.MEMBER_NO = M.MEMBER_NO
+		<!-- 처리전(대기) -->
+		<if test="classification == 'result'">
+			AND RESULT = 'D'
+		</if>
+		<!-- 키워드 검색 -->
+		<if test="classification == 'keyword'">
+			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+	</select>
+	
+	<!-- 리뷰 삭제 요청 상세 조회 -->
+	<select id="selectRequest" parameterType="_int" resultMap="requestResultSet">
+		SELECT *
+		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
+		WHERE R.AGENT_NO = A.AGENT_NO
+		AND R.REVIEW_NO = RV.REVIEW_NO
+		AND RV.MEMBER_NO = M.MEMBER_NO
+		AND R.REQUEST_NO = #{requestNo}
+	</select>
+	
+	<!-- 리뷰 삭제 -->
+	<update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 삭제 요청 상태 변경 (반려, 삭제) -->
+	<update id="updateRequest" parameterType="removeRequest">
+		UPDATE REMOVE_REQUEST
+		SET
+		<choose>
+			<when test="result == 'delete'">
+				RESULT = 'Y'
+			</when>
+			<otherwise>
+				RESULT = 'N'
+			</otherwise>
+		</choose>
+		WHERE REQUEST_NO = #{requestNo}
+	</update>
 	
 </mapper>

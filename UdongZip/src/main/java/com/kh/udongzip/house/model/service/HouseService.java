@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
@@ -26,12 +27,8 @@ public interface HouseService {
 	// 필터 : 개인회원
 	ArrayList<House> houseFilter(Map<String, Object> map);
 
-	
 	// 매물 신고 : 개인회원
 	int updateReportCount(int houseNo);
-	
-	// 허위 매물 목록 전체 조회 : 어드민
-	ArrayList<House> selectReportHouse();
 	
 	// 매물 삭제 : 어드민, 업체회원
 	int deleteHouse(int houseNo);
@@ -98,13 +95,22 @@ public interface HouseService {
 	ArrayList<String> selectHouseImages(int houseNo);
 	
 	// 매물 찜 조회 : 개인회원 : 개인회원
-	int selectZzim(Map<String, Integer> map);
+	Integer selectZzim(HashMap<String, Integer> map);
 	
 	// 매물 찜 추가 : 개인회원
-	int insertZzim(Map<String, Integer> map);
+	int insertZzim(HashMap<String, Integer> map);
 		
 	// 매물 찜 삭제 : 개인회원
-	int deleteZzim(Map<String, Integer> map);
+	int deleteZzim(HashMap<String, Integer> map);
+	
+	// 허위 매물 목록 전체 조회 : 어드민
+	ArrayList<House> selectReportHouse(PageInfo pi, HashMap<String, String> map);
+	
+	// 허위 매물 목록 전체 조회 수 : 어드민
+	int selectReportHouseCount(HashMap<String, String> map);
+	
+	// 허위 매물 목록 전체 조회 : 어드민
+	ArrayList<House> selectReportHouse();
 /**
  * 
  */

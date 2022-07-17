@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.dao.HouseDao;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
@@ -154,11 +155,6 @@ public class HouseServiceImpl implements HouseService {
 		return houseDao.houseFilter(sqlSession, map);
 	}
 	
-	@Override
-	public int updateReportCount(int houseNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public ArrayList<House> selectReportHouse() {
@@ -214,21 +210,40 @@ public class HouseServiceImpl implements HouseService {
 	
 	// 매물 찜 조회 서비스
 	@Override
-	public int selectZzim(Map<String, Integer> map) {
+	public Integer selectZzim(HashMap<String, Integer> map) {
 		return houseDao.selectZzim(sqlSession, map);
 	}
 	
 	// 매물 찜 추가 서비스
 	@Override
-	public int insertZzim(Map<String, Integer> map) {
+	public int insertZzim(HashMap<String, Integer> map) {
 		return houseDao.insertZzim(sqlSession, map);
 	}
 	
 	// 매물 찜 삭제 서비스
 	@Override
-	public int deleteZzim(Map<String, Integer> map) {
+	public int deleteZzim(HashMap<String, Integer> map) {
 		return houseDao.deleteZzim(sqlSession, map);
 	}
+	
+	// 허위 매물 신고 추가 메소드
+	@Override
+	public int updateReportCount(int houseNo) {
+		return houseDao.updateReportCount(sqlSession, houseNo);
+	}
+	
+	// 허위 매물 전체 조회 서비스
+	@Override
+	public ArrayList<House> selectReportHouse(PageInfo pi, HashMap<String, String> map) {
+		return houseDao.selectReportHouse(sqlSession, pi, map);
+	}
+
+	// 허위 매물 전체 조회 수 서비스
+	@Override
+	public int selectReportHouseCount(HashMap<String, String> map) {
+		return houseDao.selectReportHouseCount(sqlSession, map);
+	}
+	
 /**
  * 
  */

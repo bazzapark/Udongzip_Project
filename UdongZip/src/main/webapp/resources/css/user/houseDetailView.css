@@ -1,7 +1,7 @@
 /***** 개인 회원 - 매물 상세 페이지 스타일 *****/
 /* 매물 상세정보 테이블 */
 .landDetailTable {
-	width: 60%;
+	width: 70%;
 }
 .landDetailTable > thead {
   font-size: 20px;
@@ -18,7 +18,25 @@
 .landDetailTable p {
   width: 100%;
 }
-
+#size {
+	display: inline-block;
+	width: 100px;
+}
+#sizeChange {
+	width: 70px;
+}
+#category {
+	display: flex;
+}
+#category img {
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+}
+#category figcaption {
+	font-size: 12px;
+	text-align: center;
+}
 /* 매물 상세정보 박스 */
 #landDetailBox {
   position: fixed;
@@ -39,10 +57,10 @@
   background-size: contain;
   margin: 0;
 }
-#zzimImg.isZzim {
+.isZzim {
   background-image: url("../../images/houseDetailImages/bookmarkActive.png");
 }
-#zzimImg.notZzim {
+.notZzim {
 	background-image: url("../../images/houseDetailImages/bookmark.png");
 }
 #notify {
@@ -86,7 +104,7 @@
 .dateTimePicker input {
   font-size: 16px;
 }
-#consultContent {
+#content {
   width: 80%;
   height: 100px;
   font-size: 14px;

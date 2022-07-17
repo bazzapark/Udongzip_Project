@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,9 @@
 
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- 카카오 지도 API -->
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=084a0d93b202ede69ef974d4cc624440&libraries=services"></script>
 
 </head>
 <body>
@@ -34,24 +38,28 @@
         <tbody>
           <tr>
             <th scope="row">업체명</th>
-            <td>KH공인중개사사무소</td>
-            <td rowspan="10" class="col-6"><div class="container-fluid rounded-4 bg-light" id="landDetailMap">지도자리</div></td>
+            <td>${ agent.agentName }</td>
+            <td rowspan="10" class="col-6"><div class="container-fluid rounded-4 bg-light" id="landDetailMap"></div></td>
           </tr>
           <tr>
             <th scope="row">대표자명</th>
-            <td>김대표</td>
+            <td>${ agent.ceoName }</td>
           </tr>
           <tr>
             <th scope="row">연락처</th>
-            <td>010-0010-0002</td>
+            <td>${ agent.agentPhone }</td>
           </tr>
           <tr>
             <th scope="row">이메일</th>
-            <td>kh@udong.com</td>
+            <td>${ agent.agentEmail }</td>
           </tr>
           <tr>
             <th scope="row">주소</th>
-            <td>서울 영등포구 선유동2로 57 이레빌딩 19, 20층</td>
+            <td>${ agent.agentAddress }</td>
+          </tr>
+          <tr>
+            <td scope="row"></td>
+            <td><button type="button" class="btn btn-primary">채팅 문의</button></td>
           </tr>
         </tbody>
       </table>
@@ -66,14 +74,7 @@
         <tbody>
           <tr>
             <td>
-              <div class="p-3 bg-light rounded-4" name="" id="">
-			                ★ 특징 ★ <br>
-			                ✔ 도보 1분 버스 정류장 가깝습니다. <br>
-			                ✔ 도보 15분이면 당산역 도착합니다. <br>
-			                ✔ 혼자 살기 좋은 풀옵션 원룸입니다. <br>
-			                ✔ 화장실에 창문이 있어 환기하기 좋습니다. <br>
-			                ✔ 인근에 식당, 카페, 편의점, 병원등 편의시설 다수 있습니다. <br>
-              </div>
+              <div class="p-3 bg-light rounded-4" name="" id="">${ agent.introduce }</div>
             </td>
           </tr>
         </tbody>
@@ -92,90 +93,107 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>user01</td>
-            <td>친절하고 꼼꼼해요.</td>
-            <td><img src="resources/images/houseDetailImages/like.png" alt=""></td>
-            <td>2022-06-23</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>user02</td>
-            <td>친절하고 꼼꼼해요.</td>
-            <td><img src="resources/images/houseDetailImages/dislike.png" alt=""></td>
-            <td>2022-06-23</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>user03</td>
-            <td>친절하고 꼼꼼해요.</td>
-            <td></td>
-            <td>2022-06-23</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>user04</td>
-            <td>친절하고 꼼꼼해요.</td>
-            <td></td>
-            <td>2022-06-23</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>user05</td>
-            <td>친절하고 꼼꼼해요.</td>
-            <td></td>
-            <td>2022-06-23</td>
-          </tr>
+        	<c:choose>
+        		<c:when test="${ not empty reviewList }">
+        			<c:forEach var="r" begin="0" end="${ reviewList.length() }">
+        				<tr>
+        					<td>${ r.reviewNo }</td>
+        					<td>${ r.memberId }</td>
+        					<td>${ r.content }</td>
+        					<td>
+        						<c:choose>
+        							<c:when test="${ r.satisfied == 'Y' }">
+        								<img src='resources/images/houseDetailImages/like.png' alt=''>
+        							</c:when>
+        							<c:otherwise>
+        								<img src='resources/images/houseDetailImages/dislike.png' alt=''>
+        							</c:otherwise>
+        						</c:choose>
+        					</td>
+        					<td>${ r.createDate }</td>
+        				</tr>
+        			</c:forEach>
+        		</c:when>
+        		<c:otherwise>
+        			<tr><td colspan="5">작성된 리뷰가 없습니다.</td></tr>
+        		</c:otherwise>
+        	</c:choose>
         </tbody>
       </table>
+      
       <ul class="pagination pagination-sm mb-5 justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
+      
+      	<c:choose>
+      		<c:when test="${ pi.currentPage eq 1 }">
+      			<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>
+      		</c:when>
+      		<c:otherwise>
+      			<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ pi.currentPage - 1 }" aria-label="Previous">&laquo;</a></li>
+      		</c:otherwise>
+      	</c:choose>
+      	
+      	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+      		<c:choose>
+      			<c:when test="${ p == pi.currentPage }">
+      				<li class="page-item disabled"><a class="page-link" href="agList.rv?cpage=${ p }">${ p }</a></li>
+      			</c:when>
+      			<c:otherwise>
+      				<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ p }">${ p }</a></li>
+      			</c:otherwise>
+      		</c:choose>
+      		
+      	</c:forEach>
+        
+        <c:choose>
+        	<c:when test="${ pi.currentPage eq pi.endPage }">
+        		<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ pi.currentPage + 1 }" aria-label="Next">&raquo;</a></li>
+        	</c:otherwise>
+        </c:choose>
+        
       </ul>
 
       <!-- 다른 매물 -->
       <div class="listTitle ps-2 mb-3">이 업체의 다른 매물</div>
       <div id="landImgList" class="carousel carousel-dark slide mb-5" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#landImgList" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#landImgList" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#landImgList" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
         <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="10000">
-            <img src="resources/images/error.png" class="d-block" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>서울 당산동</h5>
-              <p>Some representative placeholder content for the first slide.</p>
-            </div>
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img src="resources/images/error.png" class="d-block" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>서울 당산동</h5>
-              <p>Some representative placeholder content for the second slide.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="resources/images/error.png" class="d-block" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>서울 당산동</h5>
-              <p>Some representative placeholder content for the third slide.</p>
-            </div>
-          </div>
-        </div>
+        	<c:choose>
+        		<c:when test="${ not empty houseList }">
+        			<c:forEach  var="i" begin="0" end="${ 5 }">
+        				<c:choose>
+        					<c:when test="${ i eq 0 }">
+        						<div class="carousel-item active" data-bs-interval="2000">
+						            <img src="${ houseList[i].thumbnail }" class="d-block" alt="..." role="button">
+						            <span style="display: none;">${ houseList[i].houseNo }</span>
+						            <div class="carousel-caption d-none d-md-block" role="button">
+						              <h5>${ houseList[i].address1 }</h5>
+						            </div>
+					          	</div>
+        					</c:when>
+        					<c:otherwise>
+        						<div class="carousel-item" data-bs-interval="2000" role="button">
+						            <img src="${ houseList[i].thumbnail }" class="d-block" alt="..." role="button">
+						            <span style="display: none;">${ houseList[i].houseNo }</span>
+						            <div class="carousel-caption d-none d-md-block">
+						              <h5>${ houseList[i].address1 }</h5>
+						            </div>
+					          	</div>
+        					</c:otherwise>
+        				</c:choose>
+        			</c:forEach>
+        		</c:when>
+        		<c:otherwise>
+        			<div class="carousel-item active">
+			            <img src="resources/images/houseDetailImages/emptyImage.png" class="d-block" alt="...">
+			            <div class="carousel-caption d-none d-md-block disabled">
+			              <h5>매물 없음</h5>
+			            </div>
+		          	</div>
+        		</c:otherwise>
+        	</c:choose>
+         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#landImgList" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -185,11 +203,53 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-
+      
     </div>
 
     <jsp:include page="../../common/footer.jsp" /> <!-- 푸터 -->
   </div>
+  
+  <script>
+  
+	// 카카오 지도 API
+	$(function() {
+		
+		if (${ lat == "" and lng == "" }) {
+			
+			$("#landDetailMap").css({
+				"background-image": "url('resources/images/houseDetailImages/emptyImage.png')",
+				"background-size": "contain"
+			});
+			
+		} else {
+			// 지도 생성
+			var mapContainer = document.getElementById('landDetailMap'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(${ lat }, ${ lng }), // 지도의 중심좌표
+			        level: 5 // 지도의 확대 레벨
+			    };  
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			// 매물 위치
+			var agentPin = 'resources/images/houseDetailImages/pin-agent.png', // 마커이미지의 주소입니다    
+		    pinSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+		    pinOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		  	var pinImg = new kakao.maps.MarkerImage(agentPin, pinSize, pinOption),
+		  	    pinPosition = new kakao.maps.LatLng(${ lat }, ${ lng }); // 마커가 표시될 위치입니다
+		  	var pin = new kakao.maps.Marker({
+		  	    position: pinPosition, 
+		  	    image: pinImg // 마커이미지 설정 
+		  	});
+		  	pin.setMap(map);  
+		}
+	})
+	
+	$(function() {
+		$("#landImgList>.carousel-inner").on("click", ".carousel-item>img", function() {
+			location.href = "detail.ho?hno=" + Number($(this).next().text());
+		})
+	})
+  </script>
   
 </body>
 </html>

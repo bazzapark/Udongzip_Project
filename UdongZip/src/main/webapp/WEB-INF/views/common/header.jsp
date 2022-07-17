@@ -20,7 +20,7 @@
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <!-- CSS 파일 -->
 <link rel="stylesheet" href="resources/css/common/common.css">

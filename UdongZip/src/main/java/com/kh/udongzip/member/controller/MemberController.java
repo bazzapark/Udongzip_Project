@@ -1,5 +1,7 @@
 package com.kh.udongzip.member.controller;
 
+import java.util.ArrayList;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.udongzip.agent.model.service.AgentService;
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.common.security.Auth;
 import com.kh.udongzip.common.security.Auth.Role;
+import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.common.template.TemporaryPassword;
 import com.kh.udongzip.member.model.service.MemberService;
 import com.kh.udongzip.member.model.vo.Member;
@@ -413,6 +417,77 @@ public class MemberController {
 			
 			model.addAttribute("errorMsg", "회원 탈퇴 실패");
 			
+			return "common/error";
+		}
+	}
+	
+	/**
+	 * 개인 회원 전체 조회 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 개인 회원 전체 조회 페이지
+	 */
+	@RequestMapping("list.me")
+	public String selectMemberList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String keyword) {
+		
+		// 페이징 처리 변수 셋팅
+		int listCount = memberService.selectListCount(keyword);
+		int pageLimit = 5;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+					
+		ArrayList<Member> list = memberService.selectMemberList(pi, keyword);
+		
+		if (list == null) {
+			model.addAttribute("errorMsg", "개인 회원 전체 조회에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		if (keyword != null) {
+			model.addAttribute("keyword", "&keyword=" + keyword);
+		}
+		
+		return "admin/member/memberListView";
+	}
+	
+	/**
+	 * 개인 회원 상세 조회 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 개인 회원 상세 조회 모달창
+	 */
+	@ResponseBody
+	@PostMapping("select.me")
+	public Member selectMember(int memberNo) {
+		
+		Member member = memberService.selectMember(memberNo);
+		
+		return member;
+	}
+	
+	/**
+	 * 개인 회원 탈퇴 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 개인 회원 상세 조회 페이지
+	 */
+	@PostMapping("adminDelete.me")
+	public String adminDeleteMember(int memberNo, Model model, HttpSession session) {
+		int result = memberService.deleteMember(memberNo);
+		if (result > 0) {
+			session.setAttribute("alertMsg", "개인 회원 수정이 완료되었습니다.");
+			return "redirect:/list.me";
+		} else {
+			model.addAttribute("errorMsg", "개인 회원 수정에 실패했습니다. 다시 시도해주세요. ");
 			return "common/error";
 		}
 	}

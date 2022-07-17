@@ -1,6 +1,7 @@
 package com.kh.udongzip.review.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.review.model.service.ReviewService;
 import com.kh.udongzip.review.model.vo.RemoveRequest;
 import com.kh.udongzip.review.model.vo.Review;
@@ -87,6 +91,88 @@ public class ReviewController {
 			
 		}
 		
+	}
+	
+	/**
+	 * 리뷰 삭제 요청 전체 조회 메소드
+	 * 삭제전, 키워드 검색 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 */
+	@RequestMapping("list.rv")
+	public String selectRemoveList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("classification", classification);
+		map.put("keyword", keyword);
+		
+		// 페이징 처리 변수 셋팅
+		int listCount = reviewService.selectRequestListCount(map);
+		int pageLimit = 5;
+		int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+					
+		ArrayList<RemoveRequest> list = reviewService.selectRequestList(pi, map);
+		
+		if (list == null) {
+			model.addAttribute("errorMsg", "삭제 요청 전체 조회에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		if (classification != null) {
+			model.addAttribute("classification", "&classification=" + classification);
+		}
+		if (keyword != null) {
+			model.addAttribute("keyword", "&keyword=" + keyword);
+		}
+		
+		return "admin/report/removeListView";
+	}
+	
+	/**
+	* 삭제요청 상세 조회 메소드
+	*
+	* @version 1.0
+	* @author 양아란
+	* @param requestNo
+	* @return 삭제 요청 상세 모달창
+	*/
+	@ResponseBody
+	@PostMapping("select.rv")
+	public RemoveRequest selectAgent(int requestNo) {
+		RemoveRequest request = reviewService.selectRequest(requestNo);
+		return request;
+	}
+	
+	/**
+	 * 삭제 요청 반려, 삭제 처리 메소드
+	 * 
+	 * @version 1.0
+	 * @author 양아란
+	 * 
+	 * @return 삭제 요청 전체 조회 페이지
+	 */
+	@PostMapping("adminUpdate.rv")
+	public String adminUpdate(RemoveRequest request, Model model, HttpSession session) {
+		
+		int result = reviewService.updateRequest(request);
+		
+		if (request.getResult().equals("delete")) {
+			int reviewNo = request.getReviewNo();
+			int result2 = reviewService.deleteReview(reviewNo);
+			result = result2 * result;
+		}
+		
+		if (result > 0) {
+			session.setAttribute("alertMsg", "리뷰 삭제 요청 처리가 완료되었습니다.");
+			return "redirect:/list.rv";
+		} else {
+			model.addAttribute("errorMsg", "리뷰 삭제 요청 처리에 실패했습니다. 다시 시도해주세요. ");
+			return "common/error";
+		}
 	}
 	
 }

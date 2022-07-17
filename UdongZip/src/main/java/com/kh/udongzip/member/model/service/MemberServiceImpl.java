@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.member.model.dao.MemberDao;
 import com.kh.udongzip.member.model.vo.Member;
 
@@ -51,18 +52,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.deleteMember(sqlSession, memberNo);
 	}
 
-	@Override
-	public ArrayList<Member> selectMemberList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Member selectMember(int memberNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// Member ID 중복 체크 확인
 	@Override
 	public int memberIdCheck(String memberId) {
@@ -85,5 +74,27 @@ public class MemberServiceImpl implements MemberService {
 	public int memberEmailCheck(String email) {
 		return memberDao.memberEmailCheck(sqlSession, email);
 	}
+	
+	/**
+	 * @version 1.0
+	 * @author 양아란
+	 */
+		// 개인 회원 전체 조회 수 메소드
+		@Override
+		public int selectListCount(String keyword) {
+			return memberDao.selectListCount(sqlSession, keyword);
+		}
+		
+		// 개인 회원 전체 조회 메소드
+		@Override
+		public ArrayList<Member> selectMemberList(PageInfo pi, String keyword) {
+			return memberDao.selectMemberList(sqlSession, pi, keyword);
+		}
 
+		// 개인 회원 상세 조회 메소드
+		@Override
+		public Member selectMember(int memberNo) {
+			return memberDao.selectMember(sqlSession, memberNo);
+		}
+		
 }

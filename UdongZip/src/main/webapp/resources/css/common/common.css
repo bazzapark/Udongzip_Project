@@ -20,6 +20,11 @@ div {
     margin-bottom: 100px;
 }
 
+/* textarea 태그 */
+textarea {
+	resize: none;
+}
+
 /* a 태그 */
 a {
   text-decoration: none;
@@ -27,15 +32,6 @@ a {
 }
 a:hover {
   text-decoration: none;
-}
-
-section.outer {
-  width: 60%;
-  padding-top: 50px;
-  margin: auto;
-}
-.inner {
-  margin: 50px;
 }
 
 /* 모달창 */

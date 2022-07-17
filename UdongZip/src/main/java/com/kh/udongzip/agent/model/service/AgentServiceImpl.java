@@ -1,6 +1,7 @@
 package com.kh.udongzip.agent.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.udongzip.agent.model.dao.AgentDao;
 import com.kh.udongzip.agent.model.vo.Agent;
+import com.kh.udongzip.common.model.vo.PageInfo;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -81,6 +83,34 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public int deleteAgent(int agentNo) {
 		return agentDao.deleteAgent(sqlSession, agentNo);
+		
+		
 	}
+	
+/**
+ * @version 1.0
+ * @author 양아란
+ */
+	// 업체회원 전체 조회, 가입 미승인, 검색 필터 메소드
+	@Override
+	public ArrayList<Agent> selectAgentList(PageInfo pi, HashMap<String, String> map) {
+		return agentDao.selectAgentList(sqlSession, pi, map);
+	}
+	
+	// 업체회원 전체조회, 가입 미승인, 검색필터 수 메소드
+	@Override
+	public int selectListCount(HashMap<String, String> map) {
+		return agentDao.selectListCount(sqlSession, map);
+	}
+	
+	// 업체 회원 가입 승인, 탈퇴 처리 메소드
+	@Override
+	public int adminUpdate(Agent agent) {
+		return agentDao.adminUpdate(sqlSession, agent);
+	}
+
+/**
+ * 
+ */
 
 }
