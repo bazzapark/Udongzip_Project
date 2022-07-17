@@ -30,6 +30,8 @@ import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.review.model.vo.Review;
 
 @Controller
 public class HouseController {
@@ -707,6 +709,26 @@ public class HouseController {
 		}
 	}
 	
+	 * @version 1.0
+	 * @author 박경화
+	 * @param houseNo
+	 * 		   매물 번호
+	 * @param memberNo
+	 * 		      회원 번호
+	 * @return 마이페이지 찜 매물 조회, 페이징
+	 */	
+
+	@RequestMapping("selectImages.zz")
+	public String selectList(
+			Model model, HttpSession session) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		ArrayList<House> list = houseService.selectZzimList(memberNo);
+		
+		model.addAttribute("list", list);
+		
+		return "user/house/zzimListView";
+	}
 	
 
 }

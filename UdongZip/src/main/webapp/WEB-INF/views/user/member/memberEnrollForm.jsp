@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>우동집</title>
+<title>우동집 | 우리동네집 모아보기</title>
   
   <!-- jQuery 라이브러리 -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -215,20 +215,24 @@
           <button type="button" class="button" id="idCheck">중복 확인</button>
           <div class="validate-area" id="id-validate"></div>
         </div>
+      
         <div class="form-floating mb-1">
           <input type="password" class="form-control" id="memberPwd" placeholder="비밀번호" name="memberPwd">
           <label for="">비밀번호</label>
           <div class="validate-area" id="pwd-validate"></div>
         </div>
+        
         <div class="form-floating mb-3">
           <input type="password" class="form-control" id="checkPwd" placeholder="비밀번호 재확인">
           <label for="">비밀번호 재확인</label>
           <div class="validate-area" id="check-validate"></div>
         </div>
+        
         <div class="form-floating mb-2">
           <input type="text" class="form-control" id="memberName" placeholder="이름" name="memberName">
-          <label for="">이름</label>
+          <label for="memberName">이름</label>
         </div>
+        
         <div class="form-floating mb-2">
           <input type="text" class="form-control" id="memberPhone" placeholder="연락처" pattern="[0-9]+" name="memberPhone">
           <label for="">휴대전화</label>
@@ -245,8 +249,54 @@
       <!------- 개인회원가입폼 끝 ------->
 
     </div>
-  </section>
- 
+    <!-- 아이디 중복검사 -->
+    <script>
+    	$(function() {
+    		
+    		var $idInput = $("#enrollForm input[name=memberId]");
+    		
+    		$idInput.keyup(function() {
+    			
+    			// console.log($idInput.val());
+    			if($idInput.val().length >= 5) { // 5글자 이상
+    				
+    				$.ajax({
+    					url : "idCheck.me",
+    					data : {checkId : $idInput.val()},
+    					success : function(result) {
+    						
+    						if(result == "NNNNN") { // 사용 불가능
+    							
+    							$("#checkResult").show();
+    							$("#checkResult").css("color", "red").text("중복된 아이디가 존재합니다. 다시입력해 주세요.");
+    							
+    							$("#enrollForm :submit").attr("disabled". true);
+    							
+    						}
+    						else { // 사용 가능
+    							
+    							$("#checkResult").show();
+    						    $("#checkResult").css("color", "blue").text("사용가능한 아이디 입니다.");
+    						    
+    						    $("#enrollForm :submit").attr("disabled", false);
+    						}
+    						
+    					},
+    					error : function() {
+    						
+    						console.log("아이디 중복 체크용 ajax 통신 실패!");
+    					}
+    				});
+    			}
+    			else { // 5글자 미만일 경우
+    				
+    				$("#checkResult").hide();
+    				$("#enrollForm :submit").attr("disabled", true);
+    			}
+    		});
+    	});
+    </script>
+    
   <jsp:include page="../../common/footer.jsp" />
   
                   <div class="modal" id="email-modal">

@@ -34,4 +34,7 @@ public class Reservation {
 	private int cancelAmount; // CANCEL_AMOUNT
 	private int cancelTaxFreeMount; // CANCEL_TAX_FREE_MOUNT
 
+	// 없는 필드
+	private String agentName;
+	private int reviewNo;
 }

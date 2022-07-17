@@ -58,6 +58,7 @@
 		<result column="STATION" property="station" />
 	</resultMap>
 	
+
 	<!-- 업체회원 관련 SQL 시작 : 박민규 -->
 	
 	<!-- agent 내 매물 조회용 -->
@@ -371,5 +372,15 @@
 		WHERE MEMBER_NO = #{memberNo}
 		  AND HOUSE_NO = #{houseNo}
 	</delete>
+	
+	
+	<!-- 마이페이지 찜매물 조회 -->
+	<select id="selectZzimList" parameterType="_int" resultMap="houseResultSet">
+		SELECT H.HOUSE_NO, THUMBNAIL
+		FROM HOUSE H , (SELECT HOUSE_NO
+                FROM ZZIM
+               WHERE MEMBER_NO = #{memberNo}) Z
+		WHERE H.HOUSE_NO = Z.HOUSE_NO
+	</select>
 	
 </mapper>

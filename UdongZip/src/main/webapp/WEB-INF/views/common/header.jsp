@@ -86,7 +86,7 @@
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	        <a class="" href="enrollForm.me">개인회원 가입</a>
+	        <a class="" href="regFormImpl.me">개인회원 가입</a>
 	        <a class="" href="enrollForm.ag">업체회원 가입</a>
 	      </div>
 	    </div>
@@ -200,10 +200,10 @@
 		          </button>
 		          <ul class="dropdown-menu" aria-labelledby="">
 		            <li><a class="dropdown-item" href="myPage.me">정보 수정</a></li>
-		            <li><a class="dropdown-item" href="#">예약 내역</a></li>
-		            <li><a class="dropdown-item" href="#">찜한 매물</a></li>
-		            <li><a class="dropdown-item" href="#">리뷰 관리</a></li>
-		            <li><a class="dropdown-item" href="#">1:1 문의 내역</a></li>
+		            <li><a class="dropdown-item" href="reservationlist.bo">예약 내역</a></li>
+		            <li><a class="dropdown-item" href="selectImages.zz">찜한 매물</a></li>
+		            <li><a class="dropdown-item" href="reviewlist.bo">리뷰 관리</a></li>
+		            <li><a class="dropdown-item" href="inquirylist.bo">1:1 문의 내역</a></li>
 		          </ul>
 		        </div>
 		        <button class="btn btn-primary" type="button" onclick="location.href='logout.me';">로그아웃</button>

@@ -25,7 +25,8 @@ public class Review {
 	// REVIEW 테이블에 없는 필드
 	private String memberId;
 	private String agentId;
-	private String agentName;
 	private String result;
+	private String memberName;
+	private String agentName;
 
 }

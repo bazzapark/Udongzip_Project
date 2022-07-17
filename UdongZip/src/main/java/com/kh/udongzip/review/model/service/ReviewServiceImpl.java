@@ -22,21 +22,44 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	@Autowired
+	private ReviewDao reviewDao;
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	// 게시글 총 갯수
 	@Override
-	public ArrayList<Review> selectReviewList(int memberNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectListCount(Member member) {
+			
+		return reviewDao.selectListCount(sqlSession, member);
 	}
 
+	// 리뷰 리스트
+	@Override
+	public ArrayList<Review> selectReviewList(PageInfo pi, Member member) {
+		
+		return reviewDao.selectList(sqlSession, pi, member);
+	}
+
+	// 리뷰 상세보기
 	@Override
 	public Review selectReview(int reviewNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return reviewDao.selectReview(sqlSession, reviewNo);
 	}
 
 	@Override
 	public ArrayList<Review> selectAgentReviewList(int agentNo) {
 		return reviewDao.selectAgentReviewList(sqlSession, agentNo);
+
+	}
+
+	// 리뷰삭제
+	@Override
+	public int deleteReview(int reviewNo) {
+		
+		return reviewDao.deleteReview(sqlSession, reviewNo);
 	}
 
 	@Override
@@ -93,5 +116,15 @@ public class ReviewServiceImpl implements ReviewService {
 /**
  * 
  */
+
+	// 리뷰 작성
+	@Override
+	public int insertReview(Review review) {
+
+		int result = reviewDao.insertReview(sqlSession, review);
+		
+		return result;
+	}
+
 
 }

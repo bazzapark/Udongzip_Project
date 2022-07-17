@@ -16,6 +16,7 @@ import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -245,8 +246,16 @@ public class HouseServiceImpl implements HouseService {
 	}
 	
 /**
- * 
- */
-	
+* @version 1.0
+* @author 박경화
+*/
+	// 마이페이지 - 찜 조회
+    @Override
+	public ArrayList<House> selectZzimList(int memberNo) {
+		return houseDao.selectZzimList(sqlSession, memberNo);
+	}
 
 }
+
+	
+

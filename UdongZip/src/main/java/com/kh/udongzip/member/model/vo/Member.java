@@ -23,5 +23,5 @@ public class Member {
 	
 	// MEMBER 테이블에 없는 필드
 	private String identifier;   // 식별자 (개인회원 : member, 업체회원 : agent)
-
+	
 }

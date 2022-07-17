@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -244,14 +245,15 @@ public class MemberController {
 							ModelAndView mv,
 							HttpSession session
 							) {
+// System.out.println("### MemberController : liginMember :: getMemberId = ["+ member.getMemberId() +"]");
+// System.out.println("### MemberController : liginMember :: getMemberPwd = ["+ member.getMemberPwd() +"]");
 		
 	// 암호화 후 로그인
 
 	Member loginUser = memberService.selectMember(member);
-	
 	// 아이디만 일치 하는지 확인 체크
 	
-	// 비밀반호도 일치하는지 체크
+	// 비밀번호도 일치하는지 체크
 	
 	if(loginUser != null && bCryptPasswordEncoder.matches(member.getMemberPwd(), loginUser.getMemberPwd())) { //로그인성공
 		
@@ -289,28 +291,7 @@ public class MemberController {
 	mv.setViewName("redirect:/");
 	
 	return mv;
-	// 암호화 전
-	/*
-	Member loginUser = memberService.selectMember(member);
-         
-		
-		// System.out.println(loginUser);
-		
-		if(loginUser == null) { // 실패
-			
-			mv.addObject("errorMsg","로그인 실패");
-			
-			mv.setViewName("common/error");
-		}
-		else { // 성공
-			
-			// session.setAttribute("loginUser", loginUser);
-			// model.addAttribute("loginUser", loginUser);
-			
-			mv.setViewName("redirect:/");
-		}
-		return mv;
-		*/
+
 	}
 	
 	// 로그아웃
@@ -348,7 +329,7 @@ public class MemberController {
 		// System.out.println("평문 : " + member.getMemberPwd());
 		
 		String encPwd = bCryptPasswordEncoder.encode(member.getMemberPwd());
-		// System.out.println("암호화 : " + encPwd);
+		 System.out.println("암호화 : " + encPwd);
 		
 		System.out.println(encPwd);
 		
@@ -387,7 +368,9 @@ public class MemberController {
 		if(result > 0) {
 			
 		Member updateMem = memberService.selectMember(member);
-			
+		
+		updateMem.setIdentifier("member");
+		
 		session.setAttribute("loginUser", updateMem);
 		
 		// 1회성 알람메세지 
@@ -495,4 +478,17 @@ public class MemberController {
 		}
 	}
 	
+	// 이용약관 띄어주는 폼
+		@RequestMapping("regFormImpl.me")
+		public String regFormImpl() {
+			
+			// 회원가입 폼 띄어주기
+			// /WEB-INF/views/user/member/memberEnrollForm.jsp
+			
+			return "user/member/regFormImpl";
+		}
+	
+ 
+		
+		
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이 페이지</title>
+<title>우동집 | 우리동네집 모아보기</title>
 
      <!-- jQuery 라이브러리 -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,6 +17,9 @@
      <!-- js -->
 	<script type="text/javascript" src="resources/js/user/myPage.js"></script>
 
+	<!-- CSS 파일 -->
+	<link rel="stylesheet" href="resources/css/common/common.css" />
+	
      <style>
         .content {
             background-color: white;
@@ -24,7 +27,7 @@
             margin: auto;
         }
         
-        .innerOuter {
+        .innerOuter form {
             border:1px solid lightgray;
             width: 600px;
             margin: auto;
@@ -120,44 +123,42 @@
 
 
     <jsp:include page="../../common/header.jsp" />
-
-<div class="modal fade" id="outForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title" id="">회원탈퇴</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-
-<form action="delete.me" method="post">
-<pre>회원탈퇴 하시겠습니까?
-
-회원탈퇴와 동시에 서비스 이용내역 및 모든 데이터가 삭제 됩니다. 
-이후 동일 계정으로 가입이 가능하지만 기록은 남아있지 않습니다.
-            
-그동안 우리동네집구하기를 이용해 주셔서 감사합니다.
-앞으로 보다 나은 서비스를 제공할 수 있도록 노력하겠습니다.
-</pre>
-         <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
-        <div align="center">
-    <button type="submit" class="btn btn-primary">탈퇴하기</button>
-    <br>
-    </div>
-  </form>
-  
-</div>
-</div>
-</div>
-
+	
     <div class="content">
+    <div class="modal" id="outForm" tabindex="-1" aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="">회원탈퇴</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		
+		<form action="delete.me" method="post">
+		<pre>회원탈퇴 하시겠습니까?
+		
+		회원탈퇴와 동시에 서비스 이용내역 및 모든 데이터가 삭제 됩니다. 
+		이후 동일 계정으로 가입이 가능하지만 기록은 남아있지 않습니다.
+		            
+		그동안 우리동네집구하기를 이용해 주셔서 감사합니다.
+		앞으로 보다 나은 서비스를 제공할 수 있도록 노력하겠습니다.
+		</pre>
+	         <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
+	        <div align="center">
+	    <button type="submit" class="btn btn-primary">탈퇴하기</button>
+	
+	    </div>
+	  </form>
+	  
+	</div>
+	</div>
+	</div>
         <br><br>
         <div class="innerOuter">
-            <h2 style ="border-bottom: 3px solid #757070;">마이 페이지</h2>
             <br>
 
             <form action="update.me" method="post" id="member-update-form">
                 <div class="form-group" style="width: 300px;">
-                    <albel for="memberId">* 아이디 </albel > <br>
+                    <label for="memberId">* 아이디 </label > <br>
                     <input type="text" class="form-control" id="memberId" value="${ loginUser.memberId }" name="memberId" readonly> <br>
 
                     <label for="memberName">* 이름</label> <br>

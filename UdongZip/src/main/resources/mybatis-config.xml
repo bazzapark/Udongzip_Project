@@ -32,6 +32,8 @@
 		<mapper resource="mappers/cs-mapper.xml"/>
 		<mapper resource="mappers/review-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml" />
+		<mapper resource="mappers/review-mapper.xml"/>
+		<mapper resource="mappers/inquiry-mapper.xml"/>
 	</mappers>
 
 	<!--
@@ -43,6 +45,7 @@
 		<mapper resource="mysql/cs-mapper.xml"/>
 		<mapper resource="mysql/review-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml" />
+		<mapper resource="mappers/inquiry-mapper.xml"/>
 	</mappers>
 	-->
 

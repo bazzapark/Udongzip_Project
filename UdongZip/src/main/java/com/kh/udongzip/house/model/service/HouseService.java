@@ -10,6 +10,8 @@ import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.reservation.model.vo.Reservation;
 
 public interface HouseService {
 	
@@ -95,7 +97,7 @@ public interface HouseService {
 	ArrayList<String> selectHouseImages(int houseNo);
 	
 	// 매물 찜 조회 : 개인회원 : 개인회원
-	Integer selectZzim(HashMap<String, Integer> map);
+	int selectZzim(HashMap<String, Integer> map);
 	
 	// 매물 찜 추가 : 개인회원
 	int insertZzim(HashMap<String, Integer> map);
@@ -111,8 +113,19 @@ public interface HouseService {
 	
 	// 허위 매물 목록 전체 조회 : 어드민
 	ArrayList<House> selectReportHouse();
+	
+	// 매물 찜 조회 : 개인회원 : 개인회원 
+	int selectZzim(Map<String, Integer> map);
+
+
 /**
- * 
- */
+ * @version 1.0
+ * @author 박경화
+ */	
+
+	// 내 예약 조회 - 박경화
+	ArrayList<House> selectZzimList(int memberNo);
+	
+	
 	
 }

@@ -14,6 +14,8 @@ import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.review.model.vo.Review;
 
 @Repository
 public class HouseDao {
@@ -179,8 +181,14 @@ public class HouseDao {
 	}
 	
 /**
- * 
+ * @version 1.0
+ * @author 박경화
  */
-
+	// 찜 리스트 조회
+	public ArrayList<House> selectZzimList(SqlSessionTemplate sqlSession,int memberNo) {
+		
+		
+		return (ArrayList)sqlSession.selectList("houseMapper.selectZzimList", memberNo);
+	}
 
 }

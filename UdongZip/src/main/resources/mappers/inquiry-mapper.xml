@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inquiryMapper">
+
+  	<resultMap id="inquiryResultSet" type="inquiry">
+  		<result column="INQUIRY_NO" property="inquiryNo" /> 
+  	    <result column="CATEGORY" property="cateogory" />
+  		<result column="TITLE" property="title" />
+  		<result column="MEMBER_NO" property="memberNo" />
+  		<result column="CREATE_DATE" property="createDate" />
+  		<result column="AGENT_NO" property="agentNo" />
+  		<result column="ANSWER_DATE" property="answerDate" />
+  		
+  		<result column="MEMBER_NAME" property="memberName" />
+  		<result column="AGENT_NANE" property="agentName" />
+  	</resultMap>
+    	
+    <!-- 페이징 -->
+    <select id="selectListCount" resultType="_int">
+  		SELECT COUNT(*)
+		  FROM INQUIRY
+		 WHERE STATUS = 'Y'
+		 <choose>
+            <when test="identifier == 'member'">
+                AND MEMBER_NO = #{memberNo}
+            </when>
+            <when test="identifier == 'agent'">
+                AND AGENT_NO = #{memberNo}
+            </when>
+        </choose>
+  	</select>
+  	
+  	<!-- 1:1 문의 리스트 조회 -->
+  	<select id="selectList" parameterType="member" resultMap="inquiryResultSet">
+  		SELECT *
+        FROM INQUIRY I, MEMBER M, AGENT A
+        WHERE I.MEMBER_NO = M.MEMBER_NO
+          AND I.AGENT_NO = A.AGENT_NO
+          AND I.STATUS = 'Y'
+          AND I.MEMBER_NO = #{memberNo}
+        ORDER BY CREATE_DATE DESC
+  	</select>
+  	
+  	<!-- 1:1 문의 상세조회 -->
+  	<select id="selectInquiry" parameterType="_int" resultMap="inquiryResultSet">
+	  	SELECT MEMBER_NAME, CREATE_DATE, TITLE, CONTENT, AGENT_NAME, ANSWER_DATE, ANSWER_CONTENT
+		 FROM INQUIRY I, MEMBER M, AGENT A
+			WHERE I.MEMBER_NO = M.MEMBER_NO
+			AND I.AGENT_NO = A.AGENT_NO
+		    AND I.INQUIRY_NO = #{inquiryNo}
+	</select>
+</mapper>

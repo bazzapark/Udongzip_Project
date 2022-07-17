@@ -14,6 +14,8 @@
 		<result column="STATUS" property="status"/>
 		<result column="MEMBER_ID" property="memberId"/>
 		<result column="RESULT" property="result"/>
+		<result column="MEMBER_NAME" property="memberName" />
+  		<result column="AGENT_NAME" property="agentName" />
 	</resultMap>
 	
 	<resultMap id="requestResultSet" type="removeRequest">
@@ -119,6 +121,41 @@
 		AND RV.MEMBER_NO = M.MEMBER_NO
 		AND R.REQUEST_NO = #{requestNo}
 	</select>
+  	
+  	<!-- 페이징 처리 -->
+  	<select id="selectListCount" resultType="_int">
+  		SELECT COUNT(*)
+		  FROM REVIEW
+		 WHERE STATUS = 'Y'
+		 <choose>
+            <when test="identifier == 'member'">
+                AND MEMBER_NO = #{memberNo}
+            </when>
+            <when test="identifier == 'agent'">
+                AND AGENT_NO = #{memberNo}
+            </when>
+        </choose>
+  	</select>
+  	
+  	<!-- 리뷰 리스트 -->
+  	 <select id="selectList" parameterType="member" resultMap="reviewResultSet">
+        SELECT R.REVIEW_NO, R.CONTENT, M.MEMBER_NAME, A.AGENT_NAME, TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE"
+        FROM REVIEW R, MEMBER M, AGENT A
+        WHERE R.MEMBER_NO = M.MEMBER_NO
+          AND R.AGENT_NO = A.AGENT_NO
+          AND R.STATUS = 'Y'
+          AND R.MEMBER_NO = #{memberNo}
+        ORDER BY CREATE_DATE DESC
+  	</select>
+  	
+  	<!-- 리뷰 상세보기 -->
+ 
+  	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet">
+	  	SELECT REVIEW_NO, RESERVATION_NO, AGENT_NAME, CONTENT, SATISFIED
+	      FROM REVIEW R, AGENT A
+	   	 WHERE REVIEW_NO = #{reviewNo}
+		   AND R.AGENT_NO = A.AGENT_NO
+	</select>	
 	
 	<!-- 리뷰 삭제 -->
 	<update id="deleteReview" parameterType="_int">
@@ -142,4 +179,20 @@
 		WHERE REQUEST_NO = #{requestNo}
 	</update>
 	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW(REVIEW_NO,
+						   MEMBER_NO,
+					       RESERVATION_NO,
+					       AGENT_NO, 
+					       CONTENT, 
+					       SATISFIED)
+	    VALUES(SEQ_REV.NEXTVAL
+	    	   , #{memberNo}
+	           , #{reservationNo}
+	           , #{agentNo}
+	           , #{content}
+	           , #{satisfied})
+	</insert>
+		
 </mapper>
