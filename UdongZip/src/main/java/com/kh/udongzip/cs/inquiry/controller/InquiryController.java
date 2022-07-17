@@ -166,7 +166,7 @@ public class InquiryController {
 		int pageLimit = 10;
 		int boardLimit = 10;
 		
-		PageInfo pi = Pagination.getpageInfo(listCount, currentPage, pageLimit, boardLimit);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		ArrayList<Inquiry> list = inquiryService.selectadminInquiryList(pi);
 		
