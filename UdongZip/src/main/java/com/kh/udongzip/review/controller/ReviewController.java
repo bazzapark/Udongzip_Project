@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.common.template.Pagination;
+import com.kh.udongzip.member.model.vo.Member;
 import com.kh.udongzip.review.model.service.ReviewService;
 import com.kh.udongzip.review.model.vo.RemoveRequest;
 import com.kh.udongzip.review.model.vo.Review;

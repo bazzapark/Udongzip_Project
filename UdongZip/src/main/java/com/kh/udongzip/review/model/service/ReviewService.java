@@ -11,16 +11,8 @@ import com.kh.udongzip.review.model.vo.Review;
 
 public interface ReviewService {
 	
-	// 7월 7일 박경화 페이징 추가
-	// 게시글 총 갯수 조회
-	int selectListCount(Member member);
-	
 	// 업체 리뷰 전체 조회
 	ArrayList<Review> selectAgentReviewList(int agentNo);
-	
-	// 리뷰 상세 조회 : 개인회원
-	Review selectReview(int reviewNo);
-	
 	
 	// 삭제 요청 생성
 	int insertRequest(RemoveRequest request);
@@ -41,9 +33,6 @@ public interface ReviewService {
 	
 	// 리뷰 상세 조회 : 개인회원 - 경화
 	Review selectReview(int reviewNo);
-	
-	// 리뷰 삭제 : 개인회원, 어드민 - 경화(개인회원)
-	int deleteReview(int reviewNo);
 	
 	// 삭제 요청 목록 전체 조회 : 어드민
 	ArrayList<RemoveRequest> selectRequestList(PageInfo pi, HashMap<String, String> map);

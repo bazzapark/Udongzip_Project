@@ -63,11 +63,4 @@ public class InquiryDao {
 		
 		return (ArrayList)sqlSession.selectList("inquiryMapper.selectList", member, rowBounds);
 	}
-	
-	// 1:1 문의 상세조회
-	
-	public Inquiry selectInquiry(SqlSessionTemplate sqlSession, int inquiryNo) {
-		
-		return sqlSession.selectOne("inquiryMapper.selectInquiry", inquiryNo);
-	}
 }

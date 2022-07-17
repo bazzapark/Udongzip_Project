@@ -22,7 +22,9 @@ public interface ReservationService {
 	int insertReservation(Reservation reservation);
 	
 	// 상태 변경
-	int updateresult(Reservation reservation);
+	int updateResult(HashMap<String, Object> mapn);
+	
+	ArrayList<Reservation> selectAgentReservationList(HashMap<String, Object> map);
 	
 
 }

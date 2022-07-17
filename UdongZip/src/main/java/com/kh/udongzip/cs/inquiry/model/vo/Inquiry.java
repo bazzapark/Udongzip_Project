@@ -23,7 +23,6 @@ public class Inquiry {
 	private String answerContent;  // 답변
 	private String answerDate;     // 답변일
 	private String status;         // 활성화 여부
-	private String category; // 문의종류 - 박경화 추가 
 	
 	// 테이블에 없는 필드
 	private String memberName;

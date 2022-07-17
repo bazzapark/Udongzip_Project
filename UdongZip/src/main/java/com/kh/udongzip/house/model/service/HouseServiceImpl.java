@@ -211,7 +211,7 @@ public class HouseServiceImpl implements HouseService {
 	
 	// 매물 찜 조회 서비스
 	@Override
-	public Integer selectZzim(HashMap<String, Integer> map) {
+	public int selectZzim(HashMap<String, Integer> map) {
 		return houseDao.selectZzim(sqlSession, map);
 	}
 	
@@ -253,6 +253,12 @@ public class HouseServiceImpl implements HouseService {
     @Override
 	public ArrayList<House> selectZzimList(int memberNo) {
 		return houseDao.selectZzimList(sqlSession, memberNo);
+	}
+
+	@Override
+	public int selectZzim(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -19,12 +19,6 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
-	@Autowired
-	private ReservationDao reservationDao;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
 	
 	// 페이징
 	@Override

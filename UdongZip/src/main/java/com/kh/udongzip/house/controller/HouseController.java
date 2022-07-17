@@ -709,7 +709,7 @@ public class HouseController {
 		}
 	}
 	
-	 * @version 1.0
+	/* @version 1.0
 	 * @author 박경화
 	 * @param houseNo
 	 * 		   매물 번호

@@ -20,12 +20,6 @@ public class InquiryServiceImpl implements InquiryService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	@Autowired
-	private InquiryDao inquiryDao;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
 	// 게시글 총 갯수
 	@Override
 	public int selectListCount(Member member) {

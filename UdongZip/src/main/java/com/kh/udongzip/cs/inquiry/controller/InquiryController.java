@@ -9,13 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.common.security.Auth;
 import com.kh.udongzip.common.security.Auth.Role;
+import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.cs.inquiry.model.service.InquiryService;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
+import com.kh.udongzip.member.model.vo.Member;
 
 @Controller
 public class InquiryController {
@@ -219,10 +224,6 @@ public class InquiryController {
 		}
 		
 	}
-
-	// 전체조회
-	@Autowired
-	private InquiryService inquiryService;
 	
 	@RequestMapping ("inquirylist.bo")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,

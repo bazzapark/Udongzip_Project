@@ -22,19 +22,6 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	@Autowired
-	private ReviewDao reviewDao;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
-	// 게시글 총 갯수
-	@Override
-	public int selectListCount(Member member) {
-			
-		return reviewDao.selectListCount(sqlSession, member);
-	}
-
 	// 리뷰 리스트
 	@Override
 	public ArrayList<Review> selectReviewList(PageInfo pi, Member member) {
@@ -53,13 +40,6 @@ public class ReviewServiceImpl implements ReviewService {
 	public ArrayList<Review> selectAgentReviewList(int agentNo) {
 		return reviewDao.selectAgentReviewList(sqlSession, agentNo);
 
-	}
-
-	// 리뷰삭제
-	@Override
-	public int deleteReview(int reviewNo) {
-		
-		return reviewDao.deleteReview(sqlSession, reviewNo);
 	}
 
 	@Override

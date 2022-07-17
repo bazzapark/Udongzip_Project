@@ -71,12 +71,6 @@ public class ReviewDao {
 /**
  * 
  */
-
-	// 페이징
-	public int selectListCount(SqlSessionTemplate sqlSession, Member member) {
-		
-		return sqlSession.selectOne("reviewMapper.selectListCount", member);
-	}
 	
 	// 페이징 리뷰리스트
 	public ArrayList<Review> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Member member) {
@@ -94,12 +88,6 @@ public class ReviewDao {
 		
 		return sqlSession.selectOne("reviewMapper.selectReview", revewNo);
 		
-	}
-	
-	// 리뷰삭제
-	public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
-		
-		return sqlSession.update("reviewMapper.deleteReview", reviewNo);
 	}
 	
 	// 리뷰작성

@@ -58,7 +58,7 @@ public class ReservationController {
 		map.put("userNo", agentNo);
 		map.put("identifier", "R.AGENT_NO");
 		
-		ArrayList<Reservation> reservationList = reservationService.selectReservationList(map);
+		ArrayList<Reservation> reservationList = reservationService.selectAgentReservationList(map);
 		
 		return new Gson().toJson(reservationList);
 		
@@ -239,10 +239,6 @@ public class ReservationController {
 			return "redirect:/";
 			
 		}
-		
-
-	@Autowired
-	private ReservationService reservationService;
 	
 	// 전체조회
 	@RequestMapping("reservationlist.bo")
