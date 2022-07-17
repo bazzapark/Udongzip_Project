@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.dao.HouseDao;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -199,9 +201,18 @@ public class HouseServiceImpl implements HouseService {
 	public int deleteZzim(Map<String, Integer> map) {
 		return houseDao.deleteZzim(sqlSession, map);
 	}
+
 /**
- * 
- */
-	
+* @version 1.0
+* @author 박경화
+*/
+	// 마이페이지 - 찜 조회
+    @Override
+	public ArrayList<House> selectZzimList(int memberNo) {
+		return houseDao.selectZzimList(sqlSession, memberNo);
+	}
 
 }
+
+	
+

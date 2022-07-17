@@ -23,5 +23,9 @@ public class Reservation {
 	private String result;            // 방문 결과 (방문 대기 / 예약 취소 / 방문 완료 / 미방문(노쇼))
 	private String deposit;           // 예약금 결제 상태 (결제 완료 / 환불 완료 / 환불 불가)
 	private String createDate;        // 예약 생성일
-
+	
+	// 없는 필드
+	private String agentName;
+	private String memberName;
+	private int reviewNo;
 }

@@ -23,6 +23,7 @@ public class Review {
 	private String status;         // 활성화 여부
 	
 	// REVIEW 테이블에 없는 필드
-	
+	private String memberName;
+	private String agentName;
 
 }

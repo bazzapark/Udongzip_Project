@@ -44,10 +44,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(sqlSession, member);
 	}
 
+	// 비밀번호 변경
 	@Override
-	public Member updatePwd(String newPwd) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updatePwd(Member member ) {
+
+		return 0;
 	}
 
 	// 회원 탈퇴
@@ -69,10 +70,13 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	// 아이디 중복 체크
 	@Override
-	public int memberIdCheck(String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int memberIdCheck(String checkId) {
 
+		return memberDao.idCheck(sqlSession, checkId);
+	}
+	
+	// 비밀번호 체크 
+	
 }

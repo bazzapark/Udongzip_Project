@@ -32,6 +32,13 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.deletemember", memberNo);
 	}
 	
+	// 아이디 중복확인
+	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
+		
+		return sqlSession.selectOne("memberMapper.idCheck", checkId);
+	}
 	
+	// 비밀번호 변경
+  
 	
 }

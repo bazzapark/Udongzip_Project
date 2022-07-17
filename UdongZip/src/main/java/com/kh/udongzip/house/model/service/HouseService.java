@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.reservation.model.vo.Reservation;
 
 public interface HouseService {
 	
@@ -83,19 +86,26 @@ public interface HouseService {
 	// 관리비 항목명 조회 : 개인회원
 	ArrayList<String> selectManages(List<Integer> manageInfo);
 	
-	// 매물 이미지 조회 : 개인회원
-	ArrayList<String> selectHouseImages(int houseNo);
-	
-	// 매물 찜 조회 : 개인회원 : 개인회원
-	int selectZzim(Map<String, Integer> map);
-	
 	// 매물 찜 추가 : 개인회원
 	int insertZzim(Map<String, Integer> map);
-		
-	// 매물 찜 삭제 : 개인회원
+
+	// 매물 찜 삭제 : 개인회원 
 	int deleteZzim(Map<String, Integer> map);
+	
+	// 매물 찜 조회 : 개인회원 : 개인회원 
+	int selectZzim(Map<String, Integer> map);
+
+	// 매물 이미지 조회 : 개인회원
+	ArrayList<String> selectHouseImages(int houseNo);
+
 /**
- * 
- */
+ * @version 1.0
+ * @author 박경화
+ */	
+
+	// 내 예약 조회 - 박경화
+	ArrayList<House> selectZzimList(int memberNo);
+	
+	
 	
 }

@@ -7,7 +7,7 @@ import com.kh.udongzip.member.model.vo.Member;
 public interface MemberService {
 	
 	// Member ID 중복 체크
-	int memberIdCheck(String memberId);
+	int memberIdCheck(String checkId);
 	
 	// 회원가입 : 개인회원
 	int insertMember(Member member);
@@ -19,7 +19,7 @@ public interface MemberService {
 	int updateMember(Member member);
 	
 	// 비밀번호 수정 : 개인회원
-	Member updatePwd(String newPwd);
+	int updatePwd(Member member);
 	
 	// 회원 탈퇴 (비밀번호 X) : 개인회원, 어드민
 	int deleteMember(int memberNo);

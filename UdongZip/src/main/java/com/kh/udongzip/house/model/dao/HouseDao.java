@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.house.model.vo.House;
 import com.kh.udongzip.house.model.vo.Manage;
 import com.kh.udongzip.house.model.vo.Option;
 import com.kh.udongzip.house.model.vo.Subway;
+import com.kh.udongzip.member.model.vo.Member;
+import com.kh.udongzip.review.model.vo.Review;
 
 @Repository
 public class HouseDao {
@@ -124,8 +128,14 @@ public class HouseDao {
 		return sqlSession.delete("houseMapper.deleteZzim", map);
 	}
 /**
- * 
+ * @version 1.0
+ * @author 박경화
  */
-
+	// 찜 리스트 조회
+	public ArrayList<House> selectZzimList(SqlSessionTemplate sqlSession,int memberNo) {
+		
+		
+		return (ArrayList)sqlSession.selectList("houseMapper.selectZzimList", memberNo);
+	}
 
 }

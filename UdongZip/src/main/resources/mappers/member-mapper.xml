@@ -69,5 +69,19 @@
  		 WHERE MEMBER_NO =#{memberNo}
  	</update>
  	
+ 	<!-- 아이디 중복확인 -->
+ 	<select id="idCheck" parameterType="string" resultType="_int">
+ 		SELECT COUNT(*)
+ 		FROM MEMBER
+ 		WHERE MEMBER_ID = #{checkId}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 변경 -->
+ 	<update id="updatePwd" parameterType="member">
+ 		UPDATE MEMBER
+ 		   SET MEMBER_PWD =#{memberPwd}
+ 		 WHERE MEMBER_NO =#{memberNo}
+ 		   AND STATUS = 'Y'
+ 	</update>
  
 </mapper>
