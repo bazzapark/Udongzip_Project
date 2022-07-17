@@ -18,5 +18,9 @@ public class ReservationDao {
 	public int updateResult(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return sqlSession.update("reservationMapper.updateResult", map);
 	}
+	
+	public int insertReservation(SqlSessionTemplate sqlSession, Reservation reservation) {
+		return sqlSession.insert("reservationMapper.insertReservation", reservation);
+	}
 
 }

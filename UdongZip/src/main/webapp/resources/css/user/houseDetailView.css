@@ -43,6 +43,7 @@
   right: 23%;
   width: 12%;
   background-color: #0057a442;
+  z-index: 99999;
 }
 #landDetailBox #zzimBtn {
   padding: 0;

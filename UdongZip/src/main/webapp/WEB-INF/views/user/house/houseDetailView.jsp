@@ -195,7 +195,7 @@
         <div class="row text-center mb-2"><div class="col" id="landId">매물번호 ${ house.houseNo }</div></div>
         <div class="row text-center mb-3"><div class="col"><a href="detail.ag?ano=${ house.agentNo }" id="agentId">${ house.agentName }</a></div></div>
         <div class="row text-center">
-          <div class="col"><button class="btn btn-primary" data-bs-toggle= "" data-bs-target="#consultBookingModal" id="reservation">상담 예약</button></div>
+          <div class="col"><button class="btn btn-primary" data-bs-toggle="" id="reservation" data-bs-target="#consultBookingModal">상담 예약</button></div>
         </div>
       </div>
 
@@ -563,7 +563,7 @@
 		
 		// 상담 예약 모달창 버튼 활성화
 		$("#reservation").mouseenter(function() {
-			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+			if (${ loginUser != null and loginUser.identifier eq 'member' }) {
 				$(this).attr("data-bs-toggle", "modal");
 			} else {
 				$(this).attr("data-bs-toggle", "");
@@ -604,6 +604,7 @@
 			var form = document.createElement("form");
 			var input1 = document.createElement("input");
 			var input2 = document.createElement("input");
+			var input3 = document.createElement("input");
 			var input4 = document.createElement("input");
 			var input5 = document.createElement("input");
 			var input6 = document.createElement("input");
@@ -611,12 +612,15 @@
 			var input8 = document.createElement("input");
 			var input9 = document.createElement("input");
 			
-			form.action = "kakaoPay.rs";
+			form.action = "insert.rs";
 			form.method = "POST";
 			input1.name = "partner_order_id"; // 가맹점 주문번호
 			input1.value = ${ house.houseNo } + ${ house.agentNo } + ${ loginUser.memberNo }
 			input2.name = "partner_user_id"; // 가맹점 회원 ID (문의 업체)
 			input2.value = $("#agentName").text();
+			
+			input3.name = "classification";
+			input3.value = "ready";
 			
 			input4.name = "memberNo";
 			input4.value = ${ loginUser.memberNo };
@@ -633,6 +637,7 @@
 			
 			form.appendChild(input1);
 			form.appendChild(input2);
+			form.appendChild(input3);
 			form.appendChild(input4);
 			form.appendChild(input5);
 			form.appendChild(input6);
@@ -642,7 +647,7 @@
 			form.style.display = "none";
 			document.body.appendChild(form);
 			form.submit();
-		})
+		}) 
 	  
 	  // 날짜, 시간 변수 셋팅
 	  // 현재 시간이 오후 6시 이상이면 minDate를 내일 날짜로 설정
@@ -704,7 +709,7 @@
 	    }
 	  })
 	});
-  
+  	
 	// 찜 기능 관련
 	$(function() {
 		
@@ -713,7 +718,7 @@
 			$.ajax({
 				url: "select.zz",
 				data: {
-					memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+					memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
 					houseNo: ${ house.houseNo }
 				},
 				type: "POST",
@@ -742,12 +747,12 @@
 					$.ajax({
 						url: "delete.zz",
 						data: {
-							memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+							memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
 							houseNo: ${ house.houseNo }
 						},
 						type: "POST",
 						success: function(result) {
-							if (result <= 0) {
+							if (result < 0) {
 								alert("찜 삭제에 실패했습니다. 다시 시도해주세요.");
 								return false;
 							} else {
@@ -764,12 +769,12 @@
 					$.ajax({
 						url: "insert.zz",
 						data: {
-							memberNo: ${ loginUser.memberNo == "" ? 0 : loginUser.memberNo },
+							memberNo: (${ loginUser.memberNo == "" ? 0 : loginUser.memberNo }),
 							houseNo: ${ house.houseNo }
 						},
 						type: "POST",
 						success: function(result) {
-							if (result <= 0) {
+							if (result < 0) {
 								alert("찜 하기에 실패했습니다. 다시 시도해주세요.");
 								return false;
 							} else {
@@ -810,10 +815,10 @@
 	
 	// 허위 매물 신고
 	$(function() {
-		
+		console.log("loginUser : ${ loginUser }")
 		// 허위 신고 모달창 버튼 활성화
 		$("#notify").mouseenter(function() {
-			if (${ loginUser != null and loginUser.identifier == 'member' }) {
+			if (${ loginUser != null and loginUser.identifier eq 'member' }) {
 				$(this).attr("data-bs-toggle", "modal");
 			} else {
 				$(this).attr("data-bs-toggle", "");

@@ -17,6 +17,10 @@
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="MEMBER_NAME" property="memberName" />
 		<result column="TITLE" property="houseTitle" />
+		<result column="CID" property="cid" />
+		<result column="TID" property="tid" />
+		<result column="CANCEL_AMOUNT" property="cancelAmount" />
+		<result column="CANCEL_TAX_FREEMOUNT" property="cancelTaxFreeMount" />
 	</resultMap>
 
 	<select id="selectReservationList" parameterType="hashmap" resultMap="reservationResultSet">
@@ -33,6 +37,12 @@
 		   SET RESULT = #{resultStatus}
 		 WHERE RESERVATION_NO = #{reservationNo}
 	</update>
+	
+	<insert id="insertReservation" parameterType="reservation">
+		INSERT INTO RESERVATION (RESERVATION_NO, MEMBER_NO, AGENT_NO, HOUSE_NO, RESERVATION_DATE, RESERVATION_TIME, CONTENT, RESULT, DEPOSIT, CREATE_DATE)
+		VALUES (SEQ_RES.NEXTVAL, #{memberNo}, #{agentNo}, #{houseNo}, #{reservationDate}, 
+				#{reservationTime}, #{content}, "방문 대기", "결제 완료", SYSDATE);
+	</insert>
 
 	
 </mapper>

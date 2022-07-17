@@ -27,5 +27,11 @@ public class Reservation {
 	private String memberName;
 	private String memberId;
 	private String houseTitle;
+	
+	// 환불에 필요한 정보
+	private String cid;
+	private String tid;
+	private int cancelAmount; // CANCEL_AMOUNT
+	private int cancelTaxFreeMount; // CANCEL_TAX_FREE_MOUNT
 
 }

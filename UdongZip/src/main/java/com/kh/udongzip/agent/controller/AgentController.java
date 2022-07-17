@@ -517,14 +517,13 @@ public class AgentController {
 	}
 	
 	/**
-	* 업체회원 상세 조회 페이지 이동 메소드
+	* 업체회원 상세 조회 페이지 메소드
 	*
 	* @version 1.0
 	* @author 양아란
 	* @param agentNo
 	* 		 업체회원 번호
 	* @return 업체 회원 상세 조회 페이지
-	* @throws Exception 
 	*/
 	@GetMapping("/detail.ag")
 	public String detailAgent(@RequestParam(value="ano") int agentNo, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) throws Exception {

@@ -32,8 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public int insertReservation(Reservation reservation) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reservationDao.insertReservation(sqlSession, reservation);
 	}
 
 	@Override
