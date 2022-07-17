@@ -56,5 +56,24 @@ public class ReservationServiceImpl implements ReservationService {
 	public int updateResult(HashMap<String, Object> map) {
 		return reservationDao.updateResult(sqlSession, map);
 	}
+	
+
+	// 방금 예약한 번호 불러오기
+	@Override
+	public int selectNewReservation(int memberNo) {
+		return reservationDao.selectNewReservation(sqlSession, memberNo);
+	}
+	
+	// 예약 삭제
+	@Override
+	public int deleteReservation(int reservationNo) {
+		return reservationDao.deleteReservation(sqlSession, reservationNo);
+	}
+	
+	// 예약 변경
+	@Override
+	public int updateReservation(Reservation reservation) {
+		return reservationDao.updateReservation(sqlSession, reservation);
+	}
 
 }

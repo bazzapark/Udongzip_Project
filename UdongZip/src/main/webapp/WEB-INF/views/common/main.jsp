@@ -51,13 +51,17 @@
 				count = result.length;
 			}
 			
-			for(var i = 0; i < count; i++) {
-				
-				resultStr += "<tr>"
-						   + "<td>" + result[i].title + "</td>"
-						   + "<td class='text-center'>" + result[i].createDate + "</td>"
-						   + "</tr>";
-				
+			if (count = 0) {
+				resultStr += "<tr><td class='text-center' colspan='2'>공지사항이 없습니다.</td></tr>"
+			} else {
+				for(var i = 0; i < count; i++) {
+					
+					resultStr += "<tr>"
+							   + "<td>" + result[i].title + "</td>"
+							   + "<td class='text-center'>" + result[i].createDate + "</td>"
+							   + "</tr>";
+					
+				}
 			}
 			
 			$("#mainTable").append(resultStr);

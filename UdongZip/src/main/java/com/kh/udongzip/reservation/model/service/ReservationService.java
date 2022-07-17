@@ -26,5 +26,14 @@ public interface ReservationService {
 	
 	ArrayList<Reservation> selectAgentReservationList(HashMap<String, Object> map);
 	
+	// 방금 예약한 번호 불러오기
+	int selectNewReservation(int memberNo);
+	
+	// 예약 삭제
+	int deleteReservation(int reservationNo);
+	
+	// 예약 수정
+	int updateReservation(Reservation reservation);
+	
 
 }

@@ -40,8 +40,9 @@
 		 WHERE RESERVATION_NO = #{reservationNo}
 	</update>
 	
-	<insert id="insertReservation" parameterType="reservation">
-		INSERT INTO RESERVATION (RESERVATION_NO, MEMBER_NO, AGENT_NO, HOUSE_NO, RESERVATION_DATE, RESERVATION_TIME, CONTENT, RESULT, DEPOSIT, CREATE_DATE)
+ 	<insert id="insertReservation" parameterType="reservation">
+		INSERT INTO RESERVATION (RESERVATION_NO, MEMBER_NO, AGENT_NO, HOUSE_NO, RESERVATION_DATE, 
+								RESERVATION_TIME, CONTENT, RESULT, DEPOSIT, CREATE_DATE)
 		VALUES (SEQ_RES.NEXTVAL, #{memberNo}, #{agentNo}, #{houseNo}, #{reservationDate}, 
 				#{reservationTime}, #{content}, '방문 대기', '결제 완료', SYSDATE)
 	</insert>
@@ -71,5 +72,32 @@
 		 WHERE RESERVATION_NO = #{reservationNo}
 		   AND R.AGENT_NO = A.AGENT_NO
 	</select>
+	
+		
+	<!-- 예약 결제 취소, 실패시 -->
+	<delete id="deleteReservation" parameterType="_int">
+		DELETE RESERVATION
+		WHERE RESERVATION_NO = #{reservationNo}
+	</delete>
+	
+	<!-- 방금 예약한 번호 불러오기 -->
+	<select id="selectNewReservation" parameterType="_int" resultType="_int">
+		SELECT RESERVATION_NO
+		FROM (SELECT *
+			  FROM RESERVATION
+			  WHERE MEMBER_NO = #{memberNo}
+			  ORDER BY RESERVATION_NO DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 예약 변경 -->
+	<update id="updateReservation" parameterType="reservation">
+		UPDATE RESERVATION
+		SET CID = 'TC0ONETIME',
+			TID = #{tid},
+			CANCEL_AMOUNT = 20000,
+			CANCEL_TAX_FREE_MOUNT = 1800
+		WHERE RESERVATION_NO = #{reservationNo}
+	</update>
 
 </mapper>
