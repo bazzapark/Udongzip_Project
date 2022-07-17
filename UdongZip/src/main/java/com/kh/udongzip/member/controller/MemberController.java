@@ -279,14 +279,15 @@ public class MemberController {
 		session.setAttribute("loginUser", loginUser);
 		session.setAttribute("alertMsg", "로그인에 성공했습니다."); //1회 알람문구
 	
-		mv.setViewName("redirect:/");
 	}
 	else { // 로그인 실패
 		
-		mv.addObject("errorMsg", "로그인 실패");
-		mv.setViewName("common/error");
+		session.setAttribute("alertMsg", "아이디 또는 비밀번호를 확인하세요."); //1회 알람문구
 		
 	}
+	
+	mv.setViewName("redirect:/");
+	
 	return mv;
 	// 암호화 전
 	/*
@@ -348,6 +349,8 @@ public class MemberController {
 		
 		String encPwd = bCryptPasswordEncoder.encode(member.getMemberPwd());
 		// System.out.println("암호화 : " + encPwd);
+		
+		System.out.println(encPwd);
 		
 		member.setMemberPwd(encPwd);
 		

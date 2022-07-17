@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.kh.udongzip.chat.model.service.ChatService;
 import com.kh.udongzip.chat.model.vo.ChatMessage;
 import com.kh.udongzip.chat.model.vo.ChatRoom;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.member.model.vo.Member;
 
 @Controller
@@ -25,6 +27,7 @@ public class ChatController {
 	
 	// private Logger logger = LoggerFactory.getLogger(ChatController.class);
 	
+	@Auth(role=Role.LOGINUSER)
 	@RequestMapping("chatting.do")
 	public String chat() {
 		
@@ -32,7 +35,7 @@ public class ChatController {
 		
 		return "user/chat/ChatRoomListView";
 	}
-	
+	@Auth(role=Role.LOGINUSER)
 	@ResponseBody
 	@PostMapping(value="listview.ch", produces="application/json; charset=UTF-8")
 	public String ajaxselectChatRoomList(int userNo, String identifier, String userId) {
@@ -64,7 +67,7 @@ public class ChatController {
 		
 		return new Gson().toJson(list);
 	}
-	
+	@Auth(role=Role.LOGINUSER)
 	@ResponseBody
 	@PostMapping(value="listdetail.ch", produces="application/json; charset=UTF-8")
 	public String ajaxselectChatMessageList(int chatRoomNo, String userId) {
@@ -86,7 +89,7 @@ public class ChatController {
 		
 		return new Gson().toJson(list);
 	}
-	
+	@Auth(role=Role.LOGINUSER)
 	@RequestMapping("newch.ch")
 	public String NewChatRoom(int agentNo, HttpSession session) {
 		

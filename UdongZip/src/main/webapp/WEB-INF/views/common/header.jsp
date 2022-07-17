@@ -229,10 +229,10 @@
 		      </div>
 	      	</c:when>
 	
-			<c:when test="${ !empty loginUser && loginUser.identifier eq 'admin' }">
+			<c:when test="${ !empty loginUser && loginUser.identifier eq 'root' }">
 		      <!-- 버튼 - 로그인시 - 관리자 -->
 		      <div class="btnGroup d-flex align-items-center">
-		        <button class="btn btn-primary" type="button">로그아웃</button>
+		        <button class="btn btn-primary" type="button" onclick="location.href='logout.ag'">로그아웃</button>
 		      </div>
 	      	</c:when>
 	      
