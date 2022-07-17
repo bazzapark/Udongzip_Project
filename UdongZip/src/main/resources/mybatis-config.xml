@@ -23,7 +23,6 @@
 		<typeAlias type="com.kh.udongzip.review.model.vo.Review" alias="review" />
 		<typeAlias type="com.kh.udongzip.review.model.vo.RemoveRequest" alias="removeRequest" />
 	</typeAliases>
-	
 
 	<mappers>
 		<mapper resource="mappers/agent-mapper.xml"/>
@@ -43,6 +42,7 @@
 		<mapper resource="mysql/reservation-mapper.xml"/>
 		<mapper resource="mysql/cs-mapper.xml"/>
 		<mapper resource="mysql/review-mapper.xml"/>
+		<mapper resource="mappers/chat-mapper.xml" />
 	</mappers>
 	-->
 
