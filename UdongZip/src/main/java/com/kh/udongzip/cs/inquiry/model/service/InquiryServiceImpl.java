@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.cs.inquiry.model.dao.InquiryDao;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
+import com.kh.udongzip.member.model.vo.Member;
 
 @Service
 public class InquiryServiceImpl implements InquiryService {
@@ -70,6 +71,20 @@ public class InquiryServiceImpl implements InquiryService {
 	public int selectListCount() {
 		return inquiryDao.selectListCount(sqlSession);
 	}
+	
+	// 게시글 총 갯수 : 일반회원
+	@Override
+	public int selectListCount(Member member) {
+		return inquiryDao.selectListCount(sqlSession, member);
+	}
+	
+	// 1:1문의 리스트 조회 : 일반회원
+	@Override
+	public ArrayList<Inquiry> selectInquiryList(PageInfo pi, Member member) {
+		
+		return inquiryDao.selectList(sqlSession, pi, member);
+	}
+	
 
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.udongzip.common.model.vo.PageInfo;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
+import com.kh.udongzip.member.model.vo.Member;
 
 public interface InquiryService {
 	
@@ -33,5 +34,15 @@ public interface InquiryService {
 
 	// 문의 카운트 조회 : 관리자
 	int selectListCount();
+	
+	/**
+	* @version 1.0
+	* @author 박경화
+	 */
+	// 페이징 
+	int selectListCount(Member member);
+	
+	// 전체 조회 : 개인/업체 회원, 어드민
+	ArrayList<Inquiry> selectInquiryList(PageInfo pi, Member member);
 
 }
