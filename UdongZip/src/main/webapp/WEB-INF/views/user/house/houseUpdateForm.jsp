@@ -93,10 +93,12 @@
 	                        <input type="file" class="file-input" name="reUpfile" value="${ houseImg }" accept="png, jpg, jpeg">
 		                    <input type="hidden" name="uploaded" value="${ houseImg }">
                     	</c:forEach>
-                    	<c:forEach var="i" begin="0" end="${ 8 - fn:length(houseImgList) }">
-                    		<img class="previewer-small">
-	                        <input type="file" class="file-input" name="reUpfile" accept="png, jpg, jpeg">
-                    	</c:forEach>
+                    	<c:if test="${ fn:length(houseImgList) lt 9 }">
+	                    	<c:forEach var="i" begin="0" end="${ 8 - fn:length(houseImgList) }">
+	                    		<img class="previewer-small">
+		                        <input type="file" class="file-input" name="reUpfile" accept="png, jpg, jpeg">
+	                    	</c:forEach>
+                    	</c:if>
                     </div>
                     <br clear="both">
                     <div class="info-text info-area">
