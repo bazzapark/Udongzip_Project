@@ -241,12 +241,11 @@
 	$(function() {
 		$("#landImgList>.carousel-inner").on("click", ".carousel-item>img", function() {
 			location.href = "detail.ho?hno=" + Number($(this).next().text());
-		})
-	})
+		});
+	});
 	
   		 $("#chatQA").on("click", function(){
   			 location.href="newch.ch?agentNo=" + Number($("#agentIdch").val()); 			 
-  		 });
   	 });
   </script>
   
