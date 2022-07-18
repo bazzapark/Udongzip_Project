@@ -113,9 +113,6 @@ public interface HouseService {
 	
 	// 허위 매물 목록 전체 조회 : 어드민
 	ArrayList<House> selectReportHouse();
-	
-	// 매물 찜 조회 : 개인회원
-	int selectZzim(Map<String, Integer> map);
 
 
 /**

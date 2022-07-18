@@ -38,12 +38,6 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 
 	@Override
-	public int updateInquiry(Inquiry inquiry) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int deleteInquiry(int inquiryNo) {
 		return inquiryDao.deleteInquiry(sqlSession, inquiryNo);
 	}
@@ -52,12 +46,6 @@ public class InquiryServiceImpl implements InquiryService {
 	@Override
 	public int updateAnswer(Inquiry inquiry) {
 		return inquiryDao.updateAnswer(sqlSession, inquiry);
-	}
-
-	@Override
-	public ArrayList<Inquiry> selectInquiryList(int memberNo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// 관리자 : 조회

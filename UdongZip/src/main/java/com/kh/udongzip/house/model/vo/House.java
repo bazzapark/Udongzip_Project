@@ -21,7 +21,7 @@ public class House {
 	private String salesType;         // 계약 유형
 	private String address1;          // 주소1 (시/군/구/도로명)
 	private String address2;          // 주소2 (상세주소)
-	private int zipCode;              // 우편번호
+	private String zipCode;              // 우편번호
 	private String buildingType;      // 건물 유형
 	private String buildingFloor;     // 건물 전체 층수
 	

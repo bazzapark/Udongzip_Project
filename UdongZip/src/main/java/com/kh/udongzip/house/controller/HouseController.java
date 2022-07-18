@@ -215,7 +215,7 @@ public class HouseController {
 			
 			session.setAttribute("alertMsg", "매물이 등록 되었습니다.");
 			
-			return "redirect:houseListView.ho";
+			return "redirect:house.ag";
 			
 		} else { // 등록 실패 시
 			
@@ -345,7 +345,7 @@ public class HouseController {
 				
 				session.setAttribute("alertMsg", "매물 정보가 수정 되었습니다.");
 				
-				return "redirect:houseListView.ho";
+				return "redirect:house.ag";
 				
 			} else {
 				
@@ -387,7 +387,7 @@ public class HouseController {
 			
 			session.setAttribute("alertMsg", "매물이 삭제되었습니다.");
 			
-			return "redirect:houseListView.ho";
+			return "redirect:house.ag";
 			
 		} else {
 			

@@ -255,12 +255,6 @@ public class HouseServiceImpl implements HouseService {
 		return houseDao.selectZzimList(sqlSession, memberNo);
 	}
 
-	@Override
-	public int selectZzim(Map<String, Integer> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
 
 	
