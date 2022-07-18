@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="resources/css/user/houseDetailView.css">
 
 <!-- 카카오 지도 API -->
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=084a0d93b202ede69ef974d4cc624440&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a8b77d874cdf7d0680055d6b64f7eb45&libraries=services"></script>
 
 </head>
 <body>
@@ -794,7 +794,7 @@
 		// 평, m2 변환 버튼 클릭
 		$("#sizeChange").click(function() {
 			if ($("#size").attr("class") == "m2") {
-				$("#size").text(${ house.size_p } + "평");
+				$("#size").text(${ Math.ceil(house.size_p) } + "평");
 				$("#change").text("m²");
 				$(".m2").attr("class", "p");
 			} else {

@@ -99,7 +99,7 @@ public class ReservationController {
 			URL requestUrl = new URL(url);
 			HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
 			urlConn.setRequestMethod("POST");
-			urlConn.setRequestProperty("Authorization", "KakaoAK 13acc9f723b2683c3fc9614c6a32cbfd");
+			urlConn.setRequestProperty("Authorization", "KakaoAK db58105cdc2b67569c14a97fc46cf95e");
 			urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			urlConn.setDoInput(true);
 			urlConn.setDoOutput(true);
@@ -175,7 +175,7 @@ public class ReservationController {
 			URL requestUrl = new URL(url);
 			HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
 			urlConn.setRequestMethod("GET");
-			urlConn.setRequestProperty("Authorization", "KakaoAK 13acc9f723b2683c3fc9614c6a32cbfd");
+			urlConn.setRequestProperty("Authorization", "KakaoAK db58105cdc2b67569c14a97fc46cf95e");
 			urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			urlConn.setDoInput(true);
 			urlConn.setDoOutput(true);
@@ -323,7 +323,7 @@ public class ReservationController {
 		URL requestUrl = new URL(url);
 		HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
 		urlConn.setRequestMethod("GET");
-		urlConn.setRequestProperty("Authorization", "KakaoAK 13acc9f723b2683c3fc9614c6a32cbfd");
+		urlConn.setRequestProperty("Authorization", "KakaoAK db58105cdc2b67569c14a97fc46cf95e");
 		urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 		urlConn.setDoInput(true);
 		urlConn.setDoOutput(true);

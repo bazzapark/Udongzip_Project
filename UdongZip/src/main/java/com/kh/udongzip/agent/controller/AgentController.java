@@ -545,7 +545,7 @@ public class AgentController {
 			URL requestUrl = new URL(url);
 			HttpURLConnection urlConn = (HttpURLConnection) requestUrl.openConnection();
 			urlConn.setRequestMethod("GET");
-			urlConn.setRequestProperty("Authorization", "KakaoAK cfcaaf9c4a0f2e0ba0cbc2a71f5d23a8");
+			urlConn.setRequestProperty("Authorization", "KakaoAK 73f7c0471cb80028b04ee1bed79a36aa");
 			
 			String line;
 			String reponseText = "";

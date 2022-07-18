@@ -545,8 +545,6 @@ public class HouseController {
 			mv.addObject("errorMsg", "매물 상세 조회에 실패하였습니다. 다시 시도해주세요.").setViewName("common/error");
 		}
 		
-		System.out.println("dd");
-		
 		return mv;
 	}
 	

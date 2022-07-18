@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="resources/css/user/agentDetailView.css">
 
 <!-- 카카오 지도 API -->
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=084a0d93b202ede69ef974d4cc624440&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a8b77d874cdf7d0680055d6b64f7eb45&libraries=services"></script>
 
 </head>
 <body>
@@ -25,7 +25,7 @@
       <table class="table table table-borderless mb-5 agentDetailTable">
         <thead>
           <tr>
-            <th scope="col">업체 정보</th>
+            <th scope="col" colspan="3">업체 정보</th>
           </tr>
         </thead>
         <tbody>
@@ -52,9 +52,7 @@
           </tr>
           <tr>
             <td scope="row"></td>
-            <td><button type="button" class="btn btn-primary" id="chatQA">채팅 문의</button>
-            <input type="hidden" name="agentIdch" id="agentIdch" value="${ agent.agentNo }" />
-            </td>
+            <td><button type="button" class="btn btn-primary">채팅 문의</button></td>
           </tr>
         </tbody>
       </table>
@@ -243,11 +241,7 @@
 		$("#landImgList>.carousel-inner").on("click", ".carousel-item>img", function() {
 			location.href = "detail.ho?hno=" + Number($(this).next().text());
 		})
-
-  		 $("#chatQA").on("click", function(){
-  			 location.href="newch.ch?agentNo=" + Number($("#agentIdch").val()); 			 
-  		 });
-  	 });
+	})
   </script>
   
 </body>
