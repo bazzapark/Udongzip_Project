@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.cs.notice.model.service.NoticeService;
 import com.kh.udongzip.cs.notice.model.vo.Notice;
 
@@ -30,6 +32,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 리스트 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("adminlist.no")
 	public String selectNoticeList(Model model) {
 		
@@ -48,6 +51,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 작성 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("enrollForm.no")
 	public String enrollFormNotice() {
 		
@@ -62,6 +66,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 작성 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("insert.no")
 	public String insertNotice(Notice notice, HttpSession session, Model model) {
 		
@@ -90,6 +95,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 상세 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("updateForm.no")
 	public String updateForm(int nno, Model model) {
 		
@@ -112,7 +118,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 수정 페이지
 	*
 	*/
-	
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("update.no")
 	public String updateNotice(Notice notice, HttpSession session, Model model) {
 		
@@ -142,6 +148,7 @@ public class NoticeController {
 	* @return 관리자 공지사항 리스트 전체페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("delete.no")
 	public String deleteNotice(@RequestParam("delList") List<Integer> list,
 			 					HttpSession session, Model model) {

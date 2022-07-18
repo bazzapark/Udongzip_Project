@@ -24,6 +24,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.member.model.vo.Member;
 import com.kh.udongzip.reservation.model.service.ReservationService;
@@ -50,6 +52,7 @@ public class ReservationController {
 	* @return 검색된 매물 리스트
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="agentListView.res", produces="application/json; charset=UTF-8")
 	public String selectReservationList(@RequestParam(value="ano") int agentNo) {
@@ -79,6 +82,7 @@ public class ReservationController {
 	 * @throws Exception 
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="changeResult.res", produces="text/html; charset=UTF-8")
 	public String updateResult(int reservationNo,
@@ -135,7 +139,11 @@ public class ReservationController {
 				return "NNNNN";
 			}
 			
-		} 
+			map.put("deposit", "환불 완료");
+			
+		} else {
+			map.put("deposit", "환불 불가");
+		}
 		
 		int result = reservationService.updateResult(map);
 		
@@ -162,6 +170,7 @@ public class ReservationController {
 	 * 
 	 * @return 결제 승인 페이지
 	 */
+	@Auth(role=Role.MEMBER)
 	@PostMapping("insert.rs")
 	public String insertReservation(String partner_order_id, String partner_user_id, 
 									Reservation reservation, HttpSession session, Model model) throws Exception {
@@ -400,6 +409,7 @@ public class ReservationController {
 	}
 	
 	// 전체조회
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("reservationlist.bo")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			Model model, HttpSession session) {
@@ -422,6 +432,7 @@ public class ReservationController {
 	}
 	
 	// 예약 상세조회
+	@Auth(role=Role.MEMBER)
 	@ResponseBody
 	@RequestMapping(value="reservationdetail.bo", produces="applicatoin/json; charset=UTF-8")
 	public String selectReservationdate(int reservationNo) {
@@ -441,12 +452,6 @@ public class ReservationController {
 		return "user/reservation/reservationFome";
 	}
 	
-	/**
-	 * 결제 취소 메소드
-	 * 
-	 * @version 1.0
-	 * @author 양아란
-	 */
 	
 
 }

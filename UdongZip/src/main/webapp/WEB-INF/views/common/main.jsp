@@ -12,12 +12,15 @@
 
 </head>
 <body>
-	<img alt="" id="backgroundImg">
+	<section class="showcase">
+	<h1 class="title" align="center">우리 동네 좋은 집</h1>
+	<video src="resources/images/main.mp4" autoplay loop muted id="backgroundImg">
+	</video>
+	</section>
 	<div id="wrap">
 		<jsp:include page="header.jsp" />
 		<div id="content-area">
-
-			<div id="mainTitle">우리 동네의 집들을 모아서 보세요.</div>
+			
 	    <table class="table align-middle table-sm mb-5" id="mainTable">
 	      <thead>
 	        <tr>

@@ -37,6 +37,7 @@
 	<update id="updateResult" parameterType="hashmap">
 		UPDATE RESERVATION
 		   SET RESULT = #{resultStatus}
+		     , DEPOSIT = #{deposit}
 		 WHERE RESERVATION_NO = #{reservationNo}
 	</update>
 	
@@ -97,7 +98,7 @@
 		SET CID = 'TC0ONETIME',
 			TID = #{tid},
 			CANCEL_AMOUNT = 20000,
-			CANCEL_TAX_FREE_MOUNT = 1800
+			CANCEL_TAX_FREE_AMOUNT = 1800
 		WHERE RESERVATION_NO = #{reservationNo}
 	</update>
 

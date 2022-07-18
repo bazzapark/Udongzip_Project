@@ -38,6 +38,7 @@ public class ReviewController {
 	* @return 업체회원 리뷰 목록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping("review.ag")
 	public String reviewListView() {
 		return "user/agent/agentReviewListView";
@@ -53,6 +54,7 @@ public class ReviewController {
 	* @return 리뷰 목록
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="agentListView.rev", produces="application/json; charset=UTF-8")
 	public String selectAgentReviewList(int agentNo) {
@@ -74,6 +76,7 @@ public class ReviewController {
 	* @return 업체회원 리뷰 목록 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("insert.req")
 	public String insertRequest(RemoveRequest request,
 								Model model,
@@ -196,6 +199,7 @@ public class ReviewController {
 	}
 	
 	// 리뷰작성 
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("insertReview.bo")
 	public String insertReview(Review review, Model model, HttpSession session) {
 		
@@ -216,6 +220,7 @@ public class ReviewController {
 	
 	
 	// 전체조회
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("reviewlist.bo")
 	public String selectList(
 			@RequestParam(value="cpage", defaultValue="1") int currentPage, 
@@ -241,6 +246,7 @@ public class ReviewController {
 	}
 	
 	// 리뷰 상세조회(보기)
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("detail.bo")
 	public ModelAndView selectReview(@RequestParam (value="bno", defaultValue="1") int reviewNo, ModelAndView mv) {
 		
@@ -260,6 +266,7 @@ public class ReviewController {
    }
 	
 	// 리뷰삭제
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("delete.bo")
 	public String deleteReview(int bno, Model model, HttpSession session) {
 		

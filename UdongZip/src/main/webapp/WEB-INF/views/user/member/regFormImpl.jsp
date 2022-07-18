@@ -42,12 +42,11 @@
       text-decoration: none;
     }
     /***** 공통 스타일 끝 *****/
-    
-    
 
 </style>
 </head>
 <body>
+
     <!-- 메뉴바 -->
     <jsp:include page="../../common/header.jsp" />
 
@@ -206,6 +205,11 @@
 </form>
 
 <script>
+
+	$(function() {
+		$("#loginandEnroll-btn").attr("disabled", true);
+	});
+
 	var doc = document; 
 	var form1 = doc.getElementById('form1'); 
 	var inputs = form1.getElementsByTagName('INPUT'); 
@@ -279,7 +283,5 @@
 	}; 
 </script>
 
-    <!-- 푸터바 -->
-    <jsp:include page="../../common/footer.jsp" />
 </body>
 </html>

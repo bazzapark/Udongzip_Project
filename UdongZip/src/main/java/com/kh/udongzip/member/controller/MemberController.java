@@ -318,9 +318,6 @@ public class MemberController {
 	@RequestMapping("insert.me")
 	public String insertMember(Member member, Model model, HttpSession session) {
 		
-// System.out.println("### MemberController : insertMember :: getMemberId = ["+ member.getMemberId() +"]");
-// System.out.println("### MemberController : insertMember :: getMemberPwd = ["+ member.getMemberPwd() +"]");
-// System.out.println("### MemberController : insertMember :: getMemberEmail = ["+ member.getMemberEmail() +"]");
 
 		 // System.out.println(member);
 		 

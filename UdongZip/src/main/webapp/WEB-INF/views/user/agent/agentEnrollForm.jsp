@@ -208,6 +208,10 @@
 
 <script>
 
+$(function() {
+	$("#loginandEnroll-btn").attr("disabled", true);
+});
+
 	var authCode;
 
 	$(function() {

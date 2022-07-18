@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.udongzip.common.model.vo.PageInfo;
+import com.kh.udongzip.common.security.Auth;
+import com.kh.udongzip.common.security.Auth.Role;
 import com.kh.udongzip.common.template.Pagination;
 import com.kh.udongzip.cs.inquiry.model.service.InquiryService;
 import com.kh.udongzip.cs.inquiry.model.vo.Inquiry;
@@ -34,6 +36,7 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@RequestMapping("inquiry.ag")
 	public String agentInquiryListView() {
 		return "user/agent/agentInquiryListView";
@@ -49,6 +52,7 @@ public class InquiryController {
 	* @return 문의 목록
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@ResponseBody
 	@PostMapping(value="agentListView.in", produces="applicatoin/json; charset=UTF-8")
 	public String selectAgentInquiryList(int agentNo) {
@@ -69,6 +73,7 @@ public class InquiryController {
 	* @return 업체회원 문의 상세 정보 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("agentDetail.in")
 	public String selectAgentInquiry(int inquiryNo,
 									 Model model) {
@@ -91,6 +96,7 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
+	@Auth(role=Role.AGENT)
 	@PostMapping("delete.in")
 	public String deleteInquiry(int inquiryNo,
 								Model model,
@@ -123,6 +129,7 @@ public class InquiryController {
 	* @return 사용자 1:1 문의 작성 페이지
 	*
 	*/
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("insert.in")
 	public String insertInquiry(Inquiry inquiry, HttpSession session, Model model) {
 		
@@ -158,6 +165,7 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 전체조회 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("adminlist.in")
 	public String selectinquiryList(
 			@RequestParam(value="ipage", defaultValue="1") int currentPage
@@ -186,6 +194,7 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 상세 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@ResponseBody
 	@RequestMapping("admindetail.in")
 	public Inquiry selectadminInquiry(int inquiryNo) {
@@ -203,6 +212,7 @@ public class InquiryController {
 	* @return 업체회원 1:1 문의 내역 페이지
 	*
 	*/
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("answerupdate.in")
 	public String updateAnswer(Inquiry inquiry, HttpSession session, Model model) {
 		
@@ -226,6 +236,7 @@ public class InquiryController {
 	}
 	
 	// 일반회원 전체조회
+	@Auth(role=Role.MEMBER)
 	@RequestMapping ("inquirylist.bo")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
 	                         Model model, HttpSession session) {
@@ -251,6 +262,7 @@ public class InquiryController {
 	
 	
 	// 상세조회
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("inquirydetail.bo") // inquiry
 	public ModelAndView selectInquiry(@RequestParam (value="bno", defaultValue="1") int inquiryNo, ModelAndView mv) {
 		

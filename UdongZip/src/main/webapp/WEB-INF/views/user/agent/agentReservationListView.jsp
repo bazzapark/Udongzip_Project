@@ -189,18 +189,23 @@
 	    		success : function(result) {
 	    			
 	    			if(result == "NNNNY") {
+	    			
 	    				alert("상태 변경 되었습니다.");
 	    				$(el).children().remove();
 	    				$(el).text(status);
 	    				$(el).removeClass("not-click");
+	    				getList();
+	    				
 	    			} else {
-	    				alert("상태 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
+	    				
+	    				alert("상태 변경에 실패했습니다. /ns잠시 후 다시 시도해주세요.");
+	    				
 	    			}
 	    			
 	    			
 	    		},
 	    		error : function() {
-	    			alert("상태 변경에 실패했습니다. 이 문제가 지속될 시 고객센터로 문의주세요.");
+	    			alert("상태 변경에 실패했습니다. /n이 문제가 지속될 시 고객센터로 문의주세요.");
 	    		}
 	    	})
 	    	

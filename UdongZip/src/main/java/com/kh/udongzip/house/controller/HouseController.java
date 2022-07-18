@@ -421,7 +421,6 @@ public class HouseController {
 	 * @author 연경흠 
 	 * @return 전체 조회된 house 값 조회
 	 */
-	
 	@ResponseBody
 	@RequestMapping(value="list.lo", produces="application/json; charset=UTF-8")
 	public String selectMap() {
@@ -559,6 +558,7 @@ public class HouseController {
 	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
+	@Auth(role=Role.MEMBER)
 	@ResponseBody
 	@PostMapping("select.zz")
 	public Integer selectZzim(Integer houseNo, Integer memberNo) {
@@ -568,7 +568,14 @@ public class HouseController {
 		map.put("memberNo", memberNo);
 		
 		Integer result = houseService.selectZzim(map);
-		return result;
+		
+		if(result != null) {
+			
+			return result;
+			
+		}
+		
+		return 0;
 	}
 	
 	/**
@@ -737,7 +744,7 @@ public class HouseController {
 	 * 		      회원 번호
 	 * @return 마이페이지 찜 매물 조회, 페이징
 	 */	
-
+	@Auth(role=Role.MEMBER)
 	@RequestMapping("selectImages.zz")
 	public String selectList(
 			Model model, HttpSession session) {

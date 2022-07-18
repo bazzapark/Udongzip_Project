@@ -186,7 +186,7 @@
 			<c:when test="${ empty loginUser }">
 		      <!-- 버튼 - 로그아웃시 -->
 		      <div class="btnGroup d-flex align-items-center">
-		        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginForm">
+		        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginForm" id="loginandEnroll-btn">
 		          	로그인 | 회원가입
 		        </button>
 		      </div>
