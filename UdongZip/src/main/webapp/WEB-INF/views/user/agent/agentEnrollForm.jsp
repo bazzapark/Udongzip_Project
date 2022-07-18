@@ -102,10 +102,10 @@
                     <tr>
                         <td>
                             <div class="form-floating">
-                                <input type="text" id="agentPhone" name="agentPhone" class="form-control short-input" required>
+                                <input type="text" id="agentPhone" name="agentPhone" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" class="form-control short-input" required>
                                 <label for="agentphone">연락처</label>
                             </div>
-                            <div class="validate-area">숫자만 입력하세요.</div>
+                            <div class="validate-area">예) 010-1234-5678('-' 포함)</div>
                         </td>
                         <td></td>
                     </tr>
@@ -131,10 +131,10 @@
                     <tr>
                         <td>
                             <div class="form-floating">
-                                <input type="text" id="companyNo" name="companyNo" class="form-control short-input" pattern="[0-9]+" maxlength="10" required style="width:200px;">
+                                <input type="text" id="companyNo" name="companyNo" class="form-control short-input" pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}" maxlength="12" required style="width:200px;">
                                 <label for="companyNo" class="input-label">사업자 번호</label>
                             </div>
-                            <div class="validate-area">숫자만 입력하세요.</div>
+                            <div class="validate-area">예) 234-34-85456('-' 포함)</div>
                         </td>
                         <td>
                             <div class="form-floating">

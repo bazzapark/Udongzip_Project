@@ -66,7 +66,7 @@
                     <tr>
                         <td>
                             <div class="form-floating">
-								<input type="text" class="form-control short-input" id="agentPhone" name="agentPhone" pattern="[0-9]+" maxlength="11" value="${ loginUser.agentPhone }" required>
+								<input type="text" class="form-control short-input" id="agentPhone" name="agentPhone" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" value="${ loginUser.agentPhone }" required>
 								<label for="agentphone">연락처</label>
 							</div>
                         </td>

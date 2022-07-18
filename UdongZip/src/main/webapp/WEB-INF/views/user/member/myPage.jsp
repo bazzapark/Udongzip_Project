@@ -165,7 +165,7 @@
                     <input type="text" class="form-control" id="memberName" value="${ loginUser.memberName }" name="memberName" readonly> <br>
 
                     <label for="memberPhone"> &nbsp; *휴대폰 </label> <br>
-                    <input type="text" class="form-control" id="memberPhone" value="${ loginUser.memberPhone }" name="memberPhone" required> <br>
+                    <input type="text" class="form-control" id="memberPhone" value="${ loginUser.memberPhone }" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" placeholder="예) 010-1234-5678" name="memberPhone" required> <br>
 
                     <label for="memberEmail"> &nbsp; *이메일 </label> <br>
                     <input type="text" class="form-control" id="memberEmail" value="${ loginUser.memberEmail }" name="memberEmail" required>

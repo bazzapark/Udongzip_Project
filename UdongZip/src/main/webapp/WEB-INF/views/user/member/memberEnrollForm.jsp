@@ -234,7 +234,7 @@
         </div>
         
         <div class="form-floating mb-2">
-          <input type="text" class="form-control" id="memberPhone" placeholder="연락처" pattern="[0-9]+" name="memberPhone">
+          <input type="text" class="form-control" id="memberPhone" placeholder="연락처" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13" placeholder="예) 010-1234-5678" name="memberPhone">
           <label for="">휴대전화</label>
         </div>
         <div class="form-floating mb-5" id="email-area">
