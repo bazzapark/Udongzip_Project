@@ -1,3 +1,4 @@
+@@ -1,115 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="resources/css/admin/inquiryListView.css">
+    <link rel="stylesheet" href="resources/css/admin/noticeListView.css">
 </head>
 <body>
     <!-- 전체를 감싸는 div -->
@@ -23,171 +24,96 @@
         <!-- 콘텐트 영역 -->
         <div class="content-wrap">
 
-            <h1>1 : 1 문의 목록</h1>
+            <h1>공지사항 목록</h1>
             <hr>
             <br>
 
             <!-- 게시글 관련 영역 -->
-            <div id="inquirylist-area">
+            <div id="noticelist-area">
+                <!-- 글 삭제 / 글 작성 -->
+                <form id="" action="delete.no" method="GET">
+                    <div class="admin-btn">
+                        <a class="btn btn-secondary" style="float:right;" href="enrollForm.no">글쓰기</a>
+                        <button type="submit" class="btn btn-outline-danger delete-btn">삭제하기</button>
+                        <br><br>
+                    </div>
 
-                <!-- 공지사항 목록 -->
-                <table class="table table-list" id="inquiry-list">
-                    <thead align="center">
-                    <tr>
-                        <th>No.</th>
-                        <th>회원 번호</th>
-                        <th>업체 번호</th>
-                        <th>문의 분류</th>
-                        <th>작성일</th>
-                        <th>답변일</th>
-                        <th>활성화</th>
-                    </tr>
-                    </thead>
-                    <tbody align="center">
-	                    <c:forEach var="i" items="${ list }">
-		                    <tr>
-		                        <td>${ i.inquiryNo }</td>
-		                        <td>${ i.memberNo }</td>
-		                        <td>${ i.agentNo }</td>
-		                        <td>${ i.category }</td>
-		                        <td>${ i.createDate }</td>
-		                        <td>${ i.answerDate }</td>
-		                        <td>${ i.status }</td>
-		                    </tr>
-	                	</c:forEach>
-                    </tbody>
-                </table>
+                    <!-- 공지사항 목록 -->
+                    <table class="table table-list" id="notice-list">
+                        <thead align="center">
+                        <tr>
+                            <th style="width: 5%;"><input type="checkbox" id="all_check"></th>
+                            <th style="width: 10%;">No.</th>
+                            <th style="width: 45%;">제목</th>
+                            <th style="width: 30%;">작성일</th>
+                            <th style="width: 10%">활성화</th>
+                        </tr>
+                        </thead>
+                        <tbody align="center">
+	                        <c:forEach var="n" items="${ list }">
+		                        <tr>
+		                            <td><input type="checkbox" class="each_check" name="delList" value="${ n.noticeNo }"></td>
+		                            <td class="nno">${ n.noticeNo }</td>
+		                            <td>${ n.title }</td>
+		                            <td>${ n.createDate }</td>
+		                            <td>${ n.status }</td>
+		                        </tr>
+	               			</c:forEach>
+                        </tbody>
+                    </table>
+                </form>
             </div>   
-            
-              <div id="pagingArea">
-                <ul class="pagination">
-                
- 					<c:choose>
- 						<c:when test="${ pi.currentPage eq 1 }">
-                    		<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
- 						</c:when>
- 						<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="adminlist.in?ipage=${ pi.currentPage - 1 }">Previous</a></li>
- 						</c:otherwise>
- 					</c:choose>               
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    <li class="page-item"><a class="page-link" href="adminlist.in?ipage=${ p }">${ p }</a></li>
-                    </c:forEach>
-                    
-                    <c:choose>
-                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="adminlist.in?ipage=${ pi.currentPage + 1 }">Next</a></li>
-                    	</c:otherwise>
-                    </c:choose>
-                    
-                </ul>
-            </div>
 
 
             <br><br>
+
+            <!-- 게시글 클릭 시 -->
+            <script>
+                $(function() {
+    
+                    $("#notice-list>tbody>tr>td").not(":first-child").click(function(){
+                    $(document).on("click", "#notice-list>tbody>tr>td:not(:first-child)", function(){
+                    	
+    
+                        location.href = "updateForm.no?nno=" + $(this).children(".nno").eq(0).text();
+                        location.href = "updateForm.no?nno=" + $(this).parents().children(".nno").eq(0).text();
+                    });
+                });
+
+                // 전체 선택 체크박스 클릭 시 실행 함수
+                $("#all_check").click(function() {
+
+                    if($(this).is(":checked")) { // 전체 선택 체크박스가 체크가 되었다면
+
+                        $(".each_check").prop("checked", true); // 모든 개별 선택 체크박스 체크
+
+                    } else { // 체크가 풀렸다면
+
+                        $(".each_check").prop("checked", false); // 모든 개별 선택 체크박스 해제
+
+                    }
+
+                });
+
+                // 개별 선택 체크박스 클릭 시 실행 함수
+                $(".each_check").click(function() {
+
+                    if($(".each_check:checked").length == $(".each_check").length) { // 체크된 개별 선택 체크박스의 수가 전체 체크박수의 수와 같다면
+
+                        $("#all_check").prop("checked", true); // 전체 선택 체크박스 체크
+
+                    } else { // 아니라면
+
+                        $("#all_check").prop("checked", false); // 전체 선택 체크박스 해제
+
+                    }
+
+                });
+            </script>
             
         </div>
 		<jsp:include page="../../common/footer.jsp" /> <!-- 푸터 -->
     </div>
-
-    <!-- 문의 클릭 시 모달 -->
-    <div class="modal" id="inquiry-modal" style="overflow: scroll;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header" >
-                    <button type="button" class="btn btn-outline-secondary btn-sm modal-close">&times;</button>
-                </div>
-
-                <form action="answerupdate.in" method="post">
-                	<input type="hidden" name="inquiryNo">
-	                    <div class="modal-body">
-	                        <table class="table">
-	                            <tr>
-	                                <th>문의분류</th>
-	                                <td id="category"></td>
-	                                <th>작성일</th>
-	                                <td id="createDate"></td>
-	                            </tr>
-	                            <tr>
-	                                <th>문의 제목</th>
-	                                <td colspan="3" id="title"></td>
-	                            </tr>
-	                            <tr>
-	                                <th>문의 내용</th>
-	                                <td colspan="3" style="height:100px">
-	                                    <textarea id="content" name="content" cols="30" rows="10" style="resize:none;"></textarea>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <th>답변 내용</th>
-	                                <td colspan="3" style="height:100px">
-	                                    <textarea id="answerContent" name="answerContent" cols="30" rows="10" style="resize:none;"></textarea>
-	                                </td>
-	                            </tr>
-	                        </table>
-	
-	                        <div class="modal-footer">
-	                            <button type="submit" class="btn btn-outline-dark">답변하기</button>
-	                        </div>
-	                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $(function() {
-
-
-            // inquiry-table의 tbody의 tr의 td 중 첫번째 자식 td를 제외한 모든 td 클릭 시 함수
-            // 체크박스 선택 시에도 모달창이 뜨는 현상을 방지하기 위해서 제외시키기 위한 선택자
-            $("#inquiry-list>tbody>tr>td").not(":first-child").click(function(){
-
-                $("#inquiry-modal").show(); // 모달 창 띄우기
-
-            });
-
-            // 모달 닫기 버튼 클릭 시 함수
-            $(".modal-close").click(function() {
-
-                $("#inquiry-modal").hide(); // 모달 닫기
-
-            });
-        });
-    </script>
-    
-    <script>
-	    $(function() {
-	       
-	       // 해당 tr 내용 표시
-	       $("#inquiry-list>tbody").on("click", "tr", function() {
-	          $.ajax({
-	             url: "admindetail.in",
-	             data: {inquiryNo: $(this).children().eq(0).text()},
-	             success: function(inquiry) {
-	            	
-	            	$("input[name=inquiryNo]").val(inquiry.inquiryNo);
-	                $("#category").text(inquiry.category);
-	                $("#createDate").text(inquiry.createDate);
-	                $("#title").text(inquiry.title);
-	                $("#content").text(inquiry.content);
-	                $("#answerContent").text(inquiry.answerContent);
-	                
-	             },
-	             error: function() {
-	                console.log("관리자 1:1문의 상세 조회 ajax 실패");
-	             }
-	          })
-	       })
-	    })
-    
-    </script>
     
 </body>
 </html>
