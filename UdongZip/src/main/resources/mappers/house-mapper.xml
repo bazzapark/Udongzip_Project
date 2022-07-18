@@ -250,6 +250,7 @@
 		FROM HOUSE
 		WHERE STATUS = 'Y'
 		AND SALES_STATUS = 'Y'
+		ORDER BY HOUSE_NO DESC
 	</select>
 	
 	<!-- 지도 / 매물 조회용 -->
@@ -292,7 +293,8 @@
 		</if>
 		<if test="address1 != null">
 					AND ADDRESS1 LIKE '%${address1}%'
-		</if> 
+		</if>
+		ORDER BY HOUSE_NO DESC 
   	</select>
   	
 	<!-- 매물 상세 조회 : 개인 회원, 어드민 -->
