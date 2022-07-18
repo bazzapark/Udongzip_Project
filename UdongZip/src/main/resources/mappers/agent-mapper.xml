@@ -41,6 +41,7 @@
 		  FROM AGENT
 		 WHERE AGENT_ID = #{agentId}
 		   AND STATUS = 'Y'
+		   AND PERMISSION = 'Y'
 	</select>
 	
 	<update id="updateAgent" parameterType="agent">

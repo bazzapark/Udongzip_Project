@@ -215,7 +215,7 @@ public class HouseController {
 			
 			session.setAttribute("alertMsg", "매물이 등록 되었습니다.");
 			
-			return "redirect:houseListView.ho";
+			return "redirect:house.ag";
 			
 		} else { // 등록 실패 시
 			
@@ -345,7 +345,7 @@ public class HouseController {
 				
 				session.setAttribute("alertMsg", "매물 정보가 수정 되었습니다.");
 				
-				return "redirect:houseListView.ho";
+				return "redirect:house.ag";
 				
 			} else {
 				
@@ -387,7 +387,7 @@ public class HouseController {
 			
 			session.setAttribute("alertMsg", "매물이 삭제되었습니다.");
 			
-			return "redirect:houseListView.ho";
+			return "redirect:house.ag";
 			
 		} else {
 			
@@ -495,15 +495,13 @@ public class HouseController {
 			// 매물 이미지 조회
 			ArrayList<String> images = houseService.selectHouseImages(houseNo);
 			
-			// 매물 옵션 조회
-			List<String> optionStr = Arrays.asList(house.getOptionInfo().split(";"));
+			// 매물 옵션 조회용 List
 			List<Integer> optionInt = new ArrayList<Integer>();
 			
 			// 옵션명을 담을 변수
 			ArrayList<String> options = null;
 			
-			// 매물 관리비 조회
-			List<String> manageStr = Arrays.asList(house.getManageInfo().split(";"));
+			// 매물 관리비 조회용 List
 			List<Integer> manageInt = new ArrayList<Integer>();
 			
 			// 관리비 항목명을 담을 변수
@@ -511,10 +509,10 @@ public class HouseController {
 			
 			if (house != null) { // 매물 상세 조회 성공
 				
-				if (optionStr != null) { // 옵션이 있는 경우
+				if (house.getOptionInfo() != null) { // 옵션이 있는 경우
 					
 					// String -> Integer 타입 변경
-					for (String option : optionStr) {
+					for (String option : Arrays.asList(house.getOptionInfo().split(";"))) {
 						optionInt.add(Integer.valueOf(option));
 					}
 					
@@ -522,10 +520,10 @@ public class HouseController {
 					options = houseService.selectOptions(optionInt);
 				}
 				
-				if (manageStr != null) { // 관리비가 있는 경우
+				if (house.getManageInfo() != null) { // 관리비가 있는 경우
 					
 					// String -> Integer 타입 변경
-					for (String manage : manageStr) {
+					for (String manage : Arrays.asList(house.getManageInfo().split(";"))) {
 						manageInt.add(Integer.valueOf(manage));
 					}
 					
@@ -546,6 +544,8 @@ public class HouseController {
 		} else { // 조회수 증가 실패
 			mv.addObject("errorMsg", "매물 상세 조회에 실패하였습니다. 다시 시도해주세요.").setViewName("common/error");
 		}
+		
+		System.out.println("dd");
 		
 		return mv;
 	}

@@ -268,14 +268,5 @@ public class InquiryController {
 		return mv;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

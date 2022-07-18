@@ -228,8 +228,11 @@
           </tr>
           <c:if test="${ not empty house.manageCost }">
           	<tr>
-          		<th scope="row">관리비</th>
-          		<td>${ house.manageCost }만원 (${ String.join(', ', manages) } 포함)
+          		<th scope="row">관리비</th> 
+          		<td>${ house.manageCost }만원
+          			<c:if test="${ not empty manages }">
+          				(${ String.join(', ', manages) } 포함)
+          			</c:if>
           		 </td>
           	</tr>
           </c:if>

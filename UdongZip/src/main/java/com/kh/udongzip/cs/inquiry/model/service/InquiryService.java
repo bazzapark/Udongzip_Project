@@ -14,17 +14,11 @@ public interface InquiryService {
 	// 전체 조회 : 업체 회원
 	ArrayList<Inquiry> selectAgentInquiryList(int agentNo);
 	
-	// 전체 조회 : 개인 회원
-	ArrayList<Inquiry> selectInquiryList(int memberNo);
-	
 	// 전체 조회 : 관리자 
 	ArrayList<Inquiry> selectadminInquiryList(PageInfo pi);
 	
 	// 상세 조회 : 관리자/개인/업체 회원
 	Inquiry selectInquiry(int inquiryNo);
-	
-	// 문의 수정 : 개인/업체 회원
-	int updateInquiry(Inquiry inquiry);
 	
 	// 문의 삭제 : 개인/업체 회원
 	int deleteInquiry(int inquiryNo);
