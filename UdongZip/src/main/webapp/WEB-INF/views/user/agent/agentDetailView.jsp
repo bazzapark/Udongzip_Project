@@ -52,7 +52,9 @@
           </tr>
           <tr>
             <td scope="row"></td>
-            <td><button type="button" class="btn btn-primary">채팅 문의</button></td>
+            <td><button type="button" class="btn btn-primary" id="chatQA">채팅 문의</button>
+            <input type="hidden" name="agentIdch" id="agentIdch" value="${ agent.agentNo }" />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -241,7 +243,11 @@
 		$("#landImgList>.carousel-inner").on("click", ".carousel-item>img", function() {
 			location.href = "detail.ho?hno=" + Number($(this).next().text());
 		})
-	})
+
+  		 $("#chatQA").on("click", function(){
+  			 location.href="newch.ch?agentNo=" + Number($("#agentIdch").val()); 			 
+  		 });
+  	 });
   </script>
   
 </body>

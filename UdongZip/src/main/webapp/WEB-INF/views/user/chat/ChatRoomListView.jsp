@@ -267,7 +267,7 @@
 		});	
 	
 	
-	let sock = new SockJS("http://localhost:8006/udongzip/chatting.do"); 
+	let sock = new SockJS("http://192.168.40.8:8006/udongzip/chatting.do"); 
 	//  SockJS객체를 생성하고, 그 객체가 메세지를 받고, 연결이 끊길 때 각각 어떤 함수를 호출할건지 세팅해주는 과정이다. 
 	//	constructor의 매개변수에는 자신의 url(IP)과 Handler를 맵핑한 주소 적기
 	//  핸들러로 보내주는 역할 
