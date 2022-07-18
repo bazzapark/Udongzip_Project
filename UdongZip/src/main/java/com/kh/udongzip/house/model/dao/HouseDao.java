@@ -112,74 +112,76 @@ public class HouseDao {
  * @version 1.0
  * @author 양아란
  */
-	// 매물 상세 조회
+	// 매물 상세 조회 : 개인 회원
 	public House selectHouse(SqlSessionTemplate sqlSession, int houseNo) {
 		return sqlSession.selectOne("houseMapper.selectHouse", houseNo);
 	}
 	
-	// 매물 상세 조회 조회수 증가
+	// 매물 상세 조회 조회수 증가 : 개인 회원
 	public int updateCount(SqlSessionTemplate sqlSession, int houseNo) {
 		return sqlSession.update("houseMapper.updateCount", houseNo);
 	}
 	
-	// 매물 옵션 조회
+	// 매물 옵션 조회 : 개인 회원
 	public String selectOptionInfo(SqlSessionTemplate sqlSession, int houseNo) {
 		return sqlSession.selectOne("houseMapper.selectOptionInfo", houseNo);
 	}
 	
-	// 옵션명 조회
+	// 옵션명 조회 : 개인 회원
 	public ArrayList<String> selectOptions(SqlSessionTemplate sqlSession, List<Integer> optionInfo) {
 		return (ArrayList) sqlSession.selectList("houseMapper.selectOptions", optionInfo);
 	}
 	
-	// 매물 관리비 조회
+	// 매물 관리비 조회 : 개인 회원
 	public String selectManageInfo(SqlSessionTemplate sqlSession, int houseNo) {
 		return sqlSession.selectOne("houseMapper.selectManageInfo", houseNo);
 	}
 	
-	// 관리비 항목명 조회
+	// 관리비 항목명 조회 : 개인 회원
 	public ArrayList<String> selectManages(SqlSessionTemplate sqlSession, List<Integer> manageInfo) {
 		return (ArrayList) sqlSession.selectList("houseMapper.selectManages", manageInfo);
 	}
 	
-	// 매물 이미지 조회
+	// 매물 이미지 조회 : 개인 회원
 	public ArrayList<String> selectHouseImages(SqlSessionTemplate sqlSession, int houseNo) {
 		return (ArrayList) sqlSession.selectList("houseMapper.selectHouseImages", houseNo);
 	}
 	
-	// 매물 찜 조회
+	// 매물 찜 조회 : 개인 회원
 	public Integer selectZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.selectOne("houseMapper.selectZzim", map);
 	}
 	
-	// 매물 찜 추가
+	// 매물 찜 추가 : 개인 회원
 	public int insertZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.insert("houseMapper.insertZzim", map);
 	}
 	
-	// 매물 찜 삭제
+	// 매물 찜 삭제 : 개인 회원
 	public int deleteZzim(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.delete("houseMapper.deleteZzim", map);
 	}
 	
-	// 허위 매물 신고 추가 메소드
+	// 허위 매물 신고 추가 메소드 : 개인 회원
 	public int updateReportCount(SqlSessionTemplate sqlSession, int houseNo) {
 		return sqlSession.update("houseMapper.updateReportCount", houseNo);
 	}
 	
-	// 허위 매물 전체 조회 수 메소드
+	// 허위 매물 전체 조회 수 메소드 : 어드민
 	public int selectReportHouseCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("houseMapper.selectReportHouseCount", map);
 	}
 	
-	// 허위 매물 전체 조회 메소드
+	// 허위 매물 전체 조회 메소드 : 어드민
 	public ArrayList<House> selectReportHouse(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList) sqlSession.selectList("houseMapper.selectReportHouse", map, rowBounds);
 	}
-	
+/**
+ * 
+ */
 /**
  * @version 1.0
  * @author 박경화

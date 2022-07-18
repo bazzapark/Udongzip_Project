@@ -48,10 +48,10 @@ public interface AgentService {
 	// 전체 조회, 가입 미승인, 검색 필터 : 어드민
 	ArrayList<Agent> selectAgentList(PageInfo pi, HashMap<String, String> map);
 	
-	// 업체 회원 전체 조회, 가입 미승인, 검색 필터 조회 수
+	// 업체 회원 전체 조회, 가입 미승인, 검색 필터 조회 수 : 어드민
 	int selectListCount(HashMap<String, String> map);
 	
-	// 업체 회원 가입 승인, 탈퇴 처리
+	// 업체 회원 가입 승인, 탈퇴 처리 : 어드민
 	int adminUpdate(Agent agent);
 /**
  * 

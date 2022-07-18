@@ -96,7 +96,7 @@ public interface HouseService {
 	// 매물 이미지 조회 : 개인회원
 	ArrayList<String> selectHouseImages(int houseNo);
 	
-	// 매물 찜 조회 : 개인회원 : 개인회원
+	// 매물 찜 조회 : 개인회원
 	int selectZzim(HashMap<String, Integer> map);
 	
 	// 매물 찜 추가 : 개인회원
@@ -114,7 +114,7 @@ public interface HouseService {
 	// 허위 매물 목록 전체 조회 : 어드민
 	ArrayList<House> selectReportHouse();
 	
-	// 매물 찜 조회 : 개인회원 : 개인회원 
+	// 매물 찜 조회 : 개인회원
 	int selectZzim(Map<String, Integer> map);
 
 

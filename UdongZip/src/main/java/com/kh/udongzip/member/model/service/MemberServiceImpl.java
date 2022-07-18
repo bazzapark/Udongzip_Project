@@ -32,7 +32,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override 
 	public Member selectMember(Member member) {
 		
-		// 어렵구낭...
 		Member loginUser = memberDao.loginMember(sqlSession, member);
 		
 		return loginUser;
@@ -75,26 +74,29 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.memberEmailCheck(sqlSession, email);
 	}
 	
-	/**
-	 * @version 1.0
-	 * @author 양아란
-	 */
-		// 개인 회원 전체 조회 수 메소드
-		@Override
-		public int selectListCount(String keyword) {
-			return memberDao.selectListCount(sqlSession, keyword);
-		}
-		
-		// 개인 회원 전체 조회 메소드
-		@Override
-		public ArrayList<Member> selectMemberList(PageInfo pi, String keyword) {
-			return memberDao.selectMemberList(sqlSession, pi, keyword);
-		}
+/**
+ * @version 1.0
+ * @author 양아란
+ */
+	// 개인 회원 전체 조회 수 메소드 : 어드민
+	@Override
+	public int selectListCount(String keyword) {
+		return memberDao.selectListCount(sqlSession, keyword);
+	}
+	
+	// 개인 회원 전체 조회 메소드 : 어드민
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi, String keyword) {
+		return memberDao.selectMemberList(sqlSession, pi, keyword);
+	}
 
-		// 개인 회원 상세 조회 메소드
-		@Override
-		public Member selectMember(int memberNo) {
-			return memberDao.selectMember(sqlSession, memberNo);
-		}
+	// 개인 회원 상세 조회 메소드 : 어드민
+	@Override
+	public Member selectMember(int memberNo) {
+		return memberDao.selectMember(sqlSession, memberNo);
+	}
+/**
+ * 
+ */
 		
 }

@@ -47,7 +47,7 @@
 		VALUES(SEQ_REQ.NEXTVAL, #{agentNo}, #{reviewNo}, #{reason})
 	</insert>
 	
-	<!-- 리뷰 전체 조회 -->
+	<!-- 리뷰 전체 조회 : 개인 회원 -->
 	<select id="agentSelectReviewList" parameterType="member" resultMap="reviewResultSet">
 		SELECT *
 		FROM REVIEW R, MEMBER M
@@ -61,9 +61,10 @@
 		  		AND AGENT_NO = #{memberNo}
 		  	</when>
 		  </choose>
+		ORDER BY REVIEW_NO DESC
 	</select>
 	
-	<!-- 리뷰 삭제 요청 전체 조회 수 -->
+	<!-- 리뷰 삭제 요청 전체 조회 수 : 어드민 -->
 	<select id="selectReuqestListCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
 		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
@@ -80,7 +81,7 @@
 		</if>
 	</select>
 	
-	<!-- 리뷰 삭제 요청 전체 조회 -->
+	<!-- 리뷰 삭제 요청 전체 조회 : 어드민 -->
 	<select id="selectRequestList" parameterType="hashmap" resultMap="requestResultSet">
 		SELECT *
 		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
@@ -95,9 +96,10 @@
 		<if test="classification == 'keyword'">
 			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
 		</if>
+		ORDER BY REQUEST_NO
 	</select>
 	
-	<!-- 리뷰 삭제 요청 상세 조회 -->
+	<!-- 리뷰 삭제 요청 상세 조회 : 어드민 -->
 	<select id="selectRequest" parameterType="_int" resultMap="requestResultSet">
 		SELECT *
 		FROM REMOVE_REQUEST R, AGENT A, REVIEW RV, MEMBER M
@@ -106,9 +108,31 @@
 		AND RV.MEMBER_NO = M.MEMBER_NO
 		AND R.REQUEST_NO = #{requestNo}
 	</select>
+	
+	<!-- 리뷰 삭제 : 개인 회원, 어드민 -->
+	<update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 삭제 요청 상태 변경 (반려, 삭제) : 어드민 -->
+	<update id="updateRequest" parameterType="removeRequest">
+		UPDATE REMOVE_REQUEST
+		SET
+		<choose>
+			<when test="result == 'delete'">
+				RESULT = 'Y'
+			</when>
+			<otherwise>
+				RESULT = 'N'
+			</otherwise>
+		</choose>
+		WHERE REQUEST_NO = #{requestNo}
+	</update>
   	
   	<!-- 페이징 처리 -->
-  	<select id="selectListCount" resultType="_int">
+  	<select id="selectListCount" resultType="_int" parameterType="member">
   		SELECT COUNT(*)
 		  FROM REVIEW
 		 WHERE STATUS = 'Y'
@@ -141,28 +165,6 @@
 	   	 WHERE REVIEW_NO = #{reviewNo}
 		   AND R.AGENT_NO = A.AGENT_NO
 	</select>	
-	
-	<!-- 리뷰 삭제 -->
-	<update id="deleteReview" parameterType="_int">
-		UPDATE REVIEW
-		SET STATUS = 'N'
-		WHERE REVIEW_NO = #{reviewNo}
-	</update>
-	
-	<!-- 삭제 요청 상태 변경 (반려, 삭제) -->
-	<update id="updateRequest" parameterType="removeRequest">
-		UPDATE REMOVE_REQUEST
-		SET
-		<choose>
-			<when test="result == 'delete'">
-				RESULT = 'Y'
-			</when>
-			<otherwise>
-				RESULT = 'N'
-			</otherwise>
-		</choose>
-		WHERE REQUEST_NO = #{requestNo}
-	</update>
 	
 	<!-- 리뷰 작성 -->
 	<insert id="insertReview" parameterType="review">

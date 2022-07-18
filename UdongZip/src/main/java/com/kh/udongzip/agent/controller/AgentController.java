@@ -501,13 +501,14 @@ public class AgentController {
 	}
 	
 	/**
-	* 업체회원 상세 조회 메소드
+	* 업체회원 상세 조회 메소드 : 개인 회원, 어드민
 	*
 	* @version 1.0
 	* @author 양아란
-	* @param agentNo
-	* 		 업체회원 번호
-	* @return 매물 상세 조회 페이지 - 상담 예약 모달창
+	* 
+	* @param agentNo 업체 회원 번호
+	* 
+	* @return 매물 상세 조회 모달창
 	*/
 	@ResponseBody
 	@PostMapping("select.ag")
@@ -517,12 +518,13 @@ public class AgentController {
 	}
 	
 	/**
-	* 업체회원 상세 조회 페이지 메소드
+	* 업체회원 상세 조회 페이지 메소드 : 개인 회원
 	*
 	* @version 1.0
 	* @author 양아란
-	* @param agentNo
-	* 		 업체회원 번호
+	* 
+	* @param agentNo 업체 회원 번호
+	* 
 	* @return 업체 회원 상세 조회 페이지
 	*/
 	@GetMapping("/detail.ag")
@@ -597,14 +599,20 @@ public class AgentController {
 	}
 	
 	/**
-	 * 업체 회원 전체 조회 메소드
-	 * 가입 미승인, 키워드 검색 메소드
+	 * 업체 회원 전체 조회 메소드 : 어드민
+	 * 가입 미승인, 키워드 검색 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param cpage 현재 페이지
+	 * @param classification 전체조회 / 미승인 / 키워드
+	 * @param keyword 검색 키워드
+	 * @param model 모델 객체
+	 * 
 	 * @return 업체 회원 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("list.ag")
 	public String selectAgentList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
 		
@@ -638,13 +646,18 @@ public class AgentController {
 	}
 	
 	/**
-	 * 업체 회원 가입 승인, 탈퇴 처리 메소드
+	 * 업체 회원 가입 승인, 탈퇴 처리 메소드 : 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
 	 * 
+	 * @param agent 업체 회원 객체
+	 * @param model 모델 객체
+	 * @param session 세션 객체
+	 * 
 	 * @return 업체 회원 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@PostMapping("adminUpdate.ag")
 	public String adminUpdate(Agent agent, Model model, HttpSession session) {
 		int result = agentService.adminUpdate(agent);

@@ -22,7 +22,7 @@
 		<result column="CID" property="cid" />
 		<result column="TID" property="tid" />
 		<result column="CANCEL_AMOUNT" property="cancelAmount" />
-		<result column="CANCEL_TAX_FREEMOUNT" property="cancelTaxFreeMount" />
+		<result column="CANCEL_TAX_FREE_AMOUNT" property="cancelTaxFreeAmount" />
 	</resultMap>
 
 	<select id="selectReservationList" parameterType="hashmap" resultMap="reservationResultSet">
@@ -40,6 +40,7 @@
 		 WHERE RESERVATION_NO = #{reservationNo}
 	</update>
 	
+	<!-- 에약 추가 -->
  	<insert id="insertReservation" parameterType="reservation">
 		INSERT INTO RESERVATION (RESERVATION_NO, MEMBER_NO, AGENT_NO, HOUSE_NO, RESERVATION_DATE, 
 								RESERVATION_TIME, CONTENT, RESULT, DEPOSIT, CREATE_DATE)
@@ -53,7 +54,7 @@
           WHERE MEMBER_NO = #{memberNo}
 	</select>
 	
-		<!-- 예약조회 -->
+	<!-- 예약조회 -->
 	<select id="selectList" parameterType="_int" resultMap="reservationResultSet">
 		SELECT R.RESERVATION_NO, TO_CHAR(RESERVATION_DATE, 'YYYY-MM-DD') "RESERVATION_DATE", R.MEMBER_NO,
                R.RESERVATION_TIME, R.AGENT_NO, HOUSE_NO, RESULT, DEPOSIT, A.AGENT_NAME, NVL(RE.REVIEW_NO, 0) AS REVIEW_NO
@@ -67,7 +68,7 @@
 	<!-- 예약 상세조회 -->
 	<select id="selectReservation" parameterType="_int" resultMap="reservationResultSet">
 		SELECT RESERVATION_NO, TO_CHAR(RESERVATION_DATE, 'YYYY-MM-DD') "RESERVATION_DATE", CONTENT,
-               RESERVATION_TIME, R.AGENT_NO, HOUSE_NO, RESULT, DEPOSIT, A.AGENT_NAME
+               RESERVATION_TIME, R.AGENT_NO, HOUSE_NO, RESULT, DEPOSIT, A.AGENT_NAME, CID, TID, CANCEL_AMOUNT, CANCEL_TAX_FREE_AMOUNT
 		  FROM RESERVATION R, AGENT A
 		 WHERE RESERVATION_NO = #{reservationNo}
 		   AND R.AGENT_NO = A.AGENT_NO

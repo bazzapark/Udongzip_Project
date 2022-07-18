@@ -57,23 +57,29 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationDao.updateResult(sqlSession, map);
 	}
 	
-
-	// 방금 예약한 번호 불러오기
+/**
+ * @version 1.0
+ * @author 양아란
+ */
+	// 방금 예약한 번호 불러오기 : 개인 회원
 	@Override
 	public int selectNewReservation(int memberNo) {
 		return reservationDao.selectNewReservation(sqlSession, memberNo);
 	}
 	
-	// 예약 삭제
+	// 예약 삭제 : 개인 회원
 	@Override
 	public int deleteReservation(int reservationNo) {
 		return reservationDao.deleteReservation(sqlSession, reservationNo);
 	}
 	
-	// 예약 변경
+	// 예약 변경 : 개인 회원
 	@Override
 	public int updateReservation(Reservation reservation) {
 		return reservationDao.updateReservation(sqlSession, reservation);
 	}
+/**
+ * 
+ */	
 
 }

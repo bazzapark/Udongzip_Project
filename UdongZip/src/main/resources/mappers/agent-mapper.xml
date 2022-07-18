@@ -57,7 +57,6 @@
 		SELECT *
 		  FROM AGENT
 		 WHERE AGENT_NO = #{agentNo}
-		   AND STATUS = 'Y'
 	</select>
 	
 	<update id="deleteAgent" parameterType="_int">
@@ -82,7 +81,7 @@
  		 WHERE AGENT_NO = #{agentNo}
  	</update>
  	
-	<!-- 업체 회원 전체 조회 -->
+	<!-- 업체 회원 전체 조회 : 어드민 -->
 	<select id="selectAgentList" parameterType="hashmap" resultMap="agentResultSet">
 		SELECT *
 		FROM AGENT
@@ -94,9 +93,10 @@
 		<if test="classification == 'keyword'">
 			WHERE UPPER(AGENT_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
 		</if>
+		ORDER BY AGENT_NO DESC
 	</select>
 	
-	<!-- 업체 회원 전체 조회 수 -->
+	<!-- 업체 회원 전체 조회 수 : 어드민 -->
 	<select id="selectListCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
 		FROM AGENT
@@ -110,7 +110,7 @@
 		</if>
 	</select>
 	
-	<!-- 업체 회원 가입 승인, 탈퇴 처리 -->
+	<!-- 업체 회원 가입 승인, 탈퇴 처리 : 어드민 -->
 	<update id="adminUpdate" parameterType="agent">
 		UPDATE AGENT
 		SET 

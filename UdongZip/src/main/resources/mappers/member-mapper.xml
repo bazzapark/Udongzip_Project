@@ -102,9 +102,10 @@
 	<select id="selectListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
+		WHERE MEMBER_ID != 'admin'
 		<!-- 키워드 검색 -->
 		<if test="keyword != null">
-			WHERE UPPER(MEMBER_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(MEMBER_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+			AND UPPER(MEMBER_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(MEMBER_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
 		</if>
 	</select>
 	
@@ -112,10 +113,12 @@
 	<select id="selectMemberList" parameterType="string" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
+		WHERE MEMBER_ID != 'admin'
 		<!-- 키워드 검색 -->
 		<if test="keyword != null">
-			WHERE UPPER(MEMBER_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(MEMBER_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+			AND UPPER(MEMBER_ID) LIKE '%' || UPPER(#{keyword}) || '%' OR UPPER(MEMBER_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
 		</if>
+		ORDER BY MEMBER_NO DESC
 	</select>
 	
 	<!-- 개인 회원 상세 조회 -->

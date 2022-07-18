@@ -53,7 +53,11 @@ public class MemberDao {
 	public int memberEmailCheck(SqlSessionTemplate sqlSession, String email) {
 		return sqlSession.selectOne("memberMapper.memberEmailCheck", email);
 	}
-	
+
+/**
+ * @version 1.0
+ * @author 양아란
+ */
 	// 개인 회원 전체 조회 수
 	public int selectListCount(SqlSessionTemplate sqlSession, String keyword) {
 		return sqlSession.selectOne("memberMapper.selectListCount", keyword);
@@ -71,5 +75,7 @@ public class MemberDao {
 	public Member selectMember(SqlSessionTemplate sqlSession, int memberNo) {
 		return sqlSession.selectOne("memberMapper.selectMember", memberNo);
 	}
-	
+/**
+ * 
+ */
 }

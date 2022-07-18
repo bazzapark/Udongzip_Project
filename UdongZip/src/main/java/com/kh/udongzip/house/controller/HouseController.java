@@ -467,7 +467,7 @@ public class HouseController {
 	
 	
 	/**
-	 * 매물 상세 조회 메소드
+	 * 매물 상세 조회 메소드 : 개인 회원
 	 * 조회수 증가,
 	 * 옵션 조회,
 	 * 관리비 조회,
@@ -475,8 +475,10 @@ public class HouseController {
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * 		   매물 번호
+	 * 
+	 * @param houseNo 매물 번호
+	 * @param mv 모델앤뷰 객체
+	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
 	@RequestMapping("detail.ho")
@@ -549,14 +551,14 @@ public class HouseController {
 	}
 	
 	/**
-	 * 매물 찜 조회 메소드
+	 * 매물 찜 조회 메소드 : 개인 회원, 어드민
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * 		   매물 번호
-	 * @param memberNo
-	 * 		   회원 번호
+	 * 
+	 * @param houseNo 매물 번호
+	 * @param memberNo 개인 회원 번호
+	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
 	@ResponseBody
@@ -572,16 +574,17 @@ public class HouseController {
 	}
 	
 	/**
-	 * 매물 찜 추가 메소드
+	 * 매물 찜 추가 메소드 : 개인 회원
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * 		   매물 번호
-	 * @param memberNo
-	 * 		   회원 번호
+	 * 
+	 * @param houseNo 매물 번호
+	 * @param memberNo 개인 회원 번호
+	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
+	@Auth(role=Role.MEMBER)
 	@ResponseBody
 	@PostMapping("insert.zz")
 	public int insertZzim(int houseNo, int memberNo) {
@@ -595,16 +598,17 @@ public class HouseController {
 	}
 	
 	/**
-	 * 매물 찜 삭제 메소드
+	 * 매물 찜 삭제 메소드 : 개인 회원
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * 		   매물 번호
-	 * @param memberNo
-	 * 		   회원 번호
+	 * 
+	 * @param houseNo 매물 번호
+	 * @param memberNo 개인 회원 번호
+	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
+	@Auth(role=Role.MEMBER)
 	@ResponseBody
 	@PostMapping("delete.zz")
 	public int deleteZzim(int houseNo, int memberNo) {
@@ -618,14 +622,16 @@ public class HouseController {
 	}
 	
 	/**
-	 * 허위 매물 신고 추가 메소드
+	 * 허위 매물 신고 추가 메소드 : 개인 회원
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * 		   매물 번호
+	 * 
+	 * @param houseNo 매물 번호
+	 * 
 	 * @return 매물 상세 조회 페이지
 	 */
+	@Auth(role=Role.MEMBER)
 	@ResponseBody
 	@PostMapping("update.rp")
 	public int updateReportCount(int houseNo) {
@@ -634,12 +640,20 @@ public class HouseController {
 	}
 	
 	/**
-	 * 허위 매물 신고 전체 조회 메소드
-	 * 5회 이상, 키워드 검색 메소드
+	 * 허위 매물 신고 전체 조회 메소드 : 어드민
+	 * 5회 이상, 키워드 검색
 	 * 
 	 * @version 1.0
 	 * @author 양아란
+	 * 
+	 * @param cpage 현재 페이지
+	 * @param classification 5회 이상 / 키워드 검색
+	 * @param keyword 검색 키워드
+	 * @param model 모델 객체
+	 * 
+	 * @return 허위 매물 신고 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@RequestMapping("list.rp")
 	public String selectRemoveList(@RequestParam (value="cpage", defaultValue="1") int currentPage, Model model, String classification, String keyword) {
 		
@@ -673,13 +687,16 @@ public class HouseController {
 	}
 	
 	/**
-	* 매물신고 상세 조회 메소드
+	* 허위 매물신고 상세 조회 메소드 : 어드민
 	*
 	* @version 1.0
 	* @author 양아란
-	* @param houseNo
-	* @return 매물 신고 상세 모달창
+	* 
+	* @param houseNo 매물 번호
+	* 
+	* @return 허위 매물 신고 상세 조회 모달창
 	*/
+	@Auth(role=Role.ADMIN)
 	@ResponseBody
 	@PostMapping("select.rp")
 	public House selectHouse(int houseNo) {
@@ -692,9 +709,14 @@ public class HouseController {
 	 * 
 	 * @version 1.0
 	 * @author 양아란
-	 * @param houseNo
-	 * @return 매물 신고 전체 조회 페이지
+	 * 
+	 * @param houseNo 매물 번호
+	 * @param model 모델 객체
+	 * @param session 세션 객체
+	 * 
+	 * @return 허위 매물 신고 전체 조회 페이지
 	 */
+	@Auth(role=Role.ADMIN)
 	@PostMapping("adminUpdate.rp")
 	public String adminUpdate(int houseNo, Model model, HttpSession session) {
 		

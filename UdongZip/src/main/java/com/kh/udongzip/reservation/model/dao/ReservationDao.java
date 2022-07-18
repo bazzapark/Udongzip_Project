@@ -48,19 +48,25 @@ public class ReservationDao {
 		return sqlSession.selectOne("reservationMapper.selectReservation", reservationNo);
 	}
 	
-	
-	// 방금 예약한 번호 불러오기
+/**
+ * @version 1.0
+ * @author 양아란
+ */
+	// 방금 예약한 번호 불러오기 : 개인 회원
 	public int selectNewReservation(SqlSessionTemplate sqlSession, int memberNo) {
 		return sqlSession.selectOne("reservationMapper.selectNewReservation", memberNo);
 	}
 	
-	// 예약 삭제
+	// 예약 삭제 : 개인 회원
 	public int deleteReservation(SqlSessionTemplate sqlSession, int reservationNo) {
 		return sqlSession.delete("reservationMapper.deleteReservation", reservationNo);
 	}
 	
-	// 예약 변경
+	// 예약 변경 : 개인 회원
 	public int updateReservation(SqlSessionTemplate sqlSession, Reservation reservation) {
 		return sqlSession.update("reservationMapper.updateReservation", reservation);
 	}
+/**
+ * 
+ */
 }

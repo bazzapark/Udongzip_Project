@@ -295,30 +295,29 @@
 		</if> 
   	</select>
   	
-	<!-- 매물 상세 조회 -->
+	<!-- 매물 상세 조회 : 개인 회원, 어드민 -->
 	<select id="selectHouse" parameterType="_int" resultMap="houseResultSet">
 		SELECT *
 		FROM HOUSE H, AGENT A
 		WHERE H.AGENT_NO = A.AGENT_NO
 		  AND HOUSE_NO = #{houseNo}
-		  AND H.STATUS = 'Y'
 	</select>
 	
-	<!-- 매물 상세 조회 조회수 증가 -->
+	<!-- 매물 상세 조회 조회수 증가 : 개인 회원 -->
 	<update id="updateCount" parameterType="_int">
 		UPDATE HOUSE
 		SET VIEW_COUNT = VIEW_COUNT + 1
 		WHERE HOUSE_NO = #{houseNo}
 	</update>
 	
-	<!-- 매물 옵션 조회 -->
+	<!-- 매물 옵션 조회 : 개인 회원 -->
 	<select id="selectOptionInfo" parameterType="_int" resultType="string">
 		SELECT OPTION_NO
 		FROM OPTION_INFO
 		WHERE HOUSE_NO = #{houseNo}
 	</select>
 	
-	<!-- 옵션명 조회 -->
+	<!-- 옵션명 조회 : 개인 회원 -->
 	<select id="selectOptions" parameterType="list" resultType="string">
 		SELECT OPTION_NAME
 		FROM OPTIONS
@@ -328,14 +327,14 @@
 		</foreach>
 	</select>
 	
-	<!-- 매물 관리비 조회 -->
+	<!-- 매물 관리비 조회 : 개인 회원 -->
 	<select id="selectManageInfo" parameterType="_int" resultType="string">
 		SELECT MANAGE_NO
 		FROM MANAGE_INFO
 		WHERE HOUSE_NO = #{houseNo}
 	</select>
 	
-	<!-- 관리비 항목 조회 -->
+	<!-- 관리비 항목 조회 : 개인 회원 -->
 	<select id="selectManages" parameterType="list" resultType="string">
 		SELECT MANAGE_NAME
 		FROM MANAGE
@@ -345,14 +344,14 @@
 		</foreach>
 	</select>
 	
-	<!-- 매물 이미지 조회 -->
+	<!-- 매물 이미지 조회 : 개인 회원 -->
 	<select id="selectHouseImages" parameterType="_int" resultType="string">
 		SELECT IMG_PATH
 		FROM HOUSE_IMG
 		WHERE HOUSE_NO = #{houseNo}
 	</select>
 	
-	<!-- 매물 찜 조회 -->
+	<!-- 매물 찜 조회 : 개인 회원 -->
 	<select id="selectZzim" parameterType="_int" resultType="_int">
 		SELECT HOUSE_NO
 		FROM ZZIM
@@ -360,19 +359,58 @@
 		  AND HOUSE_NO = #{houseNo}
 	</select>
 	
-	<!-- 매물 찜 추가 -->
+	<!-- 매물 찜 추가 : 개인 회원 -->
 	<insert id="insertZzim" parameterType="_int">
 		INSERT INTO ZZIM
 		VALUES (#{memberNo}, #{houseNo})
 	</insert>
 	
-	<!-- 매물 찜 삭제 -->
+	<!-- 매물 찜 삭제 : 개인 회원 -->
 	<delete id="deleteZzim" parameterType="_int">
 		DELETE FROM ZZIM
 		WHERE MEMBER_NO = #{memberNo}
 		  AND HOUSE_NO = #{houseNo}
 	</delete>
 	
+	<!-- 허위 매물 신고 추가 : 개인 회원 -->
+	<update id="updateReportCount">
+		UPDATE HOUSE
+		   SET REPORT_COUNT = REPORT_COUNT + 1
+		 WHERE HOUSE_NO = #{houseNo}
+	</update>
+	
+	<!-- 허위 매물 신고 전체 조회 수 : 어드민 -->
+	<select id="selectReportHouseCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM HOUSE H, AGENT A
+		WHERE REPORT_COUNT > 0
+		  AND H.AGENT_NO = A.AGENT_NO
+		<!-- 처리전(대기) -->
+		<if test="classification == 'count'">
+			AND REPORT_COUNT > 4
+		</if>
+		<!-- 키워드 검색 -->
+		<if test="classification == 'keyword'">
+			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+	</select>
+	
+	<!-- 허위 매물 신고 전체 조회  : 어드민-->
+	<select id="selectReportHouse" parameterType="hashmap" resultMap="houseResultSet">
+		SELECT *
+		FROM HOUSE H, AGENT A
+		WHERE REPORT_COUNT > 0
+		  AND H.AGENT_NO = A.AGENT_NO
+		<!-- 처리전(대기) -->
+		<if test="classification == 'count'">
+			AND REPORT_COUNT > 4
+		</if>
+		<!-- 키워드 검색 -->
+		<if test="classification == 'keyword'">
+			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
+		</if>
+		ORDER BY HOUSE_NO DESC
+	</select>
 	
 	<!-- 마이페이지 찜매물 조회 -->
 	<select id="selectZzimList" parameterType="_int" resultMap="houseResultSet">

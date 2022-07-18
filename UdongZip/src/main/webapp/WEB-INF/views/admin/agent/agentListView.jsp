@@ -7,26 +7,11 @@
 <meta charset="UTF-8">
 <title>우동집 | 우리동네집 모아보기</title>
 
-<!-- 부트스트랩 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-
 <!-- CSS파일 -->
 <link rel="stylesheet" href="resources/css/admin/agentListView.css">
 
-<!-- jQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 </head>
 <body>
-
-	<!-- 1회성 알림문구 기능 -->
-	<c:if test="${ not empty alertMsg }">
-		<script>
-			alert("${ alertMsg }");
-		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>
  
 	<div id="wrap">
 		<jsp:include page="../../common/header.jsp" /> <!-- 헤더 -->
@@ -83,11 +68,11 @@
 			          </tr>
 			          <tr>
 			            <th>사업자등록증</th>
-			            <td id="document1"></td>
+			            <td><a id="document1" class="btn btn-outline-primary btn-sm">파일 확인하기</a></td>
 			          </tr>
 			          <tr>
 			            <th>중개사등록증</th>
-			            <td id="document2"></td>
+			            <td><a id="document2" class="btn btn-outline-primary btn-sm">파일 확인하기</a></td>
 			          </tr>
 			        </table>
 			      </div>
@@ -241,8 +226,10 @@
 							$("#status").text("탈퇴");
 						}
 						
-						$("#document1").text(agent.document1);
-						$("#document2").text(agent.document2);
+						$("#document1").prop("href", agent.document1);
+						$("#document2").prop("href", agent.document2);
+						$("#document1").prop("target", "_blank");
+						$("#document2").prop("target", "_blank");
 					},
 					error: function() {
 						console.log("업체 회원 상세 조회 ajax 실패");

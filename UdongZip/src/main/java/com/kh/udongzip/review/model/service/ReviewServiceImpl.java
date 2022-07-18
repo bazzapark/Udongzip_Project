@@ -52,43 +52,43 @@ public class ReviewServiceImpl implements ReviewService {
  * @version 1.0
  * @author 양아란
  */
-	// 업체 회원 리뷰 전체 조회 수 메소드
+	// 업체 회원 리뷰 전체 조회 수 메소드 : 개인 회원
 	@Override
 	public int selectListCount(Member m) {
 		return reviewDao.selectListCount(sqlSession, m);
 	}
 	
-	// 업체 회원 리뷰 전체 조회 메소드
+	// 업체 회원 리뷰 전체 조회 메소드 : 개인 회원
 	@Override
 	public ArrayList<Review> agentSelectReviewList(PageInfo pi, Member m) {
 		return reviewDao.agentSelectReviewList(sqlSession, pi, m);
 	}
 	
-	// 삭제 요청 전체 조회 메소드
+	// 삭제 요청 전체 조회 메소드 : 어드민
 	@Override
 	public ArrayList<RemoveRequest> selectRequestList(PageInfo pi, HashMap<String, String> map) {
 		return reviewDao.selectRequestList(sqlSession, pi, map);
 	}
 	
-	// 삭제 요청 전체 조회 수 메소드
+	// 삭제 요청 전체 조회 수 메소드 : 어드민
 	@Override
 	public int selectRequestListCount(HashMap<String, String> map) {
 		return reviewDao.selectRequestListCount(sqlSession, map);
 	}
 	
-	// 삭제 요청 상세 조회 메소드
+	// 삭제 요청 상세 조회 메소드 : 어드민
 	@Override
 	public RemoveRequest selectRequest(int resquestNo) {
 		return reviewDao.selectRequest(sqlSession, resquestNo);
 	}
 	
-	// 리뷰 삭제 메소드
+	// 리뷰 삭제 메소드 : 어드민
 	@Override
 	public int deleteReview(int reviewNo) {
 		return reviewDao.deleteReview(sqlSession, reviewNo);
 	}
 	
-	// 리뷰 삭제 요청 반려 메소드
+	// 리뷰 삭제 요청 반려 메소드 : 어드민
 	@Override
 	public int updateRequest(RemoveRequest request) {
 		return reviewDao.updateRequest(sqlSession, request);
