@@ -158,6 +158,13 @@
     	
     	$("#checkBtn").on("click", function() {	
     		
+    		
+    		getList();
+    		
+    	});
+		$("#searchBtn").on("click", function() {	
+			
+			
     		getList();
     	
     	});
@@ -224,17 +231,8 @@
     			error : function() {
     				console.log("ajax 통신 실패!");
     			}
-    		});
-    		
-    		
-    		
+    		});	
     	};
-    	
-		$("#searchBtn").on("click", function() {	
-    		
-    		getList();
-    	
-    	});
     	
     	
 		
@@ -502,28 +500,7 @@ var markers = [];
 	            };
 	        }
 			
-	        // list 클릭 시 상세보기 페이지로 이동
-	        $(function() {
-	        	
-		         $("#result").on("click", "tr", function() {
-		            
-		            var hno = Number($(this).children().eq(0).text());
-		            var form = document.createElement("form");
-		            var input = document.createElement("input");
-		            
-		            
-		            form.action = "detail.ho";
-		            form.method = "GET";
-		            form.target = "_blank";
-		            input.name = "hno";
-		            input.value = hno;
-		            form.appendChild(input);
-		            form.style.display ="none";
-		            document.body.appendChild(form);
-		            form.submit();
-		            
-		         })
-		      });
+	       
 	        
 	        // list : hover
 	        var hoverMarker;
@@ -555,6 +532,29 @@ var markers = [];
 	        	
 	         });
 		}
+		
+		 // list 클릭 시 상세보기 페이지로 이동
+        $(function () {
+        	
+	         $("#result").on("click", "tr", function() {
+	            
+	            var hno = Number($(this).children().eq(0).text());
+	            var form = document.createElement("form");
+	            var input = document.createElement("input");
+	            
+	            
+	            form.action = "detail.ho";
+	            form.method = "GET";
+	            form.target = "_blank";
+	            input.name = "hno";
+	            input.value = hno;
+	            form.appendChild(input);
+	            form.style.display ="none";
+	            document.body.appendChild(form);
+	            form.submit();
+	            
+	         })
+	      });
 		
 	</script>
 </body>
