@@ -361,7 +361,7 @@ var markers = [];
 							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
 							 + 		"<td><div style='width:100%; font-size :17px;'><img src='resources/images/housemapicons/wal.png' style='width:20px; height:20px;'><b>" + data[i].salesType +" "+ data[i].monthlyCost + "만원</b><br></div><div style='width:100%; font-size :15px;'>" 
 							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :15px;'>"
-							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
+							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + "층 | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
 							 + "</tr>" 
 				}
 				else {
@@ -372,9 +372,9 @@ var markers = [];
 							 +		"<td><img src='" + data[i].thumbnail + "'style='width:100%; height:100%;'><td>"
 							 + 		"<td><div style='width:100%; font-size :15px;'><img src='resources/images/housemapicons/jun.png' style='width:20px; height:20px;'><b>" + data[i].salesType +" "+ deposit + "만원</b></div><div style='width:100%; font-size :13px;'>" 
 							 + 											 data[i].address1 + "</div><div style='width:100%; font-size :13px;'>"
-							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + " | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
+							 +											 data[i].buildingType + " | 방" + data[i].roomCount + "개 | " + data[i].floor + "층/ " + data[i].buildingFloor + "층 | <br> 관리비 " + data[i].manageCost + "만원<br>" + data[i].title + "</div>"
 							 + "</tr>" 
-						 
+						  
 				}
 				
 				
