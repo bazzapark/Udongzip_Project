@@ -205,7 +205,7 @@
     					
     					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     				    mapOption = {
-    				        center: new kakao.maps.LatLng(37.5251992697347, 126.897104767379), // 지도의 중심좌표
+    				        center: new kakao.maps.LatLng(37.553947632114474, 126.9727374487171), // 지도의 중심좌표
     				        level: 8, // 지도의 확대 레벨
     				        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
     				    }; 
@@ -267,7 +267,7 @@
 			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
-		        center: new kakao.maps.LatLng(37.5251992697347, 126.897104767379), // 지도의 중심좌표
+		        center: new kakao.maps.LatLng(37.553947632114474, 126.9727374487171), // 지도의 중심좌표
 		        level: 8, // 지도의 확대 레벨
 		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 		    }; 
@@ -282,10 +282,10 @@
 		        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
 		        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
 		        minLevel: 5, // 클러스터 할 최소 지도 레벨 
-		        calculator: [10, 20, 30, 40, 50, 60], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
+		        calculator: [5, 10, 20, 30, 40, 50], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
 		        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
 	                width : '30px', height : '30px',
-	                background: 'green',
+	                background: 'purple',
 	                borderRadius: '15px',
 	                color: '#000',
 	                textAlign: 'center',
@@ -294,7 +294,7 @@
 	            },
 	            {
 	                width : '40px', height : '40px',
-	                background: 'yellow',
+	                background: 'blue',
 	                borderRadius: '20px',
 	                color: '#000',
 	                textAlign: 'center',
@@ -303,8 +303,8 @@
 	            },
 	            {
 	                width : '50px', height : '50px',
-	                background: 'orange',
-	                borderRadius: '25px',
+	                background: 'green',
+	                borderRadius: '20px',
 	                color: '#000',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
@@ -312,12 +312,30 @@
 	            },
 	            {
 	                width : '60px', height : '60px',
+	                background: 'yellow',
+	                borderRadius: '20px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '61px'
+	            },
+	            {
+	                width : '70px', height : '70px',
+	                background: 'orange',
+	                borderRadius: '25px',
+	                color: '#000',
+	                textAlign: 'center',
+	                fontWeight: 'bold',
+	                lineHeight: '71px'
+	            },
+	            {
+	                width : '80px', height : '80px',
 	                background: 'red',
 	                borderRadius: '30px',
 	                color: '#000',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
-	                lineHeight: '61px'
+	                lineHeight: '81px'
 	            }
 	           
 	        ]
