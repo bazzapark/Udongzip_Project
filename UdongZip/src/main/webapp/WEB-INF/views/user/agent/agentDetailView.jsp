@@ -50,8 +50,8 @@
             <th scope="row">주소</th>
             <td>${ agent.agentAddress }</td>
           </tr>
-          <tr>
-            <td><button type="button" class="btn btn-primary" id="chatQA">채팅 문의</button>
+          <tr align="center">
+            <td colspan="2"><button type="button" class="btn btn-primary" id="chatQA">채팅 문의</button>
             <input type="hidden" name="agentIdch" id="agentIdch" value="${ agent.agentNo }" />
             </td>
           </tr>

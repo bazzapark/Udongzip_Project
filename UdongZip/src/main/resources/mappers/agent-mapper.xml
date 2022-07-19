@@ -58,6 +58,7 @@
 		SELECT *
 		  FROM AGENT
 		 WHERE AGENT_NO = #{agentNo}
+		   AND STATUS = 'Y'
 	</select>
 	
 	<update id="deleteAgent" parameterType="_int">

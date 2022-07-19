@@ -12,13 +12,17 @@
 
 </head>
 <body>
-	<section class="showcase">
-	<h1 class="title" align="center">우리 동네 좋은 집</h1>
-	<video src="resources/images/main.mp4" autoplay loop muted id="backgroundImg">
-	</video>
-	</section>
 	<div id="wrap">
 		<jsp:include page="header.jsp" />
+		
+		<section class="showcase">
+			<h1 class="title" align="center">
+				우리동네 좋은 집
+			</h1>
+			<button id="title-btn">보러가기 ></button>
+			<video src="resources/images/main.mp4" autoplay loop muted id="backgroundImg"></video>
+		</section>
+		
 		<div id="content-area">
 			
 	    <table class="table align-middle table-sm mb-5" id="mainTable">
