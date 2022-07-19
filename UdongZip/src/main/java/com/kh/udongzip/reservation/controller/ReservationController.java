@@ -142,7 +142,9 @@ public class ReservationController {
 			map.put("deposit", "환불 완료");
 			
 		} else {
+			
 			map.put("deposit", "환불 불가");
+			
 		}
 		
 		int result = reservationService.updateResult(map);

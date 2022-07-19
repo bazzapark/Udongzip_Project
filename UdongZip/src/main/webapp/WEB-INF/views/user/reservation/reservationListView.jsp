@@ -83,7 +83,7 @@
                         <td>${ re.deposit }</td>
                         
                         <c:choose>
-                          <c:when test="${ re.result eq '방문완료' }">
+                          <c:when test="${ re.result eq '방문 완료' }">
                      	   <td> 
                      	   	<c:choose>
                      	   		<c:when test="${ re.reviewNo eq 0 }">

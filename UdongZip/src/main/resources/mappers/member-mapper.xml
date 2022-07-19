@@ -66,6 +66,7 @@
  		     , MEMBER_PHONE = #{memberPhone}
  		     , MEMBER_EMAIL = #{memberEmail}
  		 WHERE MEMBER_ID = #{memberId}
+ 		   AND STATUS = 'Y'
  	</update>
  	
  	<!-- 회원 탈퇴 -->

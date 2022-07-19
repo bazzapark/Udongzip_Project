@@ -55,10 +55,10 @@
 		  AND R.STATUS = 'Y'
 		  <choose>
 		  	<when test="identifier == 'member'">
-		  		AND MEMBER_NO = #{memberNo}
+		  		AND R.MEMBER_NO = #{memberNo}
 		  	</when>
-		  	<when test="identifier == 'aegnt'">
-		  		AND AGENT_NO = #{memberNo}
+		  	<when test="identifier == 'agent'">
+		  		AND R.AGENT_NO = #{memberNo}
 		  	</when>
 		  </choose>
 		ORDER BY REVIEW_NO DESC

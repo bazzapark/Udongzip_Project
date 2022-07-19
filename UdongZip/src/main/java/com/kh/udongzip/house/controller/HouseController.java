@@ -456,8 +456,6 @@ public class HouseController {
 		map.put("roomType", roomType);
 		map.put("address1", address1);
 		
-		System.out.println(map);
-		
 		ArrayList<House> list = houseService.houseFilter(map);
 		
 		

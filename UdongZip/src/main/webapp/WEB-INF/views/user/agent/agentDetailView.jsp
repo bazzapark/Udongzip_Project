@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,14 +90,14 @@
         <tbody>
         	<c:choose>
         		<c:when test="${ not empty reviewList }">
-        			<c:forEach var="r" begin="0" end="${ reviewList.length() }">
+        			<c:forEach var="r" begin="0" end="${ fn:length(reviewList) - 1 }">
         				<tr>
-        					<td>${ r.reviewNo }</td>
-        					<td>${ r.memberId }</td>
-        					<td>${ r.content }</td>
+        					<td>${ reviewList[r].reviewNo }</td>
+        					<td>${ reviewList[r].memberId }</td>
+        					<td>${ reviewList[r].content }</td>
         					<td>
         						<c:choose>
-        							<c:when test="${ r.satisfied == 'Y' }">
+        							<c:when test="${ reviewList[r].satisfied == 'Y' }">
         								<img src='resources/images/houseDetailImages/like.png' alt=''>
         							</c:when>
         							<c:otherwise>
@@ -104,7 +105,7 @@
         							</c:otherwise>
         						</c:choose>
         					</td>
-        					<td>${ r.createDate }</td>
+        					<td>${ reviewList[r].createDate }</td>
         				</tr>
         			</c:forEach>
         		</c:when>
