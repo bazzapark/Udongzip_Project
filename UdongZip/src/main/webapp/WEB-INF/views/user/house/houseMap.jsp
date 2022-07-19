@@ -287,7 +287,7 @@
 	                width : '30px', height : '30px',
 	                background: 'purple',
 	                borderRadius: '15px',
-	                color: '#000',
+	                color: 'white',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
 	                lineHeight: '31px'
@@ -296,7 +296,7 @@
 	                width : '40px', height : '40px',
 	                background: 'blue',
 	                borderRadius: '20px',
-	                color: '#000',
+	                color: 'white',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
 	                lineHeight: '41px'
@@ -305,7 +305,7 @@
 	                width : '50px', height : '50px',
 	                background: 'green',
 	                borderRadius: '20px',
-	                color: '#000',
+	                color: 'white',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
 	                lineHeight: '51px'
@@ -323,7 +323,7 @@
 	                width : '70px', height : '70px',
 	                background: 'orange',
 	                borderRadius: '25px',
-	                color: '#000',
+	                color: 'white',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
 	                lineHeight: '71px'
@@ -332,7 +332,7 @@
 	                width : '80px', height : '80px',
 	                background: 'red',
 	                borderRadius: '30px',
-	                color: '#000',
+	                color: 'white',
 	                textAlign: 'center',
 	                fontWeight: 'bold',
 	                lineHeight: '81px'
