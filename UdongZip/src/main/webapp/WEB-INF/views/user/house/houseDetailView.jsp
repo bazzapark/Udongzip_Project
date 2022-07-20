@@ -682,6 +682,8 @@
 	      // 선택한 날짜가 오늘 날짜이면 현재 시간 기준으로 minTime 변경
 	      if ($("#bookingDate").val() == today) {
 	        $("#bookingTime").timepicker("option", "minTime", String(minDate.getHours() + 1));
+	      } else {
+	    	$("#bookingTime").timepicker("option", "minTime", "10"); 
 	      }
 	    }
 	  });
