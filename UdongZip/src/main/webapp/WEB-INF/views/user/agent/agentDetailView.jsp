@@ -246,7 +246,7 @@
 	});
 	
   		 $("#chatQA").on("click", function(){
-  			 location.href="newch.ch?agentNo=" + Number($("#agentIdch").val()); 			 
+  			 window.open("newch.ch?agentNo=" + Number($("#agentIdch").val()), "_blank"); 			 
   	 });
   </script>
   

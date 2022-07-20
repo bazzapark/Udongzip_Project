@@ -118,7 +118,7 @@
 		          <a class="nav-link" href="list.ma">매물 조회</a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="chatting.do">채팅 문의</a>
+		          <a class="nav-link" href="chatting.do" target="_blank">채팅 문의</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="faq.no" id="" aria-expanded="false">
@@ -132,7 +132,7 @@
 		      <!-- 메뉴 - 업체회원 -->
 		      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
-		          <a class="nav-link" href="chatting.do">채팅 관리</a>
+		          <a class="nav-link" href="chatting.do" target="_blank">채팅 관리</a>
 		        </li>
 		        <li class="nav-item">
 		          <a class="nav-link" href="faq.no" id="" aria-expanded="false">
