@@ -129,7 +129,7 @@ public class InquiryController {
 	* @return 사용자 1:1 문의 작성 페이지
 	*
 	*/
-	@Auth(role=Role.MEMBER)
+	@Auth(role=Role.LOGINUSER)
 	@RequestMapping("insert.in")
 	public String insertInquiry(Inquiry inquiry, HttpSession session, Model model) {
 		
@@ -280,6 +280,31 @@ public class InquiryController {
 			mv.addObject("errorMsg", "1:1문의 상세조회 실패").setViewName("common/error");
 		}
 		return mv;
+	}
+	
+	@Auth(role=Role.MEMBER)
+	@RequestMapping("inquiryDelete.bo")
+	public String memberDeleteInquiry(int inquiryNo,
+									  HttpSession session,
+									  Model model) {
+	
+		int result = inquiryService.deleteInquiry(inquiryNo);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "문의가 삭제되었습니다.");
+			
+			return "redirect:inquirylist.bo";
+			
+		} else {
+			
+			model.addAttribute("errorMsg", "문의 삭제에 실패습니다. 잠시 후 다시 시도해주세요.");
+			
+			return "common/error";
+			
+		}
+		
+		
 	}
 	
 

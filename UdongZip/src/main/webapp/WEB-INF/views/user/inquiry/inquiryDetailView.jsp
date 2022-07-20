@@ -35,7 +35,7 @@
         <div class="innerOuter">
             <h2>1:1 문의 내역</h2>
             <br>
-
+			<input type="hidden" value="${ i.inquiryNo }">
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">작성일</th>
@@ -68,7 +68,8 @@
             <br>
 
             <div align="center">
-                <a class="btn btn-secondary" style="float:right;" href="inquirylist.bo">확인</a>
+                <a class="btn btn-secondary" style="float:right;" href="inquirylist.bo">확인</a> &nbsp;
+                <a class="btn btn-secondary" id="deletebts" style="float:right; background-color: red; border: 1px solid red;">삭제하기</a> &nbsp;
             </div>
             <br><br>
         </div>
@@ -79,4 +80,15 @@
         <!-- 푸터바 -->
     <jsp:include page="../../common/footer.jsp" />
 </body>
+<script>
+	$(function() {
+		
+		$("#deletebts").click(function() {
+		
+			location.href="inquiryDelete.bo?inquiryNo=" + $("input[type=hidden]").val(); 
+			
+		})
+		
+	})
+</script>
 </html>

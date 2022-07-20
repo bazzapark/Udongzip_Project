@@ -63,12 +63,12 @@
                         <th><label for="satisfied">만족도</label></th>
                         <td colspan="3">
                             
-                                <input class="form-check-input" type="radio" name="satisfied" id="satisfied" value="만족" checked>
+                                <input class="form-check-input" type="radio" name="satisfied" id="satisfied" value="Y" checked>
                                 <label class="form-check-label" for="">
                                                                              만족
                                 </label>
                             
-                                <input class="form-check-input" type="radio" name="satisfied" id="satisfied" value="불만족">
+                                <input class="form-check-input" type="radio" name="satisfied" id="satisfied" value="N">
                                 <label class="form-check-label" for="">
                                                                              불만족
                                 </label>

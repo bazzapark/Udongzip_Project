@@ -80,7 +80,7 @@
 	              <label class="form-check-label" for="loginCheck">
 	                	아이디 저장
 	              </label>
-	              <a class="" href="#" id="changePwd">비밀번호 재설정</a>
+	              <a class="" id="changePwd">비밀번호 재설정</a>
 	            </div>
 	          </div>
 	          <button type="submit" class="btn btn-primary">로그인</button>
