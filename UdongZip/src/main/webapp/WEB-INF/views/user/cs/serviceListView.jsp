@@ -33,11 +33,11 @@
             <!-- 네비 바 -->
             <div class="navi-area">
                 <ul class="navi">
-                    <li class="tab-link current" data-tab="tab-1">자주 묻는 질문</li>
+                    <li class="tab-link current"  data-tab="tab-3" onclick="noticeajax()">공지사항</li>
+                    <li class="tab-link" data-tab="tab-1">자주 묻는 질문</li>
                     <c:if test="${ !empty loginUser and loginUser.identifier ne 'root' }">
                     	<li class="tab-link"  data-tab="tab-2">1 : 1 문의</li>
                     </c:if>
-                    <li class="tab-link"  data-tab="tab-3" onclick="noticeajax()">공지사항</li>
                 </ul>
 
 
@@ -45,7 +45,7 @@
                 <!-- 탭의 내용 -->
 
                 <!-- FAQ -->
-                <div id="tab-1" class="tab-content current">
+                <div id="tab-1" class="tab-content">
                     <br>
                     <h3 align="center">
                         <!-- 중간 문구-->
@@ -132,7 +132,7 @@
 
 
                 <!-- 공지사항 -->
-                <div id="tab-3" class="tab-content">
+                <div id="tab-3" class="tab-content current">
                     <div id="notice-area">
                         <table class="table" id="test">
                             <thead>
@@ -378,6 +378,8 @@
         <!-- 공지사항 제목 클릭 시 해당 공지 상세보기 페이지로 비동기식 이동 -->
         
     	$(function(){
+    		
+    		noticeajax();
     		
     		$("#notice-area>.table>tbody").on("click", "tr", function(){
     			
