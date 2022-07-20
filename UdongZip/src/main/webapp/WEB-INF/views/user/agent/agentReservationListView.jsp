@@ -92,10 +92,13 @@
                                 <td id="resHouse">
                                 </td>
                             </tr>
+                            <tr>	
+                            	<th>매물 위치</th>
+                            	<td id="houseLocation"></td>
+                            </tr>
                             <tr>
                                 <th>매물 확인</th>
                                 <td id="houseCheck">
-                                    <a href=""></a>
                                 </td>
                             </tr>
                             <tr>
@@ -198,14 +201,14 @@
 	    				
 	    			} else {
 	    				
-	    				alert("상태 변경에 실패했습니다. /ns잠시 후 다시 시도해주세요.");
+	    				alert("상태 변경에 실패했습니다. \n잠시 후 다시 시도해주세요.");
 	    				
 	    			}
 	    			
 	    			
 	    		},
 	    		error : function() {
-	    			alert("상태 변경에 실패했습니다. /n이 문제가 지속될 시 고객센터로 문의주세요.");
+	    			alert("상태 변경에 실패했습니다. \n이 문제가 지속될 시 고객센터로 문의주세요.");
 	    		}
 	    	})
 	    	

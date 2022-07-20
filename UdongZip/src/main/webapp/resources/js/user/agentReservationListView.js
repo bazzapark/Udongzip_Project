@@ -223,7 +223,8 @@
         				$("#resId").text(list[i].memberId);
         				$("#resName").text(list[i].memberName);
         				$("#resHouse").text(list[i].houseTitle);
-        				$("#houseCheck").text(list[i].houseNo);
+        				$("#houseLocation").text(list[i].houseAddress);
+        				$("#houseCheck").html("<a href='updateForm.ho?houseNo=" + list[i].houseNo + "'>매물 확인하기 > </a>");
         				$("#resContent").text(list[i].content);
         				$("#resDeposit").text(list[i].deposit);
         				$("#resResult").text(list[i].result);

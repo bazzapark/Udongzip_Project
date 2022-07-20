@@ -27,6 +27,7 @@ public class Reservation {
 	private String memberName;
 	private String memberId;
 	private String houseTitle;
+	private String houseAddress;
 	
 	// RESERVATION 테이블에 없는 필드
 	private String agentName;

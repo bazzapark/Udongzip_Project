@@ -196,6 +196,10 @@ nav {
   padding-left: 20px;
   width: 70%;
 }
+
+#mainTable tbody tr:hover {
+  cursor: pointer;
+}
 /***** 메인페이지 스타일 끝 *****/
 
     .pwdmodal-table {
@@ -311,6 +315,10 @@ nav {
 		  -moz-animation: fadein 6s; /* Firefox */
 		  -webkit-animation: fadein 6s; /* Safari and Chrome */
 		  -o-animation: fadein 6s; /* Opera */
+    }
+    
+    .title:hover {
+    	opacity: 0.3;
     }
     
     @keyframes fadein {

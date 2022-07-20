@@ -498,7 +498,20 @@ public class MemberController {
 			return "user/member/regFormImpl";
 		}
 	
- 
+	@RequestMapping("termsofService.ud")
+	public String termsofService() {
+		return "common/termsOfService";
+	}
+	
+	@RequestMapping("privacy.ud")
+	public String privacyPolicy() {
+		return "common/privacyPolicy";
+	}
+	
+	@RequestMapping("management.ud")
+	public String houseManagement() {
+		return "common/houseManagement";
+	}
 		
 		
 }

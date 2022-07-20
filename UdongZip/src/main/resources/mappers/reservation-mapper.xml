@@ -19,6 +19,7 @@
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="MEMBER_NAME" property="memberName" />
 		<result column="TITLE" property="houseTitle" />
+		<result column="ADDRESS1" property="houseAddress" />
 		<result column="CID" property="cid" />
 		<result column="TID" property="tid" />
 		<result column="CANCEL_AMOUNT" property="cancelAmount" />
@@ -27,7 +28,7 @@
 
 	<select id="selectReservationList" parameterType="hashmap" resultMap="reservationResultSet">
 		SELECT R.RESERVATION_NO, R.HOUSE_NO, R.CONTENT, TO_CHAR(RESERVATION_DATE, 'YYYY-MM-DD') "RESERVATION_DATE",
-			   R.RESERVATION_TIME, R.DEPOSIT, R.RESULT, M.MEMBER_ID, M.MEMBER_NAME, H.TITLE
+			   R.RESERVATION_TIME, R.DEPOSIT, R.RESULT, M.MEMBER_ID, M.MEMBER_NAME, H.TITLE, H.ADDRESS1
 		  FROM RESERVATION R, MEMBER M, HOUSE H
 		 WHERE R.MEMBER_NO = M.MEMBER_NO
 		   AND R.HOUSE_NO = H.HOUSE_NO

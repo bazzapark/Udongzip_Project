@@ -60,6 +60,8 @@
 					count = result.length;
 				}
 				
+				console.log(result);
+				
 				if (count == 0) {
 					resultStr += "<tr><td class='text-center' colspan='2'>공지사항이 없습니다.</td></tr>"
 				} else {
@@ -86,6 +88,12 @@
 		
 		getList();
 		
+		$("#mainTable tbody").on("click", "tr td", function() {
+			
+			location.href="faq.no";
+		
+		});
+				
 	})
 </script>
 </html>
