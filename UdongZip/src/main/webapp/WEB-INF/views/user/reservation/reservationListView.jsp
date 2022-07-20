@@ -45,6 +45,16 @@
         .searchBtn {width:20%;}
         
         td { text-align: center; }
+        
+        #enrollForm {
+        	width: 400px;
+        	margin: auto;
+        }
+        
+        #resdetail-modal-table {
+        	width: 300px;
+        	margin: auto;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +174,7 @@
 
                 <form id="enrollForm" method="post">
                 <input type="hidden" name="memberNo">
-                    <table algin="center">
+                    <table id="resdetail-modal-table" algin="center">
                         <tr>
                             <th><label for="title">예약번호</label></th>
                             <td id="reservationNo"></td>

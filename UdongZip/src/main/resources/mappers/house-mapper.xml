@@ -416,7 +416,7 @@
 	
 	<!-- 마이페이지 찜매물 조회 -->
 	<select id="selectZzimList" parameterType="_int" resultMap="houseResultSet">
-		SELECT H.HOUSE_NO, THUMBNAIL
+		SELECT H.HOUSE_NO, THUMBNAIL, TITLE
 		FROM HOUSE H , (SELECT HOUSE_NO
                 FROM ZZIM
                WHERE MEMBER_NO = #{memberNo}) Z

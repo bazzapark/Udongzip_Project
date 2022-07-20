@@ -16,7 +16,7 @@
     }
 
     .wrap{
-        width: 1000px;
+        width: 900px;
         /* height: 1500px; */
         margin: auto;
     }
@@ -50,12 +50,24 @@
     height : 900px;
     margin : auto;
     }
+    
+    .board-body {
+    	width: 100%;
+    	height: auto;
+    }
+    
+    .delete {
+    	height: auto;
+    	width: 100%;
+    }
 
     .thumbnail {
         border : 1px solid lightgray;
         width : 220px;
+        height : 250px;
         display : inline-block;
         margin : 30px;
+        overflow : hidden;
     }
 
     .thumbnail:hover {
@@ -84,19 +96,18 @@
                 <td class="body-r">
                     <div class="delete">
                         <b style="font-size:24px;">찜한매물</b>
-                        <hr color="">
+                        <hr>
                            <c:forEach var="zi" items="${ list }">
 	                            <div class="thumbnail" align="center">
 	                               <a href="detail.ho?hno=${ zi.houseNo }"> 
 	                               <img src="${ zi.thumbnail }" width="200px" height="150px">
+	                               <p> No. ${ zi.houseNo } </p>
+	                               <p>${ zi.title }</p>
 	                               </a>
-	                                <p> ${ zi.houseNo } </p>
 	                            </div>
                            </c:forEach>
                            
-                           
                             <br><br>
-
                     </div>
                 </td>
             </table>

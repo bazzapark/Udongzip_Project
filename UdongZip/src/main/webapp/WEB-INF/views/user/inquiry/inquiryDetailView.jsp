@@ -55,7 +55,7 @@
                 <tr></tr>
                 <tr>
                     <th width="100">답변일</th>
-                    <td colspan="3">${ i.createDate }</td>
+                    <td colspan="3">${ i.answerDate }</td>
                 </tr>
                 <tr>
                     <th>문의 답변</th>

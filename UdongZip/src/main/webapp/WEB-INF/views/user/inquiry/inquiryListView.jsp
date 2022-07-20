@@ -59,6 +59,7 @@
                 <thead align="center">
                     <tr>
                     	<th>문의번호</th>
+                    	<th>카테고리</th>
                         <th>제목</th>
                         <th>작성일</th>
                         <th>문의상태</th>
@@ -69,9 +70,19 @@
                 <c:forEach var="i" items="${ list }">
                     <tr>
                         <td class="bno">${ i.inquiryNo }</td>
+                        <td>${ i.category }</td>
                         <td>${ i.title }</td>
                         <td>${ i.createDate }</td>
-                        <td>${ i.status }</td>
+                        <td>
+                        	<c:choose>
+                        		<c:when test="${ i.answerContent != null }">
+                        			답변 완료
+                        		</c:when>
+                        		<c:otherwise>
+                        			미답변
+                        		</c:otherwise>
+                        	</c:choose>
+                        </td>
                     </tr>
                  </c:forEach>
                  

@@ -134,21 +134,21 @@
 		</div>
 		
 		<form action="delete.me" method="post">
-		<pre>회원탈퇴 하시겠습니까?
-		
-		회원탈퇴와 동시에 서비스 이용내역 및 모든 데이터가 삭제 됩니다. 
+		<p style="padding: 10px;">
+		회원탈퇴 하시겠습니까?
+		<br><br>
+		회원탈퇴와 동시에 서비스 이용내역 및 모든 데이터가 삭제 됩니다. <br>
 		이후 동일 계정으로 가입이 가능하지만 기록은 남아있지 않습니다.
-		            
-		그동안 우리동네집구하기를 이용해 주셔서 감사합니다.
-		앞으로 보다 나은 서비스를 제공할 수 있도록 노력하겠습니다.
-		</pre>
+		<br><br>        
+		그동안 우리동네집구하기를 이용해 주셔서 감사합니다.<br>
+		앞으로 보다 나은 서비스를 제공할 수 있도록 노력하겠습니다. <br>
+		</p>
 	         <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
 	        <div align="center">
 	    <button type="submit" class="btn btn-primary">탈퇴하기</button>
-	
 	    </div>
 	  </form>
-	  
+	  <br>
 	</div>
 	</div>
 	</div>
