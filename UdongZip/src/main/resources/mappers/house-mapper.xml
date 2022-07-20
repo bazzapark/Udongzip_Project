@@ -187,7 +187,7 @@
 		SELECT *
 		  FROM HOUSE H, SUBWAY S
 		 WHERE H.SUBWAY_NO = S.SUBWAY_NO
-		   AND HOUSE_NO = #{houseNo};
+		   AND HOUSE_NO = #{houseNo}
 	</select>
 	
 	<!-- 매물 수정 -->
