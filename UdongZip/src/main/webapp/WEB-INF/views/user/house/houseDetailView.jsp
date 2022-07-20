@@ -272,7 +272,7 @@
           					${ house.floor }층
           				</c:otherwise>
           			</c:choose>
-          		 	/ ${ house.buildingFloor }
+          		 	/ ${ house.buildingFloor }층
           		 </td>
           	</tr>
           </c:if>
