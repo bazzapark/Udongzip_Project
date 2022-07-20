@@ -27,6 +27,7 @@ public class Inquiry {
 	// 테이블에 없는 필드
 	private String memberName;
 	private String agentName;
-
+	private String memberId;
+	private String agentId;
 
 }

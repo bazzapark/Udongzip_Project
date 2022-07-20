@@ -14,6 +14,8 @@
   		
   		<result column="MEMBER_NAME" property="memberName" />
   		<result column="AGENT_NANE" property="agentName" />
+  		<result column="MEMBER_ID" property="memberId" />
+  		<result column="AGENT_ID" property="agentId" />
   	</resultMap>
     	
     <!-- 페이징 -->

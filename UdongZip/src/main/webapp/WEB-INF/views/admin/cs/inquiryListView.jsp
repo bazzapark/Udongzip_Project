@@ -35,8 +35,7 @@
                     <thead align="center">
                     <tr>
                         <th>No.</th>
-                        <th>회원 번호</th>
-                        <th>업체 번호</th>
+                        <th>작성자</th>
                         <th>문의 분류</th>
                         <th>작성일</th>
                         <th>답변일</th>
@@ -47,12 +46,29 @@
 	                    <c:forEach var="i" items="${ list }">
 		                    <tr>
 		                        <td>${ i.inquiryNo }</td>
-		                        <td>${ i.memberNo }</td>
-		                        <td>${ i.agentNo }</td>
+		                        <td>
+			                        <c:choose>
+			                        	<c:when test="${ i.memberId != null }">
+			                        		${ i.memberId }(개인)
+			                        	</c:when>
+			                        	<c:otherwise>
+			                        		${ i.agentId }(업체)
+			                        	</c:otherwise>
+			                        </c:choose>
+		                        </td>
 		                        <td>${ i.category }</td>
 		                        <td>${ i.createDate }</td>
 		                        <td>${ i.answerDate }</td>
-		                        <td>${ i.status }</td>
+		                        <td>
+		                        	<c:choose>
+		                        		<c:when test="${ i.answerContent != null }">
+		                        			답변 완료
+		                        		</c:when>
+		                        		<c:otherwise>
+		                        			미답변
+		                        		</c:otherwise>
+		                        	</c:choose>
+		                        </td>
 		                    </tr>
 	                	</c:forEach>
                     </tbody>

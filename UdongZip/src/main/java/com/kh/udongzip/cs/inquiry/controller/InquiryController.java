@@ -183,6 +183,8 @@ public class InquiryController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
+		System.out.println(list);
+		
 		return "admin/cs/inquiryListView";
 	}
 	
