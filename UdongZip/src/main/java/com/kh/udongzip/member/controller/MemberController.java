@@ -219,6 +219,10 @@ public class MemberController {
 				session.setAttribute("loginUser", loginUser);
 				session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
 				
+				session.removeAttribute("loginUser");
+				
+				return "redirect:/";
+				
 			} else {
 				
 				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다. 잠시후 다시 시도해주세요.");
@@ -229,10 +233,10 @@ public class MemberController {
 		} else {
 			
 			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+			return "redirect:myPage.me";
 			
 		}
 		
-		return "redirect:myPage.me";
 
 	}
 	
