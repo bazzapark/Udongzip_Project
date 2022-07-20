@@ -237,7 +237,7 @@ public class ReviewController {
 		
 		
 		ArrayList<Review> list = reviewService.selectReviewList(pi,member);
-		System.out.println(list);
+		// System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);

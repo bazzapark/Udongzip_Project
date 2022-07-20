@@ -45,13 +45,14 @@
 
             <form id="enrollForm" method="post" action="insertReview.bo">
              <input type="hidden" id="memberNo" value="${ loginUser.memberNo }" name="memberNo">
+             <input type="hidden" id="agentNo" value="${ agentNo }" name="agentNo">
                 <table algin="center">
                     <tr>
                         <th><label for="reservationNo">예약번호</label></th>
                         <td><input type="text" id="reservationNo" class="form-control" value="${ reservationNo }" name="reservationNo" readonly></td>
                        
                         <th><label for="agentNo">대상업체</label></th>
-                        <td><input type="text" id="agentNo" class="form-control" value="${ agentNo }" name="agentNo" readonly></td>
+                        <td><input type="text" id="agentName" class="form-control" value="${ agentName }" name="agentName" readonly></td>
                     </tr>
                     
                     <tr>

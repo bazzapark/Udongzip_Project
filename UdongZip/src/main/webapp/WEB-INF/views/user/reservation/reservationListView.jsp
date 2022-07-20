@@ -89,7 +89,7 @@
                      	   		<c:when test="${ re.reviewNo eq 0 }">
                      	   			<button type="button" class="btn btn-primary" onclick="r(this)">글쓰기</button>
                      	   			<input type="hidden" value="${ re.agentNo }">
-                     	   			
+                     	   			<input type="hidden" value="${ re.agentName }">
                      	   		</c:when>
                      	   		<c:otherwise>
                      	   			<button type="button" class="btn btn-primary disabled" onclick="r()">글쓰기</button>
@@ -113,9 +113,10 @@
 			function r(el) {
 				
 				var resNo = $(el).parent().siblings().eq(0).text();
-				var agentNo = $(el).siblings().val();
+				var agentNo = $(el).siblings().eq(0).val();
+				var agentName = $(el).siblings().eq(1).val();
 				
-				location.href = "reservationFome.bo?agentNo=" + agentNo + "&reservationNo=" + resNo;
+				location.href = "reservationFome.bo?agentNo=" + agentNo + "&aname=" + agentName + "&reservationNo=" + resNo;
 			}
 			</script>
 			

@@ -148,7 +148,7 @@
   	
   	<!-- 리뷰 리스트 -->
   	 <select id="selectList" parameterType="member" resultMap="reviewResultSet">
-        SELECT R.REVIEW_NO, R.CONTENT, M.MEMBER_NAME, A.AGENT_NAME, TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE"
+        SELECT R.REVIEW_NO, R.CONTENT, M.MEMBER_NAME, A.AGENT_NAME, TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE", RESERVATION_NO
         FROM REVIEW R, MEMBER M, AGENT A
         WHERE R.MEMBER_NO = M.MEMBER_NO
           AND R.AGENT_NO = A.AGENT_NO

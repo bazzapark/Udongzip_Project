@@ -105,7 +105,7 @@
         							</c:otherwise>
         						</c:choose>
         					</td>
-        					<td>${ reviewList[r].createDate }</td>
+        					<td>${ fn:substring(reviewList[r].createDate, 0, 10) }</td>
         				</tr>
         			</c:forEach>
         		</c:when>

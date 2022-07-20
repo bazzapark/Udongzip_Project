@@ -609,7 +609,9 @@
 			form.action = "insert.rs";
 			form.method = "POST";
 			input1.name = "partner_order_id"; // 가맹점 주문번호
-			input1.value = ${ house.houseNo } + ${ house.agentNo } + Number(${ loginUser.memberNo })
+			if (${ not empty loginUser }) {
+				input1.value = $("#houseNo").text() + ${ house.agentNo } + ${ loginUser.memberNo } + Date.now()
+			}
 			input2.name = "partner_user_id"; // 가맹점 회원 ID (문의 업체)
 			input2.value = $("#agentName").text();
 			
@@ -809,7 +811,6 @@
 	
 	// 허위 매물 신고
 	$(function() {
-		console.log("loginUser : ${ loginUser }")
 		// 허위 신고 모달창 버튼 활성화
 		$("#notify").mouseenter(function() {
 			if (${ not empty loginUser and loginUser.identifier eq 'member' }) {

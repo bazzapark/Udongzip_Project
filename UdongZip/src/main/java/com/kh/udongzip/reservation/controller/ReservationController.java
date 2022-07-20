@@ -445,10 +445,11 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("reservationFome.bo")
-	public String reservationFome(int reservationNo, int agentNo, Model model) {
+	public String reservationFome(int reservationNo, int agentNo, String aname, Model model) {
 		
 		model.addAttribute("reservationNo", reservationNo);
 		model.addAttribute("agentNo", agentNo);
+		model.addAttribute("agentName", aname);
 		
 		// 폼 띄어주기
 		return "user/reservation/reservationFome";
