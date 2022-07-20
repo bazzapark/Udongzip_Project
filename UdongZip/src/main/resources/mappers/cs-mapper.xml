@@ -101,7 +101,8 @@
 	<update id="updateAnswer" parameterType="inquiry">
 		UPDATE INQUIRY
 		   SET ANSWER_CONTENT = #{answerContent},
-		       ANSWER_DATE = SYSDATE
+		       ANSWER_DATE = SYSDATE,
+		       STATUS = 'Y'
 		 WHERE INQUIRY_NO = #{inquiryNo}
 	</update>
 	
@@ -157,7 +158,7 @@
 		            #{title},
 		            #{content},
 		            SYSDATE,
-		            'Y'
+		            DEFAULT
 		)
 	</insert>
 	

@@ -40,7 +40,7 @@
                         <th>문의 분류</th>
                         <th>작성일</th>
                         <th>답변일</th>
-                        <th>활성화</th>
+                        <th>답변여부</th>
                     </tr>
                     </thead>
                     <tbody align="center">
