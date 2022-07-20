@@ -19,7 +19,9 @@
 			<h1 class="title" align="center">
 				우리 동네 좋은 집
 			</h1>
-			<button id="title-btn" onclick="location.href='list.ma'">확인하기 ></button>
+			<c:if test="${ (loginUser eq null) or (loginUser.identifier eq 'member') }">
+				<button id="title-btn" onclick="location.href='list.ma'">확인하기 ></button>
+			</c:if>
 			<video src="resources/images/main.mp4" autoplay loop muted id="backgroundImg"></video>
 		</section>
 		

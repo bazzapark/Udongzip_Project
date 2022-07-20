@@ -116,6 +116,9 @@ public class ReservationController {
 			for (Map.Entry<String, String> param : params.entrySet()) {
 				strParams += (param.getKey() + "=" + param.getValue() + "&");
 			}
+			
+			strParams = strParams.substring(0,  strParams.length() - 1);
+			
 			OutputStream out = urlConn.getOutputStream(); 
 			out.write(strParams.getBytes()); 
 			out.flush(); 
@@ -199,9 +202,9 @@ public class ReservationController {
 			params.put("quantity", "1");
 			params.put("total_amount", "20000");
 			params.put("tax_free_amount", "1800");
-			params.put("approval_url", "http://localhost:8006/udongzip/kakaopay.rs");
-			params.put("cancel_url", "http://localhost:8006/udongzip/payCancel.do");
-			params.put("fail_url", "http://localhost:8006/udongzip/payError.do");
+			params.put("approval_url", "http://192.168.40.25:8006/udongzip/kakaopay.rs");
+			params.put("cancel_url", "http://192.168.40.25:8006/udongzip/payCancel.do");
+			params.put("fail_url", "http://192.168.40.25:8006/udongzip/payError.do");
 			
 			String strParams = new String();
 			for (Map.Entry<String, String> param : params.entrySet()) {
