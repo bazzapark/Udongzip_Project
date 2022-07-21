@@ -12,7 +12,6 @@
   		<result column="AGENT_NO" property="agentNo" />
   		<result column="ANSWER_DATE" property="answerDate" />
   		<result column="ANSWER_CONTENT" property="answerContent" />
-  		
   		<result column="MEMBER_NAME" property="memberName" />
   		<result column="AGENT_NANE" property="agentName" />
   		<result column="MEMBER_ID" property="memberId" />

@@ -113,7 +113,7 @@
 	
 	<!-- 업체 회원 : 내가 쓴 1:1문의 내역 조회 -->
 	<select id="selectAgentInquiryList" parameterType="_int" resultMap="inquiryResultSet">
-		SELECT *
+		SELECT INQUIRY_NO, CATEGORY, TITLE, TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') "CREATE_DATE", ANSWER_CONTENT
 		  FROM INQUIRY
 		 WHERE AGENT_NO = #{agentNo}
 		   AND STATUS = 'Y'

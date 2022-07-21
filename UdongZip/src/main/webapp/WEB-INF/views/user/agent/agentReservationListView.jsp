@@ -80,12 +80,12 @@
                                 <td id="resDate"></td>
                             </tr>
                             <tr>
-                                <th>고객 ID</th>
-                                <td id="resId"></td>
-                            </tr>
-                            <tr>
                                 <th>고객 성함</th>
                                 <td id="resName"></td>
+                            </tr>
+                            <tr>
+                                <th>연락처</th>
+                                <td id="resPhone"></td>
                             </tr>
                             <tr>
                                 <th style="height: 60px;">문의 매물</th>
@@ -145,6 +145,8 @@
     			},
     			type : "post",
     			success : function(result) {
+    				
+    				console.log(result);
     				
     				list = result;
     				listCount = result.length;

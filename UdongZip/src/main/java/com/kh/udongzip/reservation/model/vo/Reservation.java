@@ -26,6 +26,7 @@ public class Reservation {
 	
 	private String memberName;
 	private String memberId;
+	private String memberPhone;
 	private String houseTitle;
 	private String houseAddress;
 	

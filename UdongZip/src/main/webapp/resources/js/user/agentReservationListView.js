@@ -220,8 +220,8 @@
         				
         				$("#resNo").text(list[i].reservationNo);
         				$("#resDate").text(list[i].reservationDate + " " + list[i].reservationTime);
-        				$("#resId").text(list[i].memberId);
         				$("#resName").text(list[i].memberName);
+        				$("#resPhone").text(list[i].memberPhone);
         				$("#resHouse").text(list[i].houseTitle);
         				$("#houseLocation").text(list[i].houseAddress);
         				$("#houseCheck").html("<a href='updateForm.ho?houseNo=" + list[i].houseNo + "'>매물 확인하기 > </a>");

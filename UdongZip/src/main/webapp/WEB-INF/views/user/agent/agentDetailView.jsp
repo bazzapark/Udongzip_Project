@@ -92,7 +92,7 @@
         		<c:when test="${ not empty reviewList }">
         			<c:forEach var="r" begin="0" end="${ fn:length(reviewList) - 1 }">
         				<tr>
-        					<td>${ reviewList[r].reviewNo }</td>
+        					<td>${ r+1 }</td>
         					<td>${ reviewList[r].memberId }</td>
         					<td>${ reviewList[r].content }</td>
         					<td>
@@ -123,17 +123,17 @@
       			<li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous">&laquo;</a></li>
       		</c:when>
       		<c:otherwise>
-      			<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ pi.currentPage - 1 }" aria-label="Previous">&laquo;</a></li>
+      			<li class="page-item"><a class="page-link" href="detail.ag?ano=${ agent.agentNo }&cpage=${ pi.currentPage - 1 }" aria-label="Previous">&laquo;</a></li>
       		</c:otherwise>
       	</c:choose>
       	
       	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
       		<c:choose>
       			<c:when test="${ p == pi.currentPage }">
-      				<li class="page-item disabled"><a class="page-link" href="agList.rv?cpage=${ p }">${ p }</a></li>
+      				<li class="page-item disabled"><a class="page-link" href="detail.ag?ano=${ agent.agentNo }&cpage=${ p }">${ p }</a></li>
       			</c:when>
       			<c:otherwise>
-      				<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ p }">${ p }</a></li>
+      				<li class="page-item"><a class="page-link" href="detail.ag?ano=${ agent.agentNo }&cpage=${ p }">${ p }</a></li>
       			</c:otherwise>
       		</c:choose>
       		
@@ -144,7 +144,7 @@
         		<li class="page-item disabled"><a class="page-link" href="#" aria-label="Next">&raquo;</a></li>
         	</c:when>
         	<c:otherwise>
-        		<li class="page-item"><a class="page-link" href="agList.rv?cpage=${ pi.currentPage + 1 }" aria-label="Next">&raquo;</a></li>
+        		<li class="page-item"><a class="page-link" href="detail.ag?ano=${ agent.agentNo }&cpage=${ pi.currentPage + 1 }" aria-label="Next">&raquo;</a></li>
         	</c:otherwise>
         </c:choose>
         

@@ -30,8 +30,8 @@
                 <div class="filter-area">
                     <select id="filter-select">
                         <option value="전체">전체</option>
-                        <option value="만족">만족</option>
-                        <option value="불만족">불만족</option>
+                        <option value="Y">만족</option>
+                        <option value="N">불만족</option>
                     </select>
                 </div>
 

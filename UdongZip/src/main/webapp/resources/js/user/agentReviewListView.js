@@ -109,13 +109,13 @@
                          + "<td>" + "<img src='resources/images/houseDetailImages/user.png' class='user-icon'> <br>" + filterList[i].memberId + "</td>"
                          + "<td>" + filterList[i].content + "</td>";
                          
-                if(filterList[i].satisfied == "만족") {
+                if(filterList[i].satisfied == "Y") {
                 
-                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/like.png' class='review-icon'> <br>" + filterList[i].satisfied + "</td>";
+                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/like.png' class='review-icon'> <br>만족</td>";
                 
                 } else {
                 
-                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/dislike.png' class='review-icon'> <br>" + filterList[i].satisfied + "</td>";
+                	listStr += "<td>" + "<img src='resources/images/houseDetailImages/dislike.png' class='review-icon'> <br>불만족</td>";
                 	
                 }
                 
