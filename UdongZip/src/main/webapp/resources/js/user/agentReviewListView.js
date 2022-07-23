@@ -234,9 +234,18 @@
         				
         				$("#request-modal #revNo").val(list[i].reviewNo);
         				$("#request-modal .memId").text(list[i].memberId);
-        				$("#request-modal .revSatisfied").text(list[i].satisfied);
         				$("#request-modal .revDate").text(list[i].createDate);
         				$("#request-modal .revContent").text(list[i].content);
+        				
+        				if(list[i].satisfied == 'Y') {
+        					
+        					$("#request-modal .revSatisfied").text("만족");
+        				
+        				} else {
+        				
+        					$("#request-modal .revSatisfied").text("불만족");
+        				
+        				}
         				
         			}
         		
@@ -259,9 +268,18 @@
         			if(list[i].reviewNo == revNo) {
         				
         				$("#detail-modal .memId").text(list[i].memberId);
-        				$("#detail-modal .revSatisfied").text(list[i].satisfied);
         				$("#detail-modal .revDate").text(list[i].createDate);
         				$("#detail-modal .revContent").text(list[i].content);
+        				
+        				if(list[i].satisfied == 'Y') {
+        					
+        					$("#detail-modal .revSatisfied").text("만족");
+        				
+        				} else {
+        				
+        					$("#detail-modal .revSatisfied").text("불만족");
+        				
+        				}
         				
         			}
         		

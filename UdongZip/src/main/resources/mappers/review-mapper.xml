@@ -79,6 +79,7 @@
 		<if test="classification == 'keyword'">
 			AND UPPER(AGENT_NAME) LIKE '%' || UPPER(#{keyword}) || '%'
 		</if>
+		ORDER BY REQUEST_NO
 	</select>
 	
 	<!-- 리뷰 삭제 요청 전체 조회 : 어드민 -->

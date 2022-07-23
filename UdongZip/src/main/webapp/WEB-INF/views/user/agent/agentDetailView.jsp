@@ -92,7 +92,7 @@
         		<c:when test="${ not empty reviewList }">
         			<c:forEach var="r" begin="0" end="${ fn:length(reviewList) - 1 }">
         				<tr>
-        					<td>${ r+1 }</td>
+        					<td>${ (pi.currentPage*5-5)+r+1 }</td>
         					<td>${ reviewList[r].memberId }</td>
         					<td>${ reviewList[r].content }</td>
         					<td>

@@ -18,6 +18,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_PHONE" property="memberPhone" />
 		<result column="TITLE" property="houseTitle" />
 		<result column="ADDRESS1" property="houseAddress" />
 		<result column="CID" property="cid" />

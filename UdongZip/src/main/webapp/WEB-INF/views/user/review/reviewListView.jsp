@@ -56,10 +56,9 @@
                 <thead align="center">
                     <tr>
                         <th>나의리뷰</th>
-                        <th>예약 정보</th>
+                        <th>예약 번호</th>
                         <th>내용</th>
                         <th>대상 업체</th>
-                        <th>작성자</th>
                         <th>작성일</th>
                     </tr>
                 </thead>
@@ -71,7 +70,6 @@
 	                        <td>${ r.reservationNo }</td>
 	                        <td>${ r.content }</td>
 	                        <td>${ r.agentName }</td>
-	                        <td>${ r.memberName }</td>
 	                        <td>${ r.createDate }</td>
 	                    </tr>
 	                </c:forEach>

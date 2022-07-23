@@ -242,6 +242,8 @@ public class ReviewController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
+		System.out.println(list);
+		
 		return "user/review/reviewListView";
 	}
 	

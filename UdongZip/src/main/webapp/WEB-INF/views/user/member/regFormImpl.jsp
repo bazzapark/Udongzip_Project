@@ -216,7 +216,7 @@
 	var form1_data = {
 		"c1": false, 
 		"c2": false, 
-		"c3": false
+		"c3": true
 	}; 
 
 	var c1 = doc.getElementById('c1'); 
@@ -271,11 +271,6 @@
 
 		if ( !form1_data['c2'] ) {
 			alert('개인정보 수집 및 이용에 대한 안내를 선택하지 않았습니다.'); 
-			return false; 
-		}
-		
-		if ( !form1_data['c3'] ) {
-			alert('위치정보 이용약관 동의에 대한 안내를 선택하지 않았습니다.'); 
 			return false; 
 		}
 

@@ -16,7 +16,7 @@
 	<footer class="text-center">
 	  <div class="container pt-4">
 	    <section class="mb-4 footerText">
-	      <a id="companyInfo" role="button">회사소개</a> | 
+	      <a href="resources/images/companyInfo.pdf" download="우동집_회사소개서" id="companyInfo" role="button">회사소개</a> | 
 	      <a id="jobInfo" role="button">채용정보</a> | 
 	      <a id="termsOfService" role="button">이용약관</a> | 
 	      <a id="privacyPolicy" role="button"><b>개인정보처리방침</b></a> | 
