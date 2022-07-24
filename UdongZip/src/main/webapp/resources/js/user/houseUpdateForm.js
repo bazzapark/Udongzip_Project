@@ -10,11 +10,16 @@ $(function() {
 
         } else {
 	
+		
+			imgCount--;
+			
 			$(this).next().val("");
             $(this).attr("src", "");
             $(this).nextAll().eq(1).remove();
 
         }
+        
+        imgValidate();
 
     });
 
@@ -29,6 +34,8 @@ $(function() {
 			$(this).val("");
 			
 		} else {
+		
+			imgCount++;
 			
 			 // 해당 input의 형제 중 img 태그를 가져와서
 			 var imgEl = $(this).prev();
@@ -36,6 +43,8 @@ $(function() {
         	setPreview(this, imgEl); // 프리뷰 등록 함수에 같이 전달
 		
 		}
+		
+		imgValidate();
 
     });
 
@@ -217,3 +226,33 @@ function setPreview(input, el) { // 파일이 등록된 input 요소와 미리�
     }
 
 };
+
+	function checkImgs() {
+			
+		if(thumbnailCheck && imgCheck) {
+			return true;
+		} else if(thumbnailCheck == false) {
+			alert("대표 사진을 등록하세요.");
+		} else if(imgCheck == false) {
+			alert("매물 사진을 4장 이상 등록하세요.");
+		}
+				
+		return false;
+	
+	};
+
+	function imgValidate() {
+	
+		if($("#thumbnailFile").val() == "" || $("#thumbnailFile").val() == undefined) {
+			thumbnailCheck = false;
+		} else {
+			thumbnailCheck = true;
+		}
+			
+		if(imgCount >= 4) {
+			imgCheck = true;
+		} else {
+			imgCheck = false;
+		}
+	
+	};

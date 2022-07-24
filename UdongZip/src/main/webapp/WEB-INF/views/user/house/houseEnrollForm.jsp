@@ -79,16 +79,16 @@
                 <div id="img-area">
                     <div class="thumbnail-area">
                         <img class="previewer-big">
-                        <input type="file" class="file-input" name="thumbnailFile" accept="png, jpg, jpeg" required>
+                        <input type="file" class="file-input" name="thumbnailFile" id="thumbnailFile" accept="png, jpg, jpeg">
                         <h4 align="center">대표사진</h4>
                     </div>
                     <div class="etc-area">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
-                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg" required>
+                        <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
                         <input type="file" class="file-input" name="houseImg" accept="png, jpg, jpeg">
                         <img class="previewer-small">
@@ -365,7 +365,7 @@
                     </tr>
                 </table>
 
-                <button type="submit" class="button enroll-btn">등록하기</button>
+                <button type="submit" class="button enroll-btn" onclick="return checkImgs();">등록하기</button>
 
             </form>
 
@@ -378,6 +378,11 @@
 </body>
 
 <script>
+	
+	var locationCheck = false;
+	var thumbnailCheck = false;
+	var imgCheck = false;
+	var imgCount = 0;
 	
 	$(function() {
 	
@@ -411,7 +416,6 @@
 		})
 		
 	})
-	
 
 </script>
 </html>

@@ -395,6 +395,10 @@
 
 	$(function() {
 		
+		var thumbnailCheck = false;
+		var imgCheck = false;
+		var imgCount = 0;
+		
 		$("select[name=line]").on("change", function() {
 			
 			$.ajax({
