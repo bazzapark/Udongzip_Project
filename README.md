@@ -11,6 +11,10 @@
 
 우동집은 불량 중개사무소와 허위매물 문제를 해결하고, 사용자가 직접 발품을 팔지 않아도 사이트 내에서 좋은 방과 좋은 중개사무소를 만날 수 있도록 하는 것을 목표로 제작되었다.
 
+## 참여 인원 및 기간
+백엔드 6명
+1개월
+
 ## 기술 스택
 * Java8
 * Spring MVC
@@ -19,16 +23,13 @@
 * MySQL
 * Maven
 * Apache Tomcat
-* Javascript
-* HTML5
-* CSS3
 
 ## 테이블 구성
 ![UdongzipERD](https://user-images.githubusercontent.com/96688007/180923021-741b0970-1640-412e-a047-a6f292b39667.png)
 
 ## 구현 기능
 * 개인회원 기능
-  * 회원가입 및 이메일 인증(ID, PW 유효성 검사)
+  * 회원가입 및 이메일 인증, ID/PW 유효성 검사
   * 마이페이지
     * 회원 정보 수정 및 탈퇴
     * 예약 내역 조회 (방문 결과에 따른 리뷰 작성 가능 여부 판단)
@@ -37,8 +38,32 @@
     * 1:1 문의 내역 조회
     
  * 업체회원 기능
+   * 회원가입 및 이메일 인증, ID/PW 유효성 검사
+   * 마이페이지
+     * 회원 정보 수정 및 탈퇴
+     * 예약 내역 조회 (방문 결과 상태 변경)
+     * 내 업체 리뷰 조회 및 악성 리뷰 삭제 요청
+     * 1:1 문의 내역 조회
+   * 매물 관리
 
-## 주요 기능 이미지
+ * 어드민 기능
+   * 개인회원 관리
+   * 업체회원 관리
+   * 신고/요청 관리
+   * 고객센터 관리
+
+ * 매물 관련 기능
+   * 매물 전체 조회 (지도/리스트)
+   * 매물 상세 조회 및 찜하기/신고하기
+   * 중개사무소 정보 조회
+   * 채팅 문의
+
+ * 고객센터 기능
+   * 자주 묻는 질문
+   * 공지사항
+   * 1:1문의 등록
+
+## 주요 기능 설명
 
 ### 매물 조회
   * Kakao Map API를 활용한 매물 지도
@@ -64,3 +89,14 @@
 ![UdongzipPay1](https://user-images.githubusercontent.com/96688007/180925169-03c195b2-f6ab-40e5-8f1b-2dee860471ba.png)
 ![UdongzipPay2](https://user-images.githubusercontent.com/96688007/180925184-084c472e-6912-4000-8854-e4ad2f014926.png)
 ![UdongzipPay3](https://user-images.githubusercontent.com/96688007/180925935-621b5145-676f-4785-894c-894842f9fadb.png)
+
+### 매물 등록
+  * 다음 우편번호 서비스를 통한 주소 검색
+  * KaKao Map API를 활용하여 주소로 위치값(위도/경도) 획득, 지도 및 마커 출력
+  * 이미지 영역 클릭 시 파일 탐색기 작동, 미리보기가 등록된 영역 클릭 시 파일 삭제
+  * 이미지 등록 시 유효성 검사(파일 용량/확장자/최소 개수), 미리보기 등록
+  * 지하철 호선 정보 선택 시 해당 호선의 지하철역 정보 출력
+
+![UdongzipHouse1](https://user-images.githubusercontent.com/96688007/181007765-84fe7046-f9cd-4403-b51f-5989760dd60b.png)
+![UdongzipHouse2](https://user-images.githubusercontent.com/96688007/181007899-9dabe382-83e0-41fa-a57d-5db0c594af94.png)
+![UdongzipHouse3](https://user-images.githubusercontent.com/96688007/181007935-9c4cdf9f-053c-4d93-98f0-afe76aeb93d4.png)
