@@ -11,9 +11,8 @@
 
 우동집은 불량 중개사무소와 허위매물 문제를 해결하고, 사용자가 직접 발품을 팔지 않아도 사이트 내에서 좋은 방과 좋은 중개사무소를 만날 수 있도록 하는 것을 목표로 제작되었다.
 
-## 참여 인원 및 기간
-백엔드 6명
-1개월
+## 참여 인원 / 기간
+백엔드 6명 / 1개월
 
 ## 기술 스택
 * Java8
@@ -69,9 +68,12 @@
   * Kakao Map API를 활용한 매물 지도
   * 구역별 매물 개수에 따른 클러스트 스타일 변경
   * 줌 레벨에 따른 클러스터 및 마커 스타일 변경
+  * 리스트에서 특정 매물 hover 시 해당 매물의 위치에 마커 생성
+  * 주소 검색 및 다중 필터 동시 적용
   
 ![UdongzipMap1](https://user-images.githubusercontent.com/96688007/180924112-f0c0cdd2-7048-4b1e-9a07-52681d31b32b.png)
 ![UdongzipMap2](https://user-images.githubusercontent.com/96688007/180924243-fededa4a-5154-44aa-886f-3642781eddb4.png)
+![UdongzipMap3](https://user-images.githubusercontent.com/96688007/181009844-20d04f56-5abd-4659-9096-bb3fcbc69020.png)
 
 ### 개인회원과 중개사무소 1:1 실시간 채팅 문의
   * WebSocket 통신을 활용한 1:1 실시간 채팅
