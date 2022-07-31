@@ -23,6 +23,10 @@
 * Maven
 * Apache Tomcat
 
+## 실행 방법
+Apache Tomcat 서버 Start
+접속 URL : localhost:8006/udongzip
+
 ## 테이블 구성
 ![UdongzipERD](https://user-images.githubusercontent.com/96688007/180923021-741b0970-1640-412e-a047-a6f292b39667.png)
 
